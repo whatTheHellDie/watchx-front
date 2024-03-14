@@ -8,11 +8,16 @@
     "anchor-localnet": "nx run anchor:anchor localnet",
     "anchor-test": "nx run anchor:anchor test",
     "build": "nx build web",
-    "dev": "nx serve web"
+    "dev": "nx serve web --host 0.0.0.0 --port 3000"
   },
   "private": true,
   "dependencies": {
     "@coral-xyz/anchor": "^0.29.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.12",
+    "@mui/material": "^5.15.12",
+    "@reduxjs/toolkit": "^2.2.1",
     "@solana-developers/preset-react": "2.0.1",
     "@solana/spl-token": "0.3.9",
     "@solana/wallet-adapter-base": "^0.9.23",
@@ -23,9 +28,16 @@
     "@swc/helpers": "~0.5.2",
     "bs58": "5.0.0",
     "buffer": "6.0.3",
+    "css-loader": "^6.10.0",
     "react": "18.2.0",
+    "react-dev-utils": "^12.0.1",
     "react-dom": "18.2.0",
+    "react-redux": "^9.1.0",
     "react-router-dom": "6.11.2",
+    "react-slick": "^0.30.2",
+    "resolve-url-loader": "^5.0.0",
+    "slick-carousel": "^1.8.1",
+    "style-loader": "^3.3.4",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

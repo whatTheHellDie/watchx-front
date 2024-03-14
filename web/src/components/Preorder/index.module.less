@@ -1,0 +1,280 @@
+@import '../../mixin.module.less';
+.img {
+  display: block;
+  margin: 40px auto 40px;
+}
+.mainText {
+  width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+.hoverText {
+  font-family: San Francisco Display1;
+  font-size: 56px;
+  line-height: 64px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #808080;
+  &.active {
+    color: #fff;
+  }
+}
+.orderWrap {
+  background: #141e1e;
+  padding: 105px;
+  margin-top: 136px;
+  .centerText {
+    width: 1200px;
+    margin: 0 auto;
+  }
+  .title {
+    font-family: San Francisco Display1;
+    font-size: 80px;
+    font-weight: 500;
+    line-height: 84px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .title1 {
+    font-family: San Francisco Display;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 40px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-top: 25px;
+    margin-bottom: 12px;
+  }
+  .title2 {
+    font-family: San Francisco Display;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #26c6da;
+  }
+  .founderWrap {
+    margin-top: 129px;
+    width: 1200px;
+    margin: 129px auto 0;
+  }
+  .founder {
+    display: flex;
+    align-items: center;
+    margin-bottom: 48px;
+    padding-left: 50px;
+    .text {
+      font-family: San Francisco Display1;
+      font-size: 40px;
+      font-weight: 500;
+      line-height: 40px;
+      letter-spacing: 0em;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .border {
+      border-bottom: 1px dashed #fff;
+      height: 0;
+      width: 250px;
+      margin: 0 7px;
+    }
+    .border1 {
+      width: 164px;
+    }
+    .border2 {
+      width: 249px;
+    }
+    .border3 {
+      width: 278px;
+    }
+    &.active {
+      opacity: 0.5;
+    }
+  }
+
+  .sale {
+    font-family: San Francisco Display;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: left;
+    border: 1px solid #fff;
+    width: 204px;
+    height: 48px;
+    border-radius: 42px;
+    .flexCenter();
+  }
+  .price {
+    color: #26c6da;
+    font-family: San Francisco Display1;
+    font-size: 40px;
+    // font-weight: 600;
+    line-height: 40px;
+    letter-spacing: 0em;
+    text-align: right;
+  }
+  .desc {
+    color: #808080;
+    font-family: San Francisco Display;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .btnWrap {
+    display: flex;
+    gap: 24px;
+    justify-content: end;
+    padding-top: 68px;
+  }
+  .btn {
+    .flexCenter();
+    border: 1px solid #26c6da;
+    width: 200px;
+    height: 44px;
+    font-family: San Francisco Display;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #26c6da;
+    cursor: pointer;
+    border-radius: 10px;
+    &:hover {
+      background: #26c6da;
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+}
+.watchList {
+  padding: 152px 0 0;
+  width: 1200px;
+  margin: 0 auto;
+  .watchTitle {
+    font-family: San Francisco Display1;
+    font-size: 80px;
+    font-weight: 500;
+    line-height: 84px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+}
+@media screen and (max-width: 768px) {
+  .img {
+    width: 270px;
+    margin: 0 auto 8px;
+  }
+  .mainText {
+    width: 350px;
+    margin: 0 auto;
+  }
+  .hoverText {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 26px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .orderWrap {
+    margin-top: 30px;
+    padding: 24px 10px 36px;
+    .title {
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: center;
+    }
+    .title1 {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      letter-spacing: 0em;
+      text-align: center;
+      margin: 10px 0 14px;
+    }
+    .title2 {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      letter-spacing: 0em;
+      text-align: center;
+    }
+    .centerText {
+      width: 100%;
+    }
+    .founderWrap {
+      margin-top: 30px;
+      margin-left: 0;
+    }
+    .founder {
+      margin-bottom: 20px;
+      padding-left: 0;
+      .text {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        letter-spacing: 0em;
+        text-align: left;
+      }
+      .sale {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        letter-spacing: 0em;
+        text-align: center;
+        border-radius: 42px;
+        width: 74px;
+        height: 32px;
+      }
+      .price {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 20px;
+        letter-spacing: 0em;
+        text-align: right;
+      }
+      .border {
+        width: 48px;
+      }
+      .border1 {
+        width: 18px;
+      }
+      .border3 {
+        width: 58px;
+      }
+      .border4 {
+        width: 48px;
+      }
+    }
+    .desc {
+      font-size: 12px;
+      line-height: 16px;
+    }
+    .btnWrap {
+      padding-top: 20px;
+      justify-content: center;
+    }
+    .btn {
+      width: 110px;
+      height: 28px;
+      font-size: 14px;
+    }
+  }
+  .watchList {
+    padding-top: 82px;
+    width: 350px;
+    .watchTitle {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: 0em;
+    }
+  }
+}

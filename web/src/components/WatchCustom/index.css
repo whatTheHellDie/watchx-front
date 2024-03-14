@@ -1,0 +1,23 @@
+.newSlide .slick-dots li {
+  width: 120px;
+  height: 120px;
+  border: 1px solid #808080;
+}
+.newSlide .slick-dots {
+  position: static;
+}
+.newSlide .slick-slide img {
+  width: 600px;
+  height: 600px;
+}
+@media screen and (max-width: 768px) {
+  .newSlide .slick-dots li {
+    width: 80px;
+    height: 80px;
+    margin: 0 3px;
+  }
+  .newSlide .slick-slide img {
+    width: 250px;
+    height: 250px;
+  }
+}

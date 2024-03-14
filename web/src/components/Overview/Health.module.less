@@ -1,0 +1,130 @@
+.wrap {
+  position: relative;
+  padding-top: 130px;
+}
+.relative {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.titleWrap {
+  color: #fff;
+  font-size: 32px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 48px;
+  width: 660px;
+  margin-right: 160px;
+}
+.title {
+  margin-bottom: 30px;
+  width: 620px;
+  margin-top: 156px;
+}
+.render {
+  color: #26c6da;
+}
+.content {
+  color: #fff;
+
+  font-family: 'San Francisco Display';
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 30px; /* 136.364% */
+}
+.img {
+  position: absolute;
+}
+.img1 {
+  top: 68px;
+  left: 81px;
+  width: 83px;
+}
+.img2 {
+  width: 105px;
+  bottom: 62px;
+  right: 121px;
+}
+.img3 {
+  left: -230px;
+  top: 426px;
+}
+.img4 {
+  left: -115px;
+  top: 498px;
+}
+.introWrap {
+  position: relative;
+}
+.topImg {
+  position: relative;
+  z-index: 1;
+}
+.rect {
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  margin-left: -264px;
+}
+@media screen and(max-width:768px) {
+  .wrap {
+    padding-top: 0;
+    width: 350px;
+    margin: 0 auto;
+  }
+  .relative {
+    flex-direction: column-reverse;
+  }
+  .introWrap {
+    width: 210px;
+    margin-left: 94px;
+  }
+  .topImg {
+    width: 123px;
+    display: block;
+    margin: 0 auto;
+  }
+  .rect {
+    width: 210px;
+    margin-left: -105px;
+  }
+  .img1 {
+    width: 50px;
+    left: 14px;
+    top: 9px;
+  }
+  .img2 {
+    width: 50px;
+    right: 0;
+    top: 258px;
+  }
+  .img3 {
+    left: -45px;
+    top: 170px;
+    width: 35px;
+  }
+  .img4 {
+    width: 35px;
+    left: -4px;
+    top: 192px;
+  }
+  .titleWrap {
+    font-size: 20px;
+    width: auto;
+    margin-right: 0;
+    text-align: center;
+  }
+  .title {
+    width: auto;
+    font-size: 20px;
+    line-height: 30px;
+    margin-top: 40px;
+    margin-bottom: 6px;
+  }
+  .content {
+    font-size: 14px;
+  }
+}

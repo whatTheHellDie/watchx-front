@@ -1,0 +1,134 @@
+.list {
+  color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  gap: 12px;
+}
+.item {
+  width: calc(44%);
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  padding: 65px 0 0;
+  overflow: hidden;
+}
+.item:nth-child(1) {
+  background: #02474f;
+}
+.item:nth-child(2) {
+  background: #141e1e;
+}
+.list1 .item:nth-child(1) {
+  background: #141e1e;
+}
+.list1 .item:nth-child(2) {
+  background: #02474f;
+}
+.topWrap {
+  width: 517px;
+  margin: 0 auto;
+}
+.imgWrap {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.img {
+  display: block;
+}
+.title {
+  color: #fff;
+  font-family: San Francisco Display1;
+  text-align: center;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 50px;
+  /* 100% */
+  margin-bottom: 30px;
+}
+.content {
+  color: #fff;
+  text-align: center;
+  font-family: 'San Francisco Display';
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px;
+  /* 150% */
+}
+.imgWrap1 {
+  width: 100%;
+  margin: 0 0 0 10%;
+  box-sizing: border-box;
+}
+.img1 {
+  width: 100%;
+}
+.img3 {
+  width: 100%;
+}
+.abImg {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 100%;
+}
+.phoneWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+@media screen and (max-width: 768px) {
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .list1 {
+    margin-top: 0;
+    flex-direction: column-reverse;
+  }
+  .item {
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 48px;
+    background: transparent;
+    margin-bottom: 10px;
+    min-height: 312px;
+  }
+  .item:nth-child(2n-1) {
+    background: #02474f;
+  }
+  .phoneWrap {
+    width: 350px;
+    margin: 0 auto;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .topWrap {
+    width: auto;
+  }
+  .content {
+    font-family: San Francisco Display;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .img {
+    width: 350px;
+    margin-top: 30px;
+  }
+  .img4 {
+    width: 280px;
+  }
+}

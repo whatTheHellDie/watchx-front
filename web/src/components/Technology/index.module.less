@@ -1,0 +1,683 @@
+@import '../../mixin.module.less';
+.variousWrap {
+  position: relative;
+  background: #141e1e;
+  height: 560px;
+  &.variousWrapZIndex {
+    z-index: 10;
+  }
+  .banner {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .rightR {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+.absoluteWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  .flexCenter();
+}
+.newLife {
+  color: #fff;
+  word-break: break-word;
+  text-align: center;
+  .title {
+    font-family: San Francisco Display1;
+    font-size: 100px;
+    line-height: 100px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .content {
+    font-family: San Francisco Display1;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 48px;
+    letter-spacing: 0em;
+    text-align: center;
+    width: 1000px;
+    margin: 40px auto 0;
+  }
+}
+.blue {
+  color: #26c6da;
+}
+.newLife1 {
+  height: auto;
+
+  .title {
+    width: 616px;
+    font-size: 56px;
+    line-height: 56px;
+    letter-spacing: 0em;
+    text-align: center;
+    font-family: San Francisco Display1;
+  }
+  .content {
+    width: 600px;
+    font-family: San Francisco Display1;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 46px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin-top: 24px;
+  }
+}
+.play {
+  margin-top: 100px;
+  cursor: pointer;
+}
+.variousWrap1 {
+  height: auto;
+  .banner1 {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 1411px) {
+  .play {
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  .rightR {
+    width: 280px;
+  }
+}
+.abVideo {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.9);
+  align-items: center;
+  display: none;
+  &.active {
+    display: flex;
+  }
+  .videoWrap {
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+
+    .close {
+      font-size: 30px;
+      color: #fff;
+      position: absolute;
+      right: -30px;
+      top: 0;
+      cursor: pointer;
+    }
+    video {
+      width: 100%;
+    }
+  }
+}
+.flexWrap {
+  z-index: 11;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 1200px;
+  margin: 20px auto;
+  .title {
+    font-family: San Francisco Display1;
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 56px;
+    letter-spacing: 0em;
+    text-align: left;
+    width: 500px;
+  }
+  .content {
+    font-family: San Francisco Display1;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    width: 500px;
+  }
+  .right {
+    position: relative;
+  }
+  .playWrap {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.active {
+      display: none;
+    }
+  }
+  .play {
+    margin: 0;
+  }
+}
+.flexWrap1 {
+  margin-top: 84px;
+}
+.bannerWrap {
+  .banner {
+    position: relative;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: -124px;
+  }
+  .listWrap {
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    gap: 15px;
+  }
+  .item {
+    background: #181818;
+    padding: 49px 20px 43px;
+    text-align: center;
+    &:hover {
+      background: #141e1e;
+    }
+    img {
+      display: block;
+      margin: 0 auto;
+    }
+    .title {
+      font-family: San Francisco Display1;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: center;
+      margin: 28px 0 18px;
+    }
+    .content {
+      font-family: San Francisco Display;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: center;
+    }
+  }
+}
+.engineWrap {
+  background: #141e1e;
+  margin-top: 18px;
+  .title {
+    font-family: San Francisco Display1;
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 56px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding: 60px 0 24px;
+  }
+  .content {
+    font-family: San Francisco Display;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    width: 800px;
+    margin: 0 auto;
+  }
+  .img {
+    display: block;
+    width: 100%;
+  }
+}
+
+.technologyWrap {
+  padding: 55px 0 84px;
+  .title {
+    font-family: San Francisco Display;
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 56px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 55px 0 24px;
+  }
+  .img {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.AIWrap {
+  position: relative;
+  z-index: 1;
+  .bg {
+    width: 100%;
+    display: block;
+  }
+  .itemWrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  .item {
+    padding: 55px 0 21px;
+    width: 800px;
+    margin: 0 auto;
+    .title {
+      font-family: San Francisco Display1;
+      font-size: 56px;
+      font-weight: 600;
+      line-height: 56px;
+      letter-spacing: 0em;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .content {
+      font-family: San Francisco Display;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: center;
+      margin: 24px auto;
+    }
+  }
+  .img {
+    margin: 0 auto;
+    display: block;
+  }
+}
+@media screen and (max-width: 1900px) {
+  .AIWrap {
+    .img {
+      width: 600px;
+    }
+  }
+}
+@media screen and (max-width: 1656px) {
+  .AIWrap {
+    .img {
+      width: 500px;
+    }
+  }
+}
+@media screen and (max-width: 1452px) {
+  .AIWrap {
+    .img {
+      width: 400px;
+    }
+  }
+}
+@media screen and (max-width: 1310px) {
+  .AIWrap {
+    .img {
+      width: 360px;
+    }
+  }
+}
+.platformWrap {
+  display: flex;
+  text-align: center;
+  gap: 20px;
+  .title {
+    font-family: San Francisco Display1;
+    font-size: 56px;
+    line-height: 56px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .title1 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-right: 182px;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .leftItem {
+    background: #141e1e;
+    flex: 1;
+    padding-top: 71px;
+  }
+  .rightItem {
+    background: #141e1e;
+    width: 620px;
+    padding-top: 71px;
+    padding: 71px 60px 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .content {
+    font-family: San Francisco Display;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin-top: 22px;
+  }
+  .contentBox {
+    display: flex;
+    justify-content: center;
+  }
+  .contentWrap {
+    display: flex;
+    text-align: left;
+    position: relative;
+    padding-top: 78px;
+  }
+  .leftContent {
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .item1 {
+      margin-bottom: 24px;
+    }
+  }
+  .rightContent {
+    width: 444px;
+  }
+}
+.widgetWrap {
+  margin-top: 20px;
+  .bg {
+    width: auto;
+    margin: 0 auto;
+  }
+  .itemWrap {
+    padding-top: 80px;
+  }
+}
+.variousWrap1 {
+  margin-top: 20px;
+}
+.video1 {
+  width: 596px;
+}
+@media screen and (max-width: 768px) {
+  .variousWrap {
+    height: 210px;
+    .banner {
+      width: 198px;
+    }
+    .rightR {
+      display: none;
+    }
+  }
+  .newLife {
+    .title {
+      font-size: 28px;
+      line-height: 28px;
+      letter-spacing: 0em;
+      text-align: center;
+    }
+    .content {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 16px;
+      letter-spacing: 0em;
+      text-align: center;
+      width: 235px;
+      margin-top: 8px;
+    }
+  }
+  .bannerWrap {
+    .banner {
+      width: 100%;
+      margin-bottom: -36px;
+    }
+    .listWrap {
+      width: 356px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .item {
+      width: calc(50% - 5px);
+      padding: 27px 19px;
+      img {
+        width: 36px;
+      }
+      .title {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 14px;
+        letter-spacing: 0em;
+        text-align: center;
+        margin: 16px 0 8px;
+      }
+      .content {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 14px;
+        letter-spacing: 0em;
+        text-align: center;
+      }
+    }
+  }
+  .engineWrap {
+    margin-top: 10px;
+    .title {
+      padding-top: 40px;
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: center;
+    }
+    .content {
+      font-family: San Francisco Display;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 14px;
+      letter-spacing: 0em;
+      text-align: center;
+      width: 334px;
+      margin-bottom: 40px;
+    }
+  }
+  .technologyWrap {
+    padding: 47px auto 50px;
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: center;
+      margin-top: 47px;
+      margin-bottom: 20px;
+    }
+    img {
+      width: 356px;
+    }
+  }
+  .AIWrap {
+    .item {
+      width: 356px;
+      padding-top: 40px;
+
+      .title {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 24px;
+        letter-spacing: 0em;
+        text-align: center;
+      }
+      .content {
+        font-family: San Francisco Display;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 14px;
+        letter-spacing: 0em;
+        text-align: center;
+        margin: 10px auto 39px;
+        width: 315px;
+      }
+    }
+    .img {
+      width: 100%;
+      margin: 0 auto;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  .platformWrap {
+    display: block;
+    .leftItem {
+      padding-top: 40px;
+      padding-bottom: 24px;
+      margin-bottom: 10px;
+    }
+    .contentWrap {
+      padding-top: 34px;
+      flex-direction: column;
+      width: 310px;
+      margin: 0 auto;
+    }
+    .title1 {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: center;
+      padding-right: 0;
+      width: 100%;
+    }
+    .leftContent {
+      width: 100%;
+      .item1 {
+        margin-bottom: 6px;
+        text-align: center;
+      }
+    }
+    .rightContent {
+      width: 254px;
+      margin: 0 auto;
+    }
+    .rightItem {
+      width: 100%;
+      padding: 40px 0 0;
+    }
+    .title {
+      font-size: 24px;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: center;
+    }
+    .content {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 14px;
+      letter-spacing: 0em;
+      text-align: center;
+      width: 324px;
+      margin: 10px auto 20px;
+    }
+    .img1 {
+      width: 260px;
+    }
+  }
+  .widgetWrap {
+    margin-top: 10px;
+    .itemWrap {
+      padding-top: 0;
+    }
+    .item {
+      margin: 10px auto 20px;
+    }
+    .bg {
+      width: 100%;
+      padding-top: 150px;
+    }
+  }
+  .play {
+    width: 64px;
+    margin-top: 28px;
+  }
+  .absoluteWrap1 {
+    align-items: start;
+  }
+  .newLife1 {
+    .title {
+      padding-top: 64px;
+      width: 265px;
+      font-size: 24px;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: center;
+    }
+    .content {
+      font-size: 14px;
+      line-height: 18px;
+      letter-spacing: 0em;
+      text-align: center;
+      margin: 20px auto 0;
+    }
+  }
+  .variousWrap1 {
+    height: auto;
+  }
+  .abVideo {
+    .videoWrap {
+      width: 95%;
+      .close {
+        right: 0;
+        top: -24px;
+        font-size: 20px;
+      }
+    }
+  }
+  .historyFlexWrap {
+    width: 100%;
+    flex-direction: column;
+    margin: 10px auto;
+    .left {
+      width: 356px;
+      margin: 0 auto;
+    }
+    .title {
+      width: 190px;
+      text-align: left;
+    }
+    .content {
+      margin: 10px 0 40px;
+      width: 280px;
+      font-family: San Francisco Display;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 14px;
+      letter-spacing: 0em;
+      text-align: left;
+    }
+    .video1 {
+      width: 356px;
+      margin: 0 auto;
+      display: block;
+    }
+  }
+  .flexWrap1 {
+    width: 356px;
+    margin: 0 auto;
+    gap: 6px;
+    img {
+      width: 172px;
+    }
+  }
+}

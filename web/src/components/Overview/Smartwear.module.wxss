@@ -1,0 +1,141 @@
+.wrap {
+  position: relative;
+  background: #131b29;
+  padding: 54px 0 0;
+  margin-top: 12px;
+}
+.relative {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.titleWrap {
+  color: #fff;
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 48px;
+  width: 821px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.title {
+  font-size: 56px;
+  font-family: 'San Francisco Display1';
+  font-weight: 600;
+}
+.render {
+  color: #26c6da;
+}
+.content {
+  color: #fff;
+  font-family: 'San Francisco Display';
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px;
+  /* 136.364% */
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+.btn {
+  border: 1px solid #26c6da;
+  color: #26c6da;
+  text-align: center;
+  font-family: 'San Francisco Display';
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  /* 75% */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 200px;
+  height: 44px;
+  border-radius: 10px;
+}
+.btn:hover {
+  background: #26c6da;
+  color: #fff;
+  font-weight: 600;
+}
+.introWrap {
+  position: relative;
+}
+.watchImg {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  display: block;
+  padding: 29px 0 41px;
+}
+.rect {
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  margin-left: -264px;
+}
+.moreWrap {
+  display: flex;
+  gap: 24px;
+}
+@media screen and (max-width: 768px) {
+  .wrap {
+    padding-top: 48px;
+  }
+  .titleWrap {
+    font-size: 20px;
+    width: auto;
+    margin-right: 0;
+    margin-left: 0;
+    text-align: center;
+  }
+  .title {
+    width: auto;
+    font-size: 28px;
+    line-height: 28px;
+    font-weight: 700;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .content {
+    margin: 8px 0 16px;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0em;
+    text-align: center;
+    width: 334px;
+    line-height: 16px;
+  }
+  .moreWrap {
+    gap: 12px;
+  }
+  .btn {
+    width: 104px;
+    height: 24px;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+  .watchImg {
+    width: 260px;
+    padding-bottom: 44px;
+    padding-top: 30px;
+  }
+  .watchList {
+    width: 350px;
+    margin: 0 auto;
+    gap: 10px;
+    padding-top: 20px;
+  }
+  .watchItem {
+    padding: 14px;
+    border-radius: 30px;
+  }
+}

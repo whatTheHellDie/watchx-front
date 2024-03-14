@@ -1,0 +1,334 @@
+@import '../../mixin.module.less';
+.flex {
+  display: flex;
+  margin: 0 auto;
+}
+.slideWrap {
+  width: 600px;
+  margin: 0 auto;
+  padding: 50px 0;
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+}
+.rightWrap {
+  width: 600px;
+  height: 776px;
+  overflow: auto;
+}
+.rightWrapInner {
+  width: 534px;
+  margin: 0 auto;
+  padding-bottom: 41px;
+}
+.title {
+  font-family: San Francisco Display1;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 40px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 41px;
+  margin-bottom: 24px;
+}
+.desc {
+  font-family: San Francisco Display;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.ul {
+  margin-top: 41px;
+}
+.li {
+  font-family: San Francisco Display;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #c3c3c3;
+  display: flex;
+  .little {
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: #c3c3c3;
+    margin: 13px 15px 0;
+    border-radius: 50%;
+  }
+}
+.itemUl {
+}
+.itemLi {
+  border: 1px solid #ffffff;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  justify-content: space-between;
+  &.active {
+    opacity: 0.5;
+  }
+  .flex1 {
+    display: flex;
+    align-items: center;
+  }
+  .rect {
+    width: 56px;
+    height: 56px;
+    border: 2px solid #b8b8b8;
+    margin-right: 24px;
+    border-radius: 50%;
+  }
+  .name {
+    font-family: San Francisco Display;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .priceWrap {
+    text-align: center;
+    .price {
+      font-family: San Francisco Display1;
+      font-size: 28px;
+      line-height: 28px;
+      letter-spacing: 0em;
+      margin-bottom: 14px;
+    }
+    .numberWrap {
+      font-size: 14px;
+      border-radius: 10px;
+      border: 1px solid #fff;
+      display: flex;
+      width: 100px;
+      margin: 0 auto;
+    }
+    .reduce {
+      width: 32px;
+      .flexCenter();
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .number {
+      width: 36px;
+      height: 36px;
+
+      .flexCenter();
+      outline: none;
+      border: 1px solid #fff;
+      border-top: none;
+      border-bottom: none;
+      background: transparent;
+      text-align: center;
+      font-family: San Francisco Display;
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 28px;
+      letter-spacing: 0em;
+      text-align: center;
+    }
+  }
+}
+.settle {
+  background: #001718;
+  padding: 39px 24px 61px;
+}
+.settleUl {
+  border-bottom: 1px solid #808080;
+}
+.settleLi {
+  border: none;
+  margin-bottom: 50px;
+  padding: 0;
+  &.hide {
+    display: none;
+  }
+  .flex1 {
+    flex-direction: column;
+    align-items: start;
+  }
+  .settleName {
+    font-family: San Francisco Display1;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 32px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .name1 {
+    font-family: San Francisco Display;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-top: 14px;
+  }
+  .name2 {
+    text-align: right;
+  }
+}
+.total {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 6px 0;
+  .totalName {
+    font-family: San Francisco Display1;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 32px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .totalPrice {
+    font-family: San Francisco Display1;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 32px;
+    letter-spacing: 0em;
+    text-align: right;
+    color: #26c6da;
+  }
+}
+.buyBtn {
+  font-family: San Francisco Display1;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: center;
+  height: 60px;
+  border-radius: 12px;
+  background: #26c6da;
+  .flexCenter();
+  margin: 80px 6px 0;
+  cursor: pointer;
+}
+@media screen and (max-width: 768px) {
+  .slideWrap {
+    width: 350px;
+    margin: 0 auto;
+    padding: 12px 0 18px;
+  }
+  .flex {
+    flex-direction: column;
+  }
+  .title {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin: 20px 0 6px;
+  }
+  .desc {
+    font-family: San Francisco Display;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .rightWrap {
+    width: 350px;
+    height: auto;
+  }
+  .ul {
+    margin-top: 10px;
+  }
+  .li {
+    font-size: 14px;
+    line-height: 26px;
+    &::before {
+      width: 6px;
+      height: 6px;
+    }
+  }
+  .itemLi {
+    padding: 20px 16px 13px;
+    .rect {
+      width: 37px;
+      height: 37px;
+      margin-right: 16px;
+    }
+    .name {
+      font-size: 16px;
+    }
+    .priceWrap {
+      .price {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 28px;
+        letter-spacing: 0em;
+        text-align: right;
+        margin-bottom: 9px;
+      }
+      .numberWrap {
+        width: 66px;
+        height: 24px;
+      }
+      .number {
+        width: 24px;
+        height: 22px;
+        font-size: 14px;
+      }
+      .reduce {
+        font-size: 16px;
+      }
+    }
+  }
+  .settleLi {
+    margin-bottom: 30px;
+    padding: 0;
+  }
+  .settle {
+    padding: 15px 22px 30px;
+    .settleName {
+      font-size: 18px;
+    }
+    .name1 {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0em;
+      text-align: right;
+
+      margin-top: 10px;
+    }
+  }
+  .total {
+    padding: 20px 3px 0;
+    .totalName {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 32px;
+      letter-spacing: 0em;
+      text-align: left;
+    }
+    .totalPrice {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 32px;
+      letter-spacing: 0em;
+      text-align: right;
+    }
+  }
+  .buyBtn {
+    margin: 30px 3px 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: center;
+    height: 40px;
+  }
+  .rightWrapInner {
+    width: 100%;
+  }
+}

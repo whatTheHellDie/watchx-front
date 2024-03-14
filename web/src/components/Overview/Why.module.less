@@ -1,0 +1,145 @@
+.wrap {
+  position: relative;
+  background: #141e1e;
+  margin-bottom: 12px;
+}
+.relative {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.titleWrap {
+  font-family: San Francisco Display;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 48px;
+  letter-spacing: 0em;
+  text-align: left;
+  width: 569px;
+
+  color: #fff;
+  margin-left: 69px;
+}
+.title {
+  margin-top: 153px;
+  margin-bottom: 46px;
+  font-family: 'San Francisco Display1';
+  font-weight: normal;
+}
+.render {
+  color: #26c6da;
+}
+.downBtn {
+  width: 300px;
+  height: 90px;
+  border-radius: 20px;
+  border: 1px solid #26c6da;
+  font-size: 18px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  &:hover {
+    background: #26c6da;
+    color: #fff;
+    font-weight: 600;
+  }
+  img {
+    padding-left: 30px;
+    padding-right: 15px;
+  }
+}
+
+.downTitle {
+  font-family: 'San Francisco Display';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 18px; /* 100% */
+  padding-bottom: 4px;
+}
+.downContent {
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 36px; /* 112.5% */
+}
+.phoneImg {
+  display: none;
+}
+
+@media screen and(max-width:768px) {
+  .wrap {
+    padding-top: 48px;
+  }
+  .relative {
+    display: block;
+  }
+  .titleWrap {
+    width: 350px;
+    margin: 0 auto;
+  }
+  .introImg {
+    display: none;
+    width: 300px;
+    margin: 0 auto;
+  }
+  .phoneImg {
+    display: block;
+  }
+  .img1 {
+    width: 40px;
+  }
+  .img2 {
+    top: 150px;
+    left: auto;
+    right: 15px;
+    bottom: auto;
+    width: 40px;
+  }
+  .img3,
+  .img4 {
+    display: none;
+  }
+  .title {
+    width: 300px;
+    font-size: 24px;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 0 auto 29px;
+  }
+  .downBtn {
+    margin: 0 auto 0;
+    width: 156px;
+    height: 46px;
+    border-radius: 10px;
+    img {
+      width: 28px;
+      margin: 0 8px 0 14px;
+      padding: 0;
+    }
+  }
+  .downTitle {
+    font-size: 9px;
+    font-weight: 300;
+    line-height: 9px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .downContent {
+    font-family: Alata;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .btnWrap {
+    display: flex;
+    gap: 7px;
+    justify-content: center;
+  }
+}

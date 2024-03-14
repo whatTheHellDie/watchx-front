@@ -1,0 +1,65 @@
+@import '../../mixin.module.less';
+.slideWrap {
+  width: 100%;
+  margin: 0 auto;
+  background: #49422a;
+  padding: 50px 0;
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.decorateReverse {
+  transform: rotate(180deg);
+  margin: 0 auto;
+  display: block;
+  width: 100%;
+  position: relative;
+  top: 1px;
+}
+.decorate {
+  margin: 0 auto;
+  display: block;
+  width: 100%;
+}
+.boxWrap {
+  position: relative;
+}
+.btnWrap {
+  display: flex;
+  position: absolute;
+  right: 18%;
+  top: 0;
+  margin-top: 2%;
+}
+.btn {
+  margin: 0 22px;
+}
+.img1 {
+  cursor: pointer;
+  &.active {
+    opacity: 0.5;
+  }
+}
+.img2 {
+  transform: rotate(180deg);
+}
+
+@media screen and (max-width: 768px) {
+  .slideWrap .img1 {
+    width: 24px;
+  }
+  .wrap {
+    width: 306px;
+  }
+  .wrap1 {
+    width: 216px;
+  }
+  .btnWrap {
+    margin-top: 29px;
+  }
+  .btn {
+    margin: 0 4px;
+  }
+}

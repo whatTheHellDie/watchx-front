@@ -1,0 +1,22 @@
+.MuiBackdrop-root.MuiModal-backdrop.MuiBackdrop-root {
+  background: transparent;
+}
+.MuiPaper-root.MuiDrawer-paper.MuiDrawer-paperAnchorRight {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.9);
+}
+.MuiTypography-body1.MuiListItemText-primary {
+  font-size: 18px;
+  line-height: 18px;
+  margin-bottom: 9px;
+  margin-top: 9px;
+}
+.MuiDrawer-root .MuiListItemText-root {
+  margin: 0;
+}
+.MuiButtonBase-root.MuiListItemButton-root.MuiListItemButton-gutters.MuiListItemButton-root.MuiListItemButton-gutters {
+  padding: 0;
+}
+.MuiListItem-root.MuiListItem-gutters {
+  display: block;
+}

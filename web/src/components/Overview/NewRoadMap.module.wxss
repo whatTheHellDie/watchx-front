@@ -1,0 +1,173 @@
+.wrap {
+  position: relative;
+  padding-top: 55px;
+  padding-bottom: 53px;
+  background: #141e1e;
+  margin: 12px 0;
+}
+.relative {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+}
+.titleWrap {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 48px;
+  width: 554px;
+  margin-right: 43px;
+  z-index: 2;
+  width: 1200px;
+}
+.roadList {
+  display: flex;
+  gap: 12px;
+}
+.roadItem {
+  width: calc(27%);
+  border: 1px solid #26c6da;
+  border-radius: 40px;
+  box-shadow: 0 0px 3px 0px #26c6da;
+  overflow: hidden;
+}
+.roadInner {
+  border-radius: 40px;
+  padding: 47px 55px;
+  box-shadow: inset 0 0px 3px 0px #26c6da;
+  height: 100%;
+}
+.title {
+  margin-bottom: 33px;
+  font-weight: 700;
+  font-family: San Francisco Display1;
+}
+.nameTitle {
+  font-family: 'San Francisco Display1';
+  font-weight: normal;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 50px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 42px;
+}
+.content {
+  color: #fff;
+  font-family: 'San Francisco Display';
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 30px;
+  /* 136.364% */
+}
+.img {
+  position: absolute;
+}
+.contentItem {
+  color: #c2c2c2;
+  font-family: San Francisco Display;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0em;
+  text-align: left;
+  display: flex;
+}
+.before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: #c2c2c2;
+  border-radius: 50%;
+  display: block;
+  margin-right: 10px;
+  margin-top: 13px;
+}
+.end {
+  margin-left: 80px;
+}
+@media screen and (max-width: 768px) {
+  .wrap {
+    padding-top: 19px;
+    margin-top: 0;
+    padding-bottom: 32px;
+  }
+  .nameTitle {
+    font-family: San Francisco Display1;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin-bottom: 29px;
+  }
+  .img1,
+  .img2,
+  .img3,
+  .img {
+    display: none;
+  }
+  .titleWrap {
+    box-sizing: border-box;
+    margin: 0 auto;
+    font-size: 18px;
+    width: 100%;
+    padding-left: 16px;
+    overflow: auto;
+  }
+  .roadList {
+    display: flex;
+    width: 642px;
+    margin-right: 16px;
+  }
+  .roadItem {
+    width: 100%;
+    margin-bottom: 0;
+  }
+  .roadInner {
+    padding: 24px 20px 27px;
+    width: 204px;
+    height: 234px;
+    box-sizing: border-box;
+    border-radius: 20.8px;
+  }
+  .content {
+    font-size: 12px;
+    line-height: 24px;
+  }
+  .contentItem {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: #c2c2c2;
+    border-radius: 50%;
+    display: block;
+    margin-right: 6px;
+    margin-top: 6px;
+  }
+  .title {
+    font-family: San Francisco Display1;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 24px;
+  }
+  .title:first-child {
+    padding-right: 23px;
+  }
+  .end {
+    margin-left: 0;
+  }
+}

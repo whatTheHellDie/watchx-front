@@ -1,0 +1,658 @@
+.variousWrap {
+  position: relative;
+  background: #141e1e;
+  height: 560px;
+}
+.variousWrap.variousWrapZIndex {
+  z-index: 10;
+}
+.variousWrap .banner {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.variousWrap .rightR {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.absoluteWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.newLife {
+  color: #fff;
+  word-break: break-word;
+  text-align: center;
+}
+.newLife .title {
+  font-family: San Francisco Display1;
+  font-size: 100px;
+  line-height: 100px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+.newLife .content {
+  font-family: San Francisco Display1;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 48px;
+  letter-spacing: 0em;
+  text-align: center;
+  width: 1000px;
+  margin: 40px auto 0;
+}
+.blue {
+  color: #26c6da;
+}
+.newLife1 {
+  height: auto;
+}
+.newLife1 .title {
+  width: 616px;
+  font-size: 56px;
+  line-height: 56px;
+  letter-spacing: 0em;
+  text-align: center;
+  font-family: San Francisco Display1;
+}
+.newLife1 .content {
+  width: 600px;
+  font-family: San Francisco Display1;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 46px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-top: 24px;
+}
+.play {
+  margin-top: 100px;
+  cursor: pointer;
+}
+.variousWrap1 {
+  height: auto;
+}
+.variousWrap1 .banner1 {
+  width: 100%;
+}
+@media screen and (max-width: 1411px) {
+  .play {
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  .rightR {
+    width: 280px;
+  }
+}
+.abVideo {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.9);
+  align-items: center;
+  display: none;
+}
+.abVideo.active {
+  display: flex;
+}
+.abVideo .videoWrap {
+  width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+.abVideo .videoWrap .close {
+  font-size: 30px;
+  color: #fff;
+  position: absolute;
+  right: -30px;
+  top: 0;
+  cursor: pointer;
+}
+.abVideo .videoWrap video {
+  width: 100%;
+}
+.flexWrap {
+  z-index: 11;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 1200px;
+  margin: 20px auto;
+}
+.flexWrap .title {
+  font-family: San Francisco Display1;
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 56px;
+  letter-spacing: 0em;
+  text-align: left;
+  width: 500px;
+}
+.flexWrap .content {
+  font-family: San Francisco Display1;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  width: 500px;
+}
+.flexWrap .right {
+  position: relative;
+}
+.flexWrap .playWrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flexWrap .playWrap.active {
+  display: none;
+}
+.flexWrap .play {
+  margin: 0;
+}
+.flexWrap1 {
+  margin-top: 84px;
+}
+.bannerWrap .banner {
+  position: relative;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: -124px;
+}
+.bannerWrap .listWrap {
+  width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  gap: 15px;
+}
+.bannerWrap .item {
+  background: #181818;
+  padding: 49px 20px 43px;
+  text-align: center;
+}
+.bannerWrap .item:hover {
+  background: #141e1e;
+}
+.bannerWrap .item img {
+  display: block;
+  margin: 0 auto;
+}
+.bannerWrap .item .title {
+  font-family: San Francisco Display1;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin: 28px 0 18px;
+}
+.bannerWrap .item .content {
+  font-family: San Francisco Display;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+.engineWrap {
+  background: #141e1e;
+  margin-top: 18px;
+}
+.engineWrap .title {
+  font-family: San Francisco Display1;
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 56px;
+  letter-spacing: 0em;
+  text-align: center;
+  padding: 60px 0 24px;
+}
+.engineWrap .content {
+  font-family: San Francisco Display;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
+  width: 800px;
+  margin: 0 auto;
+}
+.engineWrap .img {
+  display: block;
+  width: 100%;
+}
+.technologyWrap {
+  padding: 55px 0 84px;
+}
+.technologyWrap .title {
+  font-family: San Francisco Display;
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 56px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin: 55px 0 24px;
+}
+.technologyWrap .img {
+  display: block;
+  margin: 0 auto;
+}
+.AIWrap {
+  position: relative;
+  z-index: 1;
+}
+.AIWrap .bg {
+  width: 100%;
+  display: block;
+}
+.AIWrap .itemWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.AIWrap .item {
+  padding: 55px 0 21px;
+  width: 800px;
+  margin: 0 auto;
+}
+.AIWrap .item .title {
+  font-family: San Francisco Display1;
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 56px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin: 0 auto;
+}
+.AIWrap .item .content {
+  font-family: San Francisco Display;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin: 24px auto;
+}
+.AIWrap .img {
+  margin: 0 auto;
+  display: block;
+}
+@media screen and (max-width: 1900px) {
+  .AIWrap .img {
+    width: 600px;
+  }
+}
+@media screen and (max-width: 1656px) {
+  .AIWrap .img {
+    width: 500px;
+  }
+}
+@media screen and (max-width: 1452px) {
+  .AIWrap .img {
+    width: 400px;
+  }
+}
+@media screen and (max-width: 1310px) {
+  .AIWrap .img {
+    width: 360px;
+  }
+}
+.platformWrap {
+  display: flex;
+  text-align: center;
+  gap: 20px;
+}
+.platformWrap .title {
+  font-family: San Francisco Display1;
+  font-size: 56px;
+  line-height: 56px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+.platformWrap .title1 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 182px;
+  text-align: right;
+  white-space: nowrap;
+}
+.platformWrap .leftItem {
+  background: #141e1e;
+  flex: 1;
+  padding-top: 71px;
+}
+.platformWrap .rightItem {
+  background: #141e1e;
+  width: 620px;
+  padding-top: 71px;
+  padding: 71px 60px 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.platformWrap .content {
+  font-family: San Francisco Display;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-top: 22px;
+}
+.platformWrap .contentBox {
+  display: flex;
+  justify-content: center;
+}
+.platformWrap .contentWrap {
+  display: flex;
+  text-align: left;
+  position: relative;
+  padding-top: 78px;
+}
+.platformWrap .leftContent {
+  width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.platformWrap .leftContent .item1 {
+  margin-bottom: 24px;
+}
+.platformWrap .rightContent {
+  width: 444px;
+}
+.widgetWrap {
+  margin-top: 20px;
+}
+.widgetWrap .bg {
+  width: auto;
+  margin: 0 auto;
+}
+.widgetWrap .itemWrap {
+  padding-top: 80px;
+}
+.variousWrap1 {
+  margin-top: 20px;
+}
+.video1 {
+  width: 596px;
+}
+@media screen and (max-width: 768px) {
+  .variousWrap {
+    height: 210px;
+  }
+  .variousWrap .banner {
+    width: 198px;
+  }
+  .variousWrap .rightR {
+    display: none;
+  }
+  .newLife .title {
+    font-size: 28px;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .newLife .content {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: center;
+    width: 235px;
+    margin-top: 8px;
+  }
+  .bannerWrap .banner {
+    width: 100%;
+    margin-bottom: -36px;
+  }
+  .bannerWrap .listWrap {
+    width: 356px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .bannerWrap .item {
+    width: calc(45%);
+    padding: 27px 19px;
+  }
+  .bannerWrap .item img {
+    width: 36px;
+  }
+  .bannerWrap .item .title {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 16px 0 8px;
+  }
+  .bannerWrap .item .content {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .engineWrap {
+    margin-top: 10px;
+  }
+  .engineWrap .title {
+    padding-top: 40px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .engineWrap .content {
+    font-family: San Francisco Display;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: center;
+    width: 334px;
+    margin-bottom: 40px;
+  }
+  .technologyWrap {
+    padding: 47px auto 50px;
+  }
+  .technologyWrap .title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin-top: 47px;
+    margin-bottom: 20px;
+  }
+  .technologyWrap img {
+    width: 356px;
+  }
+  .AIWrap .item {
+    width: 356px;
+    padding-top: 40px;
+  }
+  .AIWrap .item .title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .AIWrap .item .content {
+    font-family: San Francisco Display;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 10px auto 39px;
+    width: 315px;
+  }
+  .AIWrap .img {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+  }
+  .platformWrap {
+    display: block;
+  }
+  .platformWrap .leftItem {
+    padding-top: 40px;
+    padding-bottom: 24px;
+    margin-bottom: 10px;
+  }
+  .platformWrap .contentWrap {
+    padding-top: 34px;
+    flex-direction: column;
+    width: 310px;
+    margin: 0 auto;
+  }
+  .platformWrap .title1 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding-right: 0;
+    width: 100%;
+  }
+  .platformWrap .leftContent {
+    width: 100%;
+  }
+  .platformWrap .leftContent .item1 {
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  .platformWrap .rightContent {
+    width: 254px;
+    margin: 0 auto;
+  }
+  .platformWrap .rightItem {
+    width: 100%;
+    padding: 40px 0 0;
+  }
+  .platformWrap .title {
+    font-size: 24px;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .platformWrap .content {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: center;
+    width: 324px;
+    margin: 10px auto 20px;
+  }
+  .platformWrap .img1 {
+    width: 260px;
+  }
+  .widgetWrap {
+    margin-top: 10px;
+  }
+  .widgetWrap .itemWrap {
+    padding-top: 0;
+  }
+  .widgetWrap .item {
+    margin: 10px auto 20px;
+  }
+  .widgetWrap .bg {
+    width: 100%;
+    padding-top: 150px;
+  }
+  .play {
+    width: 64px;
+    margin-top: 28px;
+  }
+  .absoluteWrap1 {
+    align-items: start;
+  }
+  .newLife1 .title {
+    padding-top: 64px;
+    width: 265px;
+    font-size: 24px;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .newLife1 .content {
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 20px auto 0;
+  }
+  .variousWrap1 {
+    height: auto;
+  }
+  .abVideo .videoWrap {
+    width: 95%;
+  }
+  .abVideo .videoWrap .close {
+    right: 0;
+    top: -24px;
+    font-size: 20px;
+  }
+  .historyFlexWrap {
+    width: 100%;
+    flex-direction: column;
+    margin: 10px auto;
+  }
+  .historyFlexWrap .left {
+    width: 356px;
+    margin: 0 auto;
+  }
+  .historyFlexWrap .title {
+    width: 190px;
+    text-align: left;
+  }
+  .historyFlexWrap .content {
+    margin: 10px 0 40px;
+    width: 280px;
+    font-family: San Francisco Display;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .historyFlexWrap .video1 {
+    width: 356px;
+    margin: 0 auto;
+    display: block;
+  }
+  .flexWrap1 {
+    width: 356px;
+    margin: 0 auto;
+    gap: 6px;
+  }
+  .flexWrap1 img {
+    width: 172px;
+  }
+}

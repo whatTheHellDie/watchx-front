@@ -1,0 +1,339 @@
+@import '../../mixin.module.less';
+.wrap {
+  width: 1200px;
+  margin: 0 auto;
+}
+.orderTitle {
+  font-family: San Francisco Display1;
+  font-size: 60px;
+  font-weight: 500;
+  line-height: 60px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 70px;
+}
+.between {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 68px;
+}
+.left {
+  font-family: San Francisco Display1;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 40px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.itemUl {
+  padding-top: 24px;
+}
+.itemLi {
+  display: flex;
+  justify-content: space-between;
+  .name1 {
+    font-family: San Francisco Display;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 12px;
+    color: #c3c3c3;
+  }
+}
+.total {
+  border-top: 1px solid #727272;
+  border-bottom: 1px solid #727272;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  height: 100px;
+}
+.totalPrice {
+  font-family: San Francisco Display1;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 40px;
+  letter-spacing: 0em;
+  text-align: right;
+}
+.twitterWrap {
+  margin-top: 68px;
+}
+.twitterTip {
+  font-family: San Francisco Display;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #c3c3c3;
+  margin-bottom: 24px;
+}
+.xConnect {
+  background: #26c6da;
+  width: 280px;
+  height: 86px;
+  border-radius: 20px;
+  font-family: San Francisco Display;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: 0em;
+  color: #fff;
+  .flexCenter();
+  cursor: pointer;
+  margin-bottom: 56px;
+  img {
+    margin-right: 24px;
+  }
+}
+.select {
+  width: 100%;
+  height: 86px;
+  border: none !important;
+  background: #141e1e;
+  color: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+
+  .dec {
+    display: block;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 34px;
+    top: 34px;
+    pointer-events: none;
+  }
+}
+.inputWrap {
+  margin-top: 68px;
+}
+.input {
+  width: 100%;
+  width: 100%;
+  height: 86px;
+  background: #141e1e;
+  color: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  outline: none;
+  border: none;
+  font-size: 32px;
+  line-height: 32px;
+  padding: 0 32px;
+}
+.email {
+  font-family: San Francisco Display;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  display: flex;
+  margin-top: 18px;
+}
+.radio {
+  width: 25px;
+  height: 25px;
+  border: 1px solid #26c6da;
+  cursor: pointer;
+  margin-right: 12px;
+  &.active {
+    background: url(../../assets/upload/checked.png);
+  }
+}
+.deliveryWrap {
+  margin-top: 68px;
+}
+.placeholder {
+  color: #727272;
+}
+.select1 {
+  margin-bottom: 24px;
+}
+.twoColumn {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  .input {
+    margin-bottom: 24px;
+  }
+}
+.credit {
+  font-size: 40px;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.connectBtn {
+  width: 320px;
+  height: 86px;
+
+  border-radius: 20px;
+  font-family: San Francisco Display;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
+  .flexCenter();
+  background: #26c6da;
+  cursor: pointer;
+}
+.payBtn {
+  width: 1200px;
+  height: 86px;
+  font-family: San Francisco Display;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 40px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin-top: 129px;
+  margin-bottom: 103px;
+}
+@media screen and (max-width: 768px) {
+  .wrap {
+    width: 350px;
+  }
+  .orderTitle {
+    margin-top: 8px;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 26px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .between {
+    margin-top: 14px;
+  }
+  .left {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+
+  .itemLi {
+    .name1 {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      letter-spacing: 0em;
+      text-align: left;
+      margin-bottom: 6px;
+    }
+  }
+  .total {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    height: 44px;
+  }
+  .totalPrice {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: right;
+  }
+  .twitterWrap {
+    margin-top: 20px;
+  }
+  .twitterTip {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 14px;
+  }
+  .xConnect {
+    width: 127px;
+    height: 36px;
+
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 20px;
+    img {
+      width: 16px;
+      margin-right: 9px;
+    }
+  }
+  .select {
+    height: 46px;
+    .dec {
+      width: 14px;
+      top: 19px;
+      right: 19px;
+    }
+  }
+  .inputWrap {
+    margin-top: 20px;
+  }
+  .input {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    height: 46px;
+  }
+  .email {
+    margin-top: 7px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .radio {
+    width: 13px;
+    height: 13px;
+    box-sizing: border-box;
+    &.active {
+      background: url(../..//assets/upload/checkedPhone.png);
+    }
+  }
+  .deliveryWrap {
+    margin-top: 20px;
+  }
+  .select1 {
+    margin-bottom: 10px;
+  }
+  .twoColumn {
+    gap: 10px;
+    .input {
+      margin-bottom: 10px;
+    }
+  }
+  .credit {
+    margin-bottom: 10px;
+  }
+  .connectBtn {
+    width: 146px;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .payBtn {
+    width: 100%;
+    margin: 40px 0;
+  }
+}

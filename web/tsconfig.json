@@ -4,7 +4,10 @@
     "allowJs": false,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
-    "strict": true
+    "strict": true,
+    // 支持导入 .less 文件
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
   },
   "files": [],
   "include": [],

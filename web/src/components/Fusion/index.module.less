@@ -1,0 +1,373 @@
+@import '../../mixin.module.less';
+
+.bannerWrap {
+  position: relative;
+}
+.banner {
+  width: 100%;
+}
+.newLife {
+  color: #fff;
+  word-break: break-word;
+  text-align: center;
+  padding: 125px 0 0;
+  .title {
+    font-family: San Francisco Display1;
+    font-size: 56px;
+    line-height: 56px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .content {
+    font-family: San Francisco Display;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0em;
+    text-align: center;
+    width: 800px;
+    margin: 0 auto;
+    padding-bottom: 142px;
+  }
+}
+.decorate {
+  width: 100%;
+  display: block;
+}
+.fourWatch {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  img {
+    width: 25%;
+    display: block;
+    flex: 1;
+    margin-right: 26px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+.fourWatch1 {
+  gap: 24px;
+}
+.twoImg {
+  display: flex;
+  img {
+    display: block;
+    width: 50%;
+  }
+}
+
+.newLife1 {
+  background: transparent;
+  padding-top: 100px;
+}
+
+.flexEnd {
+  display: flex;
+  justify-content: end;
+  position: relative;
+}
+.flexStart {
+  justify-content: start;
+}
+.newLife2 {
+  background: transparent;
+  padding-top: 228px;
+  .content {
+    padding-bottom: 6px;
+  }
+}
+
+.newLife3 {
+  padding-top: 70px;
+  .content {
+    padding-bottom: 70px;
+  }
+}
+
+.variousWrap {
+  position: relative;
+  margin-top: 199px;
+}
+.absoluteWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  .flexCenter();
+}
+.wareTitle {
+  color: #ff1400;
+  font-family: San Francisco Display1;
+  font-size: 32px;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+.newLife5 {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  .title,
+  .content {
+    text-align: right;
+  }
+  .title {
+    width: 338px;
+  }
+  .content {
+    width: 484px;
+  }
+}
+.banner11 {
+  display: block;
+  margin: 0 auto;
+}
+.params {
+  width: 1200px;
+  padding-top: 160px;
+  margin: 0 auto;
+  .paramsTitle {
+    font-family: San Francisco Display1;
+    font-size: 80px;
+    line-height: 84px;
+    letter-spacing: 0em;
+    text-align: center;
+    padding-bottom: 69px;
+  }
+  .paramsWrap {
+  }
+  .basicTitle {
+    background: #3b3b3b;
+    height: 88px;
+    padding-left: 47px;
+    font-family: San Francisco Display;
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 42px;
+    letter-spacing: 0em;
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+  .basicWrap {
+    display: flex;
+  }
+  .basicLeft {
+    width: 382px;
+    box-sizing: border-box;
+    padding-right: 57px;
+    font-family: San Francisco Display;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0em;
+    min-height: 83px;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    justify-content: end;
+  }
+  .basicRight {
+    width: 818px;
+    border-right: none;
+    justify-content: start;
+    padding: 0 0 0 70px;
+  }
+}
+.fw12 {
+  margin-top: 150px;
+}
+@media screen and (max-width: 1620px) {
+  .flexEnd {
+    .img {
+      width: 1300px;
+    }
+  }
+}
+@media screen and (max-width: 1350px) {
+  .flexEnd {
+    .img {
+      width: 1100px;
+    }
+  }
+  .leftImg {
+    width: 443px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .newLife {
+    padding-top: 30px;
+    .title {
+      font-size: 22px;
+      line-height: 25px;
+      width: 350px;
+      margin: 0 auto 10px;
+    }
+    .content {
+      font-size: 14px;
+      width: 334px;
+      line-height: 22px;
+      line-height: 16px;
+      padding-bottom: 46px;
+    }
+  }
+
+  .gif1 {
+    width: 350px;
+    margin: 0 auto;
+    height: auto;
+  }
+  .newLife1 {
+    .content {
+      padding-bottom: 20px;
+    }
+  }
+  .gifWrap {
+    width: 350px;
+    margin: 0 auto;
+    flex-direction: column;
+    .gifContent {
+      width: 350px;
+      margin: 30px auto 0;
+      .title {
+        font-size: 22px;
+        font-weight: 500;
+        line-height: 25px;
+        letter-spacing: 0em;
+        text-align: center;
+      }
+      .content {
+        font-family: San Francisco Display;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16px;
+        letter-spacing: 0em;
+        text-align: center;
+        padding-bottom: 20px;
+      }
+    }
+    .gif2 {
+      width: 350px;
+      height: auto;
+    }
+    .gif4 {
+      width: 350px;
+      height: auto;
+    }
+  }
+  .gifWrap1 {
+    flex-direction: column-reverse;
+  }
+  .variousWrap {
+    .newLife {
+      padding-top: 10px;
+    }
+  }
+  .banner4 {
+    width: 350px;
+    margin: 0 auto;
+  }
+
+  .wareTitle {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .variousWrapDeep .banner {
+    min-height: 180px;
+  }
+
+  .params {
+    width: 350px;
+    padding-top: 10px;
+    .paramsTitle {
+      padding-bottom: 6px;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 38px;
+      letter-spacing: 0em;
+      text-align: center;
+    }
+    .basicTitle {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 11px;
+      letter-spacing: 0em;
+      text-align: left;
+      height: 25px;
+      padding-left: 14px;
+    }
+    .basicLeft {
+      padding-right: 10px;
+      min-height: 24px;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 18px;
+      letter-spacing: 0em;
+      text-align: right;
+    }
+    .basicRight {
+      padding-left: 15px;
+      text-align: left;
+    }
+  }
+  .fourWatch {
+    flex-wrap: wrap;
+    gap: 10px;
+    img {
+      width: calc(50% - 10px);
+      margin-right: 0;
+    }
+  }
+  .flexEnd {
+    .img {
+      width: 350px;
+    }
+  }
+  .variousWrap {
+    margin-top: 20px;
+  }
+  .newLife5 {
+    .title {
+      width: 157px;
+      margin: 0 0 10px;
+    }
+    .content {
+      width: 180px;
+    }
+  }
+  .leftImg {
+    width: auto;
+    img {
+      width: 131px;
+    }
+  }
+  .banner11 {
+    width: 250px;
+  }
+  .fourWatch1 {
+    flex-wrap: nowrap;
+    gap: 8px;
+    img {
+      width: calc(33% - 4px);
+    }
+  }
+  .fw8 {
+    width: 336px;
+  }
+  .twoImg {
+    flex-direction: column-reverse;
+    img {
+      width: 100%;
+    }
+  }
+  .fw12 {
+    margin: 0;
+    width: 100%;
+  }
+}

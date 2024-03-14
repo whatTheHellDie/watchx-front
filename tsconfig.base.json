@@ -15,8 +15,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@solana-wallet/anchor": ["anchor/src/index.ts"]
+      "@solana-wallet/anchor": ["anchor/src/index.ts"],
+      "@/*": [
+        "src/*"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["node_modules", "tmp"],
+  "include": [
+    "typings.d.ts"
+  ],
 }

@@ -1,0 +1,177 @@
+.wrap {
+  position: relative;
+  background: #141e1e;
+  padding: 54px 0 0;
+  margin-top: 12px;
+}
+.relative {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titleWrap {
+  color: #fff;
+
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 48px;
+  width: 872px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.title {
+  font-size: 56px;
+  font-family: 'San Francisco Display1';
+  font-weight: 600;
+}
+.render {
+  color: #26c6da;
+}
+.content {
+  color: #fff;
+
+  font-family: 'San Francisco Display';
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 32px; /* 136.364% */
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+.btn {
+  border: 1px solid #26c6da;
+  color: #26c6da;
+
+  text-align: center;
+  font-family: 'San Francisco Display';
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 75% */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 200px;
+  height: 44px;
+
+  border-radius: 10px;
+
+  &:hover {
+    background: #26c6da;
+    color: #fff;
+    font-weight: 600;
+  }
+}
+
+.flexWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 29px;
+}
+.introWrap {
+  position: relative;
+  display: inline-block;
+}
+.watchImg {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  display: block;
+  padding: 0 0;
+}
+.img {
+  position: absolute;
+}
+.img1 {
+  top: -38px;
+  right: -36px;
+}
+.img2 {
+  top: 109px;
+  right: -71px;
+}
+.rect {
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  margin-left: -264px;
+}
+.moreWrap {
+  display: flex;
+  gap: 24px;
+}
+.phoneImg {
+  display: none;
+}
+@media screen and(max-width:768px) {
+  .wrap {
+    padding-top: 50px;
+  }
+  .titleWrap {
+    font-size: 20px;
+    width: auto;
+    margin-right: 0;
+    margin-left: 0;
+    text-align: center;
+  }
+  .title {
+    width: auto;
+    font-size: 28px;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .content {
+    margin: 8px 0 14px;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0em;
+    text-align: center;
+    width: 334px;
+    line-height: 16px;
+  }
+  .flexWrap {
+    margin-top: 0;
+  }
+  .introWrap {
+    width: 350px;
+    margin: 0 auto;
+  }
+  .watchImg {
+    padding-top: 0;
+    display: none;
+  }
+  .watchList {
+    width: 350px;
+    margin: 0 auto;
+    gap: 10px;
+    padding-top: 20px;
+  }
+  .watchItem {
+    padding: 14px;
+    border-radius: 30px;
+  }
+  .img1 {
+    width: 36px;
+    top: 33px;
+    left: 179px;
+  }
+  .img2 {
+    width: 36px;
+    top: 78.5px;
+    left: 226px;
+  }
+  .phoneImg {
+    display: block;
+    width: 100%;
+    padding-top: 97px;
+  }
+}

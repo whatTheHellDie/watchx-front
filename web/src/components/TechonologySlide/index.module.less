@@ -1,0 +1,112 @@
+@import '../../mixin.module.less';
+.slideOut {
+  padding: 80px 0 61px;
+}
+.item {
+  width: 620px;
+}
+.title {
+  font-family: San Francisco Display1;
+  font-size: 56px;
+  font-weight: 600;
+  line-height: 56px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.content {
+  font-family: San Francisco Display;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin: 11px 0 60px;
+}
+.slideWrap {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 50px 0;
+  position: relative;
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.decorateReverse {
+  transform: rotate(180deg);
+  margin: 0 auto;
+  display: block;
+  width: 100%;
+  position: relative;
+  top: 1px;
+}
+.decorate {
+  margin: 0 auto;
+  display: block;
+  width: 100%;
+}
+
+.btn {
+  position: absolute;
+  margin: 0 22px;
+  left: 29px;
+  bottom: 273px;
+}
+.btn1 {
+  left: auto;
+  right: 29px;
+}
+.img1 {
+  cursor: pointer;
+  &.active {
+    opacity: 0.5;
+  }
+}
+.img2 {
+  transform: rotate(180deg);
+}
+
+@media screen and (max-width: 768px) {
+  .slideOut {
+    padding: 0;
+  }
+  .slideWrap {
+    padding-top: 50px;
+    padding-bottom: 32px;
+    width: 100%;
+    .img1 {
+      width: 8px;
+    }
+    .wrap {
+      width: 100%;
+    }
+  }
+  .item {
+    width: 315px;
+    margin: 0 auto;
+  }
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .content {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+  .btn {
+    bottom: 113px;
+    margin: 0;
+    left: 9px;
+  }
+  .btn1 {
+    left: auto;
+    right: 9px;
+  }
+}
