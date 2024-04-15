@@ -4,6 +4,16 @@
 <head>
   <meta charset="utf-8" />
   <title>WatchX</title>
+  <script>
+    const currentUrl = window.location.href;
+
+    // 判断当前 URL 是否需要跳转到另一个网站
+    if (currentUrl.includes('watchx.pro')) {
+      // 如果当前 URL 包含 'example.com'，则跳转到另一个网站
+      window.location.href = 'https://watchx.network/';
+    }
+
+  </script>
   <base href="/" />
   <meta name="viewport"
     content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
@@ -13,5 +23,6 @@
 <body>
   <div id="root"></div>
 </body>
+
 
 </html>

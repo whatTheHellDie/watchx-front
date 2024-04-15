@@ -5,17 +5,41 @@
 }
 .slideWrap {
   width: 600px;
-  margin: 0 auto;
   padding: 50px 0;
+
   img {
     display: block;
     margin: 0 auto;
   }
 }
+.slideOut {
+  &.active {
+    display: block;
+    position: fixed;
+    top: 184px;
+    left: 0;
+    width: 100%;
+    .slideWrapUp {
+      width: 1200px;
+      margin: -100px auto;
+    }
+  }
+  &.active1 {
+    position: absolute;
+    top: auto;
+    bottom: 87px;
+  }
+}
+.slideWrap1 {
+  display: none;
+  &.active {
+    display: block;
+  }
+}
 .rightWrap {
   width: 600px;
-  height: 776px;
-  overflow: auto;
+  position: relative;
+  z-index: 2;
 }
 .rightWrapInner {
   width: 534px;
@@ -210,6 +234,36 @@
   margin: 80px 6px 0;
   cursor: pointer;
 }
+.watchList {
+  padding: 0 0 0;
+  width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  .watchTitle {
+    font-family: San Francisco Display1;
+    font-size: 80px;
+    font-weight: 500;
+    line-height: 84px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .watchTitle1Wrap {
+    position: fixed;
+    z-index: 3;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    background: #000;
+    display: none;
+    &.active {
+      display: block;
+    }
+    .watchTitle1 {
+      width: 1200px;
+      margin: 0 auto;
+    }
+  }
+}
 @media screen and (max-width: 768px) {
   .slideWrap {
     width: 350px;
@@ -330,5 +384,15 @@
   }
   .rightWrapInner {
     width: 100%;
+  }
+  .watchList {
+    width: 350px;
+    .watchTitle {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: 0em;
+    }
   }
 }

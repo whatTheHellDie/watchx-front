@@ -5,16 +5,16 @@ import { ReactComponent as Join3Svg } from '@/assets/svg/join3.svg';
 import { ReactComponent as Join4Svg } from '@/assets/svg/join4.svg';
 import { CSSTransition } from 'react-transition-group';
 import useIsElementInViewport from '../components/useIsElementInViewport';
+import { useState } from 'react';
 
 const button = {
-  height: { md: '35px', xs: '38px' },
+  height: { md: '35px', xs: '12px' },
   display: 'flex',
   alignItems: 'center',
-  borderRadius: '14px',
   fontSize: { md: 18, xs: 12 },
   whiteSpace: 'nowrap',
 
-  color: '#9E9E9E',
+  color: '#808080',
   fontWeight: 700,
   lineHeight: { md: '28.57px', xs: '24px' },
   wordWrap: 'break-word',
@@ -23,59 +23,75 @@ const urlList = [
   {
     name: 'Docs',
     inner: [
-      { name: 'Guide', url: '#' },
-      { name: 'Whitepaper ', url: '#' },
+      {
+        name: 'litepaper ',
+        url: 'https://watchxnetwork.gitbook.io/watchx/',
+      },
       { name: 'Github', url: '#' },
     ],
   },
   {
     name: 'Community',
     inner: [
-      { name: 'Discord', url: '#' },
-      { name: 'X(Twitter) ', url: '#' },
-      { name: 'Telegram', url: '#' },
-      { name: 'Medium', url: '#' },
+      { name: 'Discord', url: 'https://discord.gg/heNbWZyhhJ' },
+      { name: 'X(Twitter) ', url: 'https://x.com/watchxlife' },
+      { name: 'Telegram', url: 'https://t.me/watchxofficial' },
+      { name: 'Medium', url: 'https://medium.com/@watchxnetwork' },
     ],
   },
   {
     name: 'Support',
     inner: [
-      { name: 'Returns', url: '#' },
-      { name: 'Warranty', url: '#' },
-      { name: 'Privacy Policy', url: '#' },
-      { name: 'Deposit Agreement', url: '#' },
+      { name: 'Privacy Policy', url: '/assets/upload/PrivacyPolicy.pdf' },
     ],
   },
 ];
 const styles = {
   listWrap: {
     color: '#fff',
-    display: 'flex',
+    display: { md: 'flex', xs: 'block' },
     justifyContent: { md: 'space-around', xs: 'space-between' },
     flexWrap: { xs: 'wrap', md: 'nowrap' },
     paddingTop: '25px',
   },
   item: {
-    width: { md: '154px', xs: '46%' },
-    fontSize: { md: '20px', xs: 14 },
+    width: { md: '154px', xs: '100%' },
+    fontSize: { md: '20px', xs: 16 },
 
-    mb: { xs: '30px', md: 0 },
+    mb: { xs: '0', md: 0 },
+    '&.active': {
+      img: { transform: 'rotate(180deg)' },
+      '.activeBoxLast': { borderBottom: 'none' },
+      '.activeBox': { display: 'block' },
+    },
+    '.activeBox': { display: { xs: 'none', md: 'block' } },
   },
   listName: {
-    padding: '0 0 11px',
+    padding: { md: '0 0 11px', xs: '0' },
+    height: { xs: '32px', md: 'auto' },
+    alignItems: { xs: 'center' },
+    display: { xs: 'flex', md: 'block' },
+    justifyContent: 'space-between',
+    borderBottom: { xs: '1px solid #808080', md: 'none' },
+
+    img: {
+      display: { md: 'none' },
+      mr: '5px',
+    },
     '&::after': {
       content: '""',
       width: '19px',
       height: '2px',
       background: '#26C6DA',
-      display: 'block',
+      display: { md: 'block', xs: 'none' },
     },
   },
   name: {
-    color: '#9E9E9E',
+    color: '#c3c3c3',
     lineHeight: { md: '20px', xs: '20px' },
     mb: '12px',
     fontSize: { md: '20px', xs: 12 },
+    ml: { xs: '6px', md: '0' },
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -86,7 +102,7 @@ const styles = {
   },
   logoTitleWrap: {
     borderTop: { xs: '1px solid #4d4d4d', md: 'none' },
-    display: 'flex',
+    display: { md: 'flex', xs: 'none' },
     alignItems: { md: 'center', xs: 'start' },
     color: '#fff',
     marginRight: { md: '165px', xs: 'auto' },
@@ -97,12 +113,14 @@ const styles = {
     pt: { md: 0, xs: '10px' },
     fontSize: { md: '18px', xs: '12px' },
     width: { md: '320px', xs: 'auto' },
+    display: { md: 'block', xs: 'none' },
   },
 };
 export const Footer = () => {
   const [elementRef, isElementVisible] = useIsElementInViewport();
   const [elementRef1, isElementVisible1] = useIsElementInViewport();
   const [elementRef2, isElementVisible2] = useIsElementInViewport();
+  const [activeIndex, setActiveIndex] = useState<any>(null);
   return (
     <Box>
       <Box
@@ -118,7 +136,7 @@ export const Footer = () => {
           a: {
             display: 'block',
           },
-          borderRadius: '30px',
+          borderRadius: { md: '30px' },
           '.fly1': {
             position: 'absolute',
             top: { md: '236px', xs: '15px' },
@@ -146,6 +164,7 @@ export const Footer = () => {
             flexDirection: { xs: 'column-reverse', md: 'row' },
 
             '.footerImg': {
+              display: { md: 'flex', xs: 'none' },
               width: { xs: '120px', md: 'auto' },
             },
           }}
@@ -162,17 +181,31 @@ export const Footer = () => {
             </Box>
           </Box>
           <Box sx={styles.listWrap}>
-            {urlList.map((item) => {
+            {urlList.map((item, i) => {
               return (
-                <Box sx={styles.item} key={item.name}>
-                  <Box sx={styles.listName}>{item.name}</Box>
-                  {item.inner.map((itemx: any) => {
-                    return (
-                      <a href={itemx.url} key={itemx.name}>
-                        <Box sx={styles.name}>{itemx.name}</Box>
-                      </a>
-                    );
-                  })}
+                <Box
+                  sx={styles.item}
+                  key={item.name}
+                  onClick={() => {
+                    setActiveIndex(i);
+                  }}
+                  className={activeIndex === i ? 'active' : ''}
+                >
+                  <Box sx={styles.listName} className="activeBoxLast">
+                    {item.name}
+                    <div>
+                      <img src="/assets/upload/downSelect1.png" alt="" />
+                    </div>
+                  </Box>
+                  <Box className="activeBox">
+                    {item.inner.map((itemx: any) => {
+                      return (
+                        <a href={itemx.url} key={itemx.name} target="_blank">
+                          <Box sx={styles.name}>{itemx.name} </Box>
+                        </a>
+                      );
+                    })}
+                  </Box>
                 </Box>
               );
             })}
@@ -181,13 +214,11 @@ export const Footer = () => {
 
         <Box
           sx={{
-            display: { md: 'flex', xs: 'block' },
+            display: { xs: 'flex' },
             justifyContent: 'space-between',
-            padding: { md: '60px 80px 0 0', xs: 0 },
-            alignItems: 'center',
-            position: { xs: 'absolute', md: 'static' },
-            bottom: '-18px',
-            left: '119px',
+            padding: { md: '60px 80px 0 0', xs: '40px 0 0' },
+            alignItems: { md: 'center' },
+            flexDirection: { xs: 'column-reverse', md: 'unset' },
           }}
         >
           <Box
@@ -223,14 +254,14 @@ export const Footer = () => {
               >
                 <Box
                   sx={{
-                    p: { xs: '0 0 25px', md: '26px 0 ' },
+                    p: { xs: '0 0 10px', md: '26px 0 ' },
                     textAlign: 'center',
                     display: { xs: 'flex', md: '' },
-                    justifyContent: { xs: 'space-between', md: 'auto' },
+                    justifyContent: { xs: 'auto', md: 'auto' },
                     gap: { md: '50px', xs: '7.5px' },
                   }}
                 >
-                  <a href="#" target="_blank">
+                  <a href="https://discord.gg/heNbWZyhhJ" target="_blank">
                     <img
                       src="/assets/upload/v1.png"
                       onMouseEnter={(event: any) => {
@@ -242,7 +273,7 @@ export const Footer = () => {
                       className="joinSvg"
                     />
                   </a>
-                  <a href="#" target="_blank">
+                  <a href="https://x.com/watchxlife" target="_blank">
                     <img
                       src="/assets/upload/v2.png"
                       onMouseEnter={(event: any) => {
@@ -254,7 +285,7 @@ export const Footer = () => {
                       className="joinSvg"
                     />
                   </a>
-                  <a target="_blank" href="#">
+                  <a target="_blank" href="https://t.me/watchxofficial">
                     <img
                       src="/assets/upload/v3.png"
                       onMouseEnter={(event: any) => {
@@ -266,7 +297,7 @@ export const Footer = () => {
                       className="joinSvg"
                     />
                   </a>
-                  <a target="_blank">
+                  <a target="_blank" href="https://medium.com/@watchxnetwork">
                     <img
                       src="/assets/upload/v4.png"
                       onMouseEnter={(event: any) => {

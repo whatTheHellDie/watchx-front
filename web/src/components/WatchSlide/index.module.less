@@ -4,12 +4,26 @@
   margin: 0 auto;
   background: #49422a;
   padding: 50px 0;
-  img {
-    display: block;
-    margin: 0 auto;
+}
+.slideContent {
+  width: 1200px;
+  margin: 0 auto;
+}
+.wrap {
+  margin-right: 24px;
+}
+.slideInner {
+  width: 2484px;
+  position: relative;
+  left: 0;
+  transition: all 1.5s ease;
+  &.active {
+    left: -924px;
+  }
+  &.active1 {
+    left: -1284px;
   }
 }
-
 .decorateReverse {
   transform: rotate(180deg);
   margin: 0 auto;
@@ -50,8 +64,20 @@
   .slideWrap .img1 {
     width: 24px;
   }
+  .slideContent {
+    width: 350px;
+  }
+  .slideInner {
+    &.active {
+      left: -316px;
+    }
+    &.active1 {
+      left: -498px;
+    }
+  }
   .wrap {
     width: 306px;
+    margin-right: 10px;
   }
   .wrap1 {
     width: 216px;

@@ -41,45 +41,47 @@ export default function Technology() {
             <img src="/assets/upload/ai1.png" alt="" />
             <div className={styles.title}>AI Application Engine</div>
             <div className={styles.content}>
-              AI large models enhance privacy by processing data using
+              AI vertical models enhance privacy by processing data using
               techniques like deep learning, making sensitive Organism vital
               characteristics data information challenging to identify.
             </div>
           </div>
           <div className={styles.item}>
             <img src="/assets/upload/ai2.png" alt="" />
-            <div className={styles.title}>AI Application Engine</div>
+            <div className={styles.title}>Data Ownership</div>
             <div className={styles.content}>
-              AI large models enhance privacy by processing data using
-              techniques like deep learning, making sensitive Organism vital
-              characteristics data information challenging to identify.
+              Traditional data platforms often lack transparency, and users
+              often do not have control over their personal data. allows
+              individuals to have control over their data, giving access to
+              monetize it.
             </div>
           </div>
           <div className={styles.item}>
             <img src="/assets/upload/ai3.png" alt="" />
-            <div className={styles.title}>AI Application Engine</div>
+            <div className={styles.title}>Zk-based Data Layer</div>
             <div className={styles.content}>
-              AI large models enhance privacy by processing data using
-              techniques like deep learning, making sensitive Organism vital
-              characteristics data information challenging to identify.
+              Provide security and user anonymity using zero-knowledge proof and
+              blockchain technology. Proving the authenticity of information
+              without revealing specifics.
             </div>
           </div>
           <div className={styles.item}>
             <img src="/assets/upload/ai4.png" alt="" />
-            <div className={styles.title}>AI Application Engine</div>
+            <div className={styles.title}>Algorithm Market</div>
             <div className={styles.content}>
-              AI large models enhance privacy by processing data using
-              techniques like deep learning, making sensitive Organism vital
-              characteristics data information challenging to identify.
+              An open technology framework that enables collaboration and
+              integration of various health data algorithms. Different algorithm
+              providers can share and communicate, fostering innovation and
+              collaboration.
             </div>
           </div>
         </div>
       </div>
       <div className={styles.engineWrap}>
-        <div className={styles.title}>Health Large Model Engine</div>
+        <div className={styles.title}>Health Vertical Model Engine</div>
         <div className={styles.content}>
-          Large models enhance privacy by processing datausing techniques like
-          deep learning, making sensitivOrganism vital characteristics data
+          Vertical models enhance privacy by processing datausing techniques
+          like deep learning, making sensitivOrganism vital characteristics data
           informationchallenging to identify.
         </div>
         <img src="/assets/upload/hand.png" alt="" className={styles.img} />
@@ -111,7 +113,7 @@ export default function Technology() {
           <div className={styles.item}>
             <div className={styles.title}>AI Expert Consultation</div>
             <div className={styles.content}>
-              Based on MoE large-scale model technology in medical and health
+              Based on iMLite vertical models technology in medical and health
               fields, it provides users with convenient medical consultation and
               diagnostic advice.
             </div>
@@ -280,7 +282,7 @@ export default function Technology() {
                 // ref={videoRef}
                 className={styles.video1}
                 ref={videoRef1}
-                src="./assets/media/Production.mp4"
+                src="./assets/media/watchx_production.mp4"
                 controls
                 controlsList="nodownload noplaybackrate"
               >
@@ -338,7 +340,7 @@ export default function Technology() {
           <video
             ref={videoRef}
             className={styles.video}
-            src="./assets/media/laboratory.mp4"
+            src="./assets/media/watchx_laboratory.mp4"
             controls
             controlsList="nodownload noplaybackrate"
           >

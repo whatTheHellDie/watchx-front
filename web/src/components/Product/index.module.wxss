@@ -44,7 +44,6 @@
 }
 .videoWrap .video {
   width: 1200px;
-  height: 650px;
 }
 .newLife1 {
   background: transparent;

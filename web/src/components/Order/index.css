@@ -7,13 +7,30 @@
 }
 .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input {
   color: #fff;
-  font-size: 32px;
-  line-height: 32px;
+  font-size: 14px;
   display: flex;
   align-items: center;
-  padding-left: 31px;
+  padding: 0;
+  padding-left: 16px;
 }
 .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary {
+}
+.wallet-adapter-dropdown,
+.wallet-adapter-button-trigger {
+  width: 100%;
+}
+.wallet-adapter-button-trigger {
+  opacity: 0;
+}
+.wallet-adapter-dropdown-list-active {
+  width: 100%;
+  top: 42px;
+}
+.wallet-adapter-modal-wrapper {
+  background: #141e1e;
+}
+.wallet-adapter-modal-button-close {
+  background: #ffffff1a;
 }
 @media screen and (max-width: 768px) {
   .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input {

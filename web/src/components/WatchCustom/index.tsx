@@ -136,185 +136,261 @@ export default function WatchCustom() {
     });
     __buyTotal(num);
   };
+  const [activeFixed, setActiveFixed] = useState(false);
+  const [activeFixed1, setActiveFixed1] = useState(false);
+  const [activeFixed2, setActiveFixed2] = useState(false);
+  const handleScroll = (e: any) => {
+    // 处理滚动事件
+    const constant = type === 'founder' ? 2325 : 2300;
+    const buyArr = watchInfoArr.filter((item: any) => {
+      return Number(item.num) > 0;
+    });
+    if (window.scrollY > constant) {
+      setActiveFixed(true);
+    } else {
+      setActiveFixed(false);
+    }
+    const constant1 = type === 'founder' ? 2425 : 2400;
+    const arrDistance = buyArr.length * 120;
+    console.log(arrDistance, 'arrDistance');
+    // console.log(window.scrollY);
+    if (
+      window.scrollY > constant1 &&
+      window.scrollY <
+        (type === 'founder' ? 3197 + arrDistance : 3172 + arrDistance)
+    ) {
+      setActiveFixed1(true);
+      setActiveFixed2(false);
+    } else if (
+      window.scrollY >=
+      (type === 'founder' ? 3197 + arrDistance : 3172 + arrDistance)
+    ) {
+      setActiveFixed1(true);
+      setActiveFixed2(true);
+    } else {
+      setActiveFixed1(false);
+      setActiveFixed2(false);
+    }
+  };
+  useEffect(() => {
+    // 添加滚动事件监听器
+    window.addEventListener('scroll', handleScroll);
+  }, []);
   return (
-    <div className={styles.flex}>
-      <div className={`${styles.slideWrap} newSlide`}>
-        <div className="slider-container">
-          <Slider
-            {...settings}
-            ref={(slider: any) => {
-              sliderRef = slider;
-            }}
-          >
-            <div style={{ width: window.innerWidth > 768 ? 120 : 80 }}>
-              <img
-                className={styles.img}
-                src={`/assets/upload/${
-                  type === 'founder' ? 'Founder' : 'Fusion'
-                }1.png`}
-              />
-            </div>
-            <div style={{ width: window.innerWidth > 768 ? 120 : 80 }}>
-              <img
-                className={styles.img}
-                src={`/assets/upload/${
-                  type === 'founder' ? 'Founder' : 'Fusion'
-                }2.png`}
-              />
-            </div>
-            <div style={{ width: window.innerWidth > 768 ? 120 : 80 }}>
-              <img
-                className={styles.img}
-                src={`/assets/upload/${
-                  type === 'founder' ? 'Founder' : 'Fusion'
-                }3.png`}
-              />
-            </div>
-            <div style={{ width: window.innerWidth > 768 ? 120 : 80 }}>
-              <img
-                className={styles.img}
-                src={`/assets/upload/${
-                  type === 'founder' ? 'Founder' : 'Fusion'
-                }4.png`}
-              />
-            </div>
-          </Slider>
-        </div>
+    <div className={styles.watchList}>
+      <div className={`${styles.watchTitle} `}>
+        WatchX {type === 'founder' ? 'Founder' : 'Fusion'}
       </div>
-      <div className={styles.rightWrap}>
-        <div className={styles.rightWrapInner}>
-          <div className={styles.title}>
-            {type === 'founder'
-              ? 'Versatile Solar Sports Watch'
-              : 'Multi-function smart watch'}
-          </div>
-          <div className={styles.desc}>
-            {type === 'founder'
-              ? 'Durable sports watches for extreme sports and outdoors lifestyle.'
-              : 'Enhance your leisure life with a richer experience of sports and health.'}
-          </div>
-          <div className={styles.ul}>
-            {arr.map((item) => {
-              return (
-                <div className={styles.li}>
-                  <div>
-                    <div className={styles.little}></div>
-                  </div>
-                  <div style={{ flex: 1 }}>{item}</div>
-                </div>
-              );
-            })}
-          </div>
-          <div className={styles.title}>Selection / Colors</div>
-          <div className={styles.itemUl}>
-            {watchInfoArr.map((item, i) => {
-              return (
-                <div key={'a' + i} className={`${styles.itemLi} `}>
-                  <div className={styles.flex1}>
-                    <div
-                      className={styles.rect}
-                      style={{ background: item.bg }}
-                    ></div>
-                    <div className={styles.name}>{item.name}</div>
-                  </div>
-                  <div className={styles.priceWrap}>
-                    <div className={styles.price}>${price}</div>
-                    <div className={styles.numberWrap}>
-                      <div className={styles.reduce} onClick={() => reduce(i)}>
-                        -
-                      </div>
-                      <input
-                        type="text"
-                        className={styles.number}
-                        value={item.num}
-                        placeholder="0"
-                        onChange={(event) => {
-                          let value = event.target.value;
-                          // 过滤非数字字符
-                          value = value.replace(/\D/g, '');
-                          inputChange(value, i);
-                        }}
-                      />
-                      <div
-                        className={`${styles.reduce} ${styles.add}`}
-                        onClick={() => add(i)}
-                      >
-                        +
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          <div className={styles.settle}>
-            <div
-              className={styles.settleUl}
-              style={{ display: buyNum > 0 ? 'block' : 'none' }}
-            >
-              {watchInfoArr.map((item, i) => {
-                return (
-                  <div
-                    key={'b' + i}
-                    className={`${styles.itemLi} ${styles.settleLi} ${
-                      !item.num ? styles.active : ''
-                    } ${!(Number(item.num) > 0) ? styles.hide : ''}`}
-                  >
-                    <div className={styles.flex1}>
-                      <div className={styles.settleName}>WatchX Founder</div>
-                      <div className={styles.name1}>{item.name}</div>
-                    </div>
-                    <div className={styles.priceWrap}>
-                      <div className={styles.price}>${price}</div>
-                      <div className={`${styles.name1} ${styles.name2}`}>
-                        x{item.num}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            <div className={styles.total}>
-              <div className={styles.totalName}>Total price</div>
-              <div className={styles.totalPrice}>${buyTotal.toFixed(2)}</div>
-            </div>
-            <div
-              className={styles.buyBtn}
-              onClick={() => {
-                if (buyNum == 0) {
-                  setOpen(true);
-                  return;
-                }
-                const newArr = watchInfoArr.filter((item) => {
-                  return Number(item.num) > 0;
-                });
-                navigate(
-                  `/Order?param=${encodeURIComponent(
-                    JSON.stringify(newArr)
-                  )}&type=${type === 'founder' ? 'founder' : 'fusion'}`
-                );
-              }}
-            >
-              PREORDER NOW
-            </div>
-          </div>
-        </div>
-      </div>
-      <Snackbar
-        open={open}
-        autoHideDuration={3000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      <div
+        className={`${styles.watchTitle1Wrap} ${
+          activeFixed ? styles.active : ''
+        }`}
       >
-        <Alert
-          onClose={handleClose}
-          severity="warning"
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
-          Please select quantity
-        </Alert>
-      </Snackbar>
+        <div className={`${styles.watchTitle} ${styles.watchTitle1}`}>
+          WatchX {type === 'founder' ? 'Founder' : 'Fusion'}
+        </div>
+      </div>
+      <div className={styles.watchContent}>
+        <div className={styles.flex}>
+          <div
+            className={`${styles.slideWrap} ${styles.slideWrap1} ${
+              activeFixed1 ? styles.active : ''
+            }`}
+          ></div>
+          <div
+            className={`${styles.slideOut} ${
+              activeFixed1 ? styles.active : ''
+            } ${activeFixed2 ? styles.active1 : ''}`}
+          >
+            <div className={`${styles.slideWrapUp} `}>
+              <div className={`${styles.slideWrap} newSlide`}>
+                <div className="slider-container">
+                  <Slider
+                    {...settings}
+                    ref={(slider: any) => {
+                      sliderRef = slider;
+                    }}
+                  >
+                    <div style={{ width: window.innerWidth > 768 ? 120 : 80 }}>
+                      <img
+                        className={styles.img}
+                        src={`/assets/upload/${
+                          type === 'founder' ? 'Founder' : 'Fusion'
+                        }1.png`}
+                      />
+                    </div>
+                    <div style={{ width: window.innerWidth > 768 ? 120 : 80 }}>
+                      <img
+                        className={styles.img}
+                        src={`/assets/upload/${
+                          type === 'founder' ? 'Founder' : 'Fusion'
+                        }2.png`}
+                      />
+                    </div>
+                    <div style={{ width: window.innerWidth > 768 ? 120 : 80 }}>
+                      <img
+                        className={styles.img}
+                        src={`/assets/upload/${
+                          type === 'founder' ? 'Founder' : 'Fusion'
+                        }3.png`}
+                      />
+                    </div>
+                    <div style={{ width: window.innerWidth > 768 ? 120 : 80 }}>
+                      <img
+                        className={styles.img}
+                        src={`/assets/upload/${
+                          type === 'founder' ? 'Founder' : 'Fusion'
+                        }4.png`}
+                      />
+                    </div>
+                  </Slider>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.rightWrap}>
+            <div className={styles.rightWrapInner}>
+              <div className={styles.title}>
+                {type === 'founder'
+                  ? 'Versatile Solar Sports Watch'
+                  : 'Multi-function smart watch'}
+              </div>
+              <div className={styles.desc}>
+                {type === 'founder'
+                  ? 'Durable sports watches for extreme sports and outdoors lifestyle.'
+                  : 'Enhance your leisure life with a richer experience of sports and health.'}
+              </div>
+              <div className={styles.ul}>
+                {arr.map((item) => {
+                  return (
+                    <div className={styles.li}>
+                      <div>
+                        <div className={styles.little}></div>
+                      </div>
+                      <div style={{ flex: 1 }}>{item}</div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className={styles.title}>Selection / Colors</div>
+              <div className={styles.itemUl}>
+                {watchInfoArr.map((item, i) => {
+                  return (
+                    <div key={'a' + i} className={`${styles.itemLi} `}>
+                      <div className={styles.flex1}>
+                        <div
+                          className={styles.rect}
+                          style={{ background: item.bg }}
+                        ></div>
+                        <div className={styles.name}>{item.name}</div>
+                      </div>
+                      <div className={styles.priceWrap}>
+                        <div className={styles.price}>${price}</div>
+                        <div className={styles.numberWrap}>
+                          <div
+                            className={styles.reduce}
+                            onClick={() => reduce(i)}
+                          >
+                            -
+                          </div>
+                          <input
+                            type="text"
+                            className={styles.number}
+                            value={item.num}
+                            placeholder="0"
+                            onChange={(event) => {
+                              let value = event.target.value;
+                              // 过滤非数字字符
+                              value = value.replace(/\D/g, '');
+                              inputChange(value, i);
+                            }}
+                          />
+                          <div
+                            className={`${styles.reduce} ${styles.add}`}
+                            onClick={() => add(i)}
+                          >
+                            +
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className={styles.settle}>
+                <div
+                  className={styles.settleUl}
+                  style={{ display: buyNum > 0 ? 'block' : 'none' }}
+                >
+                  {watchInfoArr.map((item, i) => {
+                    return (
+                      <div
+                        key={'b' + i}
+                        className={`${styles.itemLi} ${styles.settleLi} ${
+                          !item.num ? styles.active : ''
+                        } ${!(Number(item.num) > 0) ? styles.hide : ''}`}
+                      >
+                        <div className={styles.flex1}>
+                          <div className={styles.settleName}>
+                            WatchX Founder
+                          </div>
+                          <div className={styles.name1}>{item.name}</div>
+                        </div>
+                        <div className={styles.priceWrap}>
+                          <div className={styles.price}>${price}</div>
+                          <div className={`${styles.name1} ${styles.name2}`}>
+                            x{item.num}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className={styles.total}>
+                  <div className={styles.totalName}>Total price</div>
+                  <div className={styles.totalPrice}>
+                    ${buyTotal.toFixed(2)}
+                  </div>
+                </div>
+                <div
+                  className={styles.buyBtn}
+                  onClick={() => {
+                    if (buyNum == 0) {
+                      setOpen(true);
+                      return;
+                    }
+                    const newArr = watchInfoArr.filter((item) => {
+                      return Number(item.num) > 0;
+                    });
+                    navigate(
+                      `/Order?param=${encodeURIComponent(
+                        JSON.stringify(newArr)
+                      )}&type=${type === 'founder' ? 'founder' : 'fusion'}`
+                    );
+                  }}
+                >
+                  PREORDER NOW
+                </div>
+              </div>
+            </div>
+          </div>
+          <Snackbar
+            open={open}
+            autoHideDuration={3000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          >
+            <Alert
+              onClose={handleClose}
+              severity="warning"
+              variant="filled"
+              sx={{ width: '100%' }}
+            >
+              Please select quantity
+            </Alert>
+          </Snackbar>
+        </div>
+      </div>
     </div>
   );
 }

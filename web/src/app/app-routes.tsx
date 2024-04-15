@@ -7,9 +7,10 @@ import Product from '../components/Product';
 import Technology from '../components/Technology';
 export function AppRoutes() {
   return useRoutes([
-    { index: true, element: <Navigate replace to="/Home" /> },
+    // { index: true, element: <Navigate replace to="/" /> },
     {
-      path: '/Home',
+      index: true,
+      path: '/',
       element: <OverviewPage />,
     },
     {

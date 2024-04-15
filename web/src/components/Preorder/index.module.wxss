@@ -2,10 +2,14 @@
   display: block;
   margin: 40px auto 40px;
 }
+.mainTextWrap {
+  overflow: visible;
+}
 .mainText {
   width: 1000px;
   margin: 0 auto;
   text-align: center;
+  padding-bottom: 136px;
 }
 .hoverText {
   font-family: San Francisco Display1;
@@ -21,7 +25,6 @@
 .orderWrap {
   background: #141e1e;
   padding: 105px;
-  margin-top: 136px;
 }
 .orderWrap .centerText {
   width: 1200px;
@@ -123,6 +126,7 @@
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
+  padding-left: 50px;
 }
 .orderWrap .btnWrap {
   display: flex;
@@ -152,20 +156,16 @@
   color: #fff;
   font-weight: 600;
 }
-.watchList {
-  padding: 152px 0 0;
-  width: 1200px;
-  margin: 0 auto;
-}
-.watchList .watchTitle {
-  font-family: San Francisco Display1;
-  font-size: 80px;
-  font-weight: 500;
-  line-height: 84px;
-  letter-spacing: 0em;
-  text-align: left;
+.minHeight {
+  height: 152px;
 }
 @media screen and (max-width: 768px) {
+  .minHeight {
+    height: 82px;
+  }
+  .phoneHide {
+    display: none;
+  }
   .img {
     width: 270px;
     margin: 0 auto 8px;
@@ -173,6 +173,7 @@
   .mainText {
     width: 350px;
     margin: 0 auto;
+    padding-bottom: 30px;
   }
   .hoverText {
     font-size: 16px;
@@ -182,7 +183,6 @@
     text-align: center;
   }
   .orderWrap {
-    margin-top: 30px;
     padding: 24px 10px 36px;
   }
   .orderWrap .title {
@@ -211,8 +211,8 @@
     width: 100%;
   }
   .orderWrap .founderWrap {
-    margin-top: 30px;
-    margin-left: 0;
+    width: 350px;
+    margin: 30px auto 0;
   }
   .orderWrap .founder {
     margin-bottom: 20px;
@@ -257,6 +257,7 @@
   .orderWrap .desc {
     font-size: 12px;
     line-height: 16px;
+    padding-left: 0;
   }
   .orderWrap .btnWrap {
     padding-top: 20px;
@@ -266,16 +267,5 @@
     width: 110px;
     height: 28px;
     font-size: 14px;
-  }
-  .watchList {
-    padding-top: 82px;
-    width: 350px;
-  }
-  .watchList .watchTitle {
-    text-align: center;
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: 0em;
   }
 }

@@ -13,7 +13,6 @@ import { Footer } from '../footer';
 import BodyWrapper from '../BodyWrapper';
 import { VideoCanvasPlay } from '../videoPlayer';
 import styles from './index.module.less';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 // import bgNew from '@/assets/img/star.png';
 export default function OverviewPage() {
   const [locale, setLocale] = useState(false);
@@ -88,7 +87,7 @@ export default function OverviewPage() {
                 ref={videoRef}
                 loop={true}
                 playsInline
-                src="./assets/media/video1.mp4"
+                src="./assets/media/watchx_home.mp4"
                 controlsList="nodownload noplaybackrate"
               >
                 Your browser does not support the video tag.
@@ -108,7 +107,6 @@ export default function OverviewPage() {
           </Box>
         </Box>
       </Box>
-      {/* <WalletMultiButton /> */}
     </BodyWrapper>
   );
 }

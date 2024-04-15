@@ -96,7 +96,7 @@ export default function OverviewPage() {
         <video
           ref={myElementRef}
           className={styles.video}
-          src="./assets/media/video1.mp4"
+          src="./assets/media/watchx_home.mp4"
           controls
           controlsList="nodownload noplaybackrate"
         >
@@ -220,7 +220,7 @@ export default function OverviewPage() {
           ref={myElementRef1}
           className={styles.video}
           controls
-          src="./assets/media/video2.mp4"
+          src="./assets/media/watchx_mountain.mp4"
           controlsList="nodownload noplaybackrate"
         >
           Your browser does not support the video tag.
@@ -313,7 +313,7 @@ export default function OverviewPage() {
           ref={myElementRef2}
           className={styles.video}
           controls
-          src="./assets/media/video3.mp4"
+          src="./assets/media/watchx_boat.mp4"
           controlsList="nodownload noplaybackrate"
         >
           Your browser does not support the video tag.
