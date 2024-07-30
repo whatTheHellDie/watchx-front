@@ -34,7 +34,7 @@ const urlList = [
     name: 'Community',
     inner: [
       { name: 'Discord', url: 'https://discord.gg/heNbWZyhhJ' },
-      { name: 'X(Twitter) ', url: 'https://x.com/watchxlife' },
+      { name: 'X(Twitter) ', url: 'https://twitter.com/watchxnetwork' },
       { name: 'Telegram', url: 'https://t.me/watchxofficial' },
       { name: 'Medium', url: 'https://medium.com/@watchxnetwork' },
     ],
@@ -273,7 +273,7 @@ export const Footer = () => {
                       className="joinSvg"
                     />
                   </a>
-                  <a href="https://x.com/watchxlife" target="_blank">
+                  <a href="https://twitter.com/watchxnetwork" target="_blank">
                     <img
                       src="/assets/upload/v2.png"
                       onMouseEnter={(event: any) => {

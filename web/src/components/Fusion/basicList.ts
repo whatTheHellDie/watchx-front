@@ -1,7 +1,7 @@
 export const basicList = [
   {
     title: `size`,
-    content: `46.7 x 11.8mm `,
+    content: `46 x 10.8mm `,
   },
   {
     title: `weight`,
@@ -31,7 +31,7 @@ export const basicList = [
   },
   {
     title: `battery capacity`,
-    content: `350mAh`,
+    content: `300mAh`,
   },
 
   {
