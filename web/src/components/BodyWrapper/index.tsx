@@ -16,7 +16,6 @@ export default function BodyWrapper(props: any) {
     <Box
       sx={{
         position: 'relative',
-        backgroundColor: '#000',
         width: '100%',
         overflow: 'hidden',
         minWidth: { md: '1200px' },

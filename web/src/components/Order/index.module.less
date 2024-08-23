@@ -35,7 +35,7 @@
   opacity: 0;
 }
 .orderTitle {
-  font-family: San Francisco Display1;
+  font-family: Barlow Condensed;
   font-size: 32px;
   font-weight: 600;
   line-height: 32px;
@@ -46,9 +46,10 @@
   display: flex;
   justify-content: space-between;
   margin-top: 68px;
+  margin-bottom: 91px;
 }
 .left {
-  font-family: San Francisco Display1;
+  font-family: Barlow Condensed;
   font-size: 18px;
   font-weight: 600;
   line-height: 18px;
@@ -63,7 +64,7 @@
   display: flex;
   justify-content: space-between;
   .name1 {
-    font-family: San Francisco Display;
+    font-family: Barlow Condensed;
     font-size: 16px;
     font-weight: 400;
     line-height: 16px;
@@ -83,7 +84,7 @@
   height: 40px;
 }
 .totalPrice {
-  font-family: San Francisco Display1;
+  font-family: Barlow Condensed;
   font-size: 18px;
   font-weight: 600;
   line-height: 18px;
@@ -94,7 +95,7 @@
   margin-top: 30px;
 }
 .twitterTip {
-  font-family: San Francisco Display;
+  font-family: Barlow Condensed;
   font-size: 14px;
   font-weight: 400;
   line-height: 14px;
@@ -108,7 +109,7 @@
   width: 160px;
   height: 44px;
   border-radius: 10px;
-  font-family: San Francisco Display;
+  font-family: Barlow Condensed;
   font-size: 14px;
   font-weight: 400;
   line-height: 14px;
@@ -145,7 +146,7 @@
   }
 }
 .orderTitle1 {
-  margin-top: 64px;
+  margin-top: 44px;
 }
 .inputWrap {
   margin-top: 30px;
@@ -166,7 +167,7 @@
 }
 
 .email {
-  font-family: San Francisco Display;
+  font-family: Barlow Condensed;
   font-size: 12px;
   font-weight: 400;
   line-height: 12px;
@@ -205,7 +206,7 @@
   }
 }
 .credit {
-  font-family: San Francisco Display;
+  font-family: Barlow Condensed;
   font-size: 18px;
   font-weight: 600;
   line-height: 18px;
@@ -217,7 +218,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: San Francisco Display;
+  font-family: Barlow Condensed;
   font-size: 14px;
   font-weight: 400;
   line-height: 14.04px;
@@ -228,7 +229,7 @@
   height: 44px;
 
   border-radius: 10px;
-  font-family: San Francisco Display;
+  font-family: Barlow Condensed;
   font-size: 14px;
   font-weight: 400;
   line-height: 14px;
@@ -249,15 +250,22 @@
 .payBtn {
   width: 100%;
   height: 44px;
-  font-family: San Francisco Display1;
+  font-family: Modular Amplitude;
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 24px;
-  letter-spacing: 0em;
   text-align: center;
 
   margin-top: 64px;
   margin-bottom: 103px;
+}
+.addressTip {
+  margin-top: 8px;
+  font-family: Barlow Condensed;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 12px;
+  text-align: left;
 }
 @media screen and (max-width: 1200px) {
   .phoneHide {
@@ -265,6 +273,53 @@
   }
   .pcOpacity {
     opacity: 1;
+  }
+}
+.alertContent {
+  padding: 57px 0 87px;
+  .payTitle {
+    display: flex;
+    gap: 16px;
+    font-family: Barlow Condensed;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 32px;
+    text-align: left;
+    justify-content: center;
+  }
+  .status {
+    line-height: 64px;
+  }
+  .priceTip {
+    font-family: Barlow Condensed;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 18px;
+    text-align: left;
+    color: #ffffffb2;
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+  .statusBtn {
+    cursor: pointer;
+    width: 380px;
+    height: 64px;
+    top: 615px;
+    left: 763px;
+    border-radius: 40px;
+    border: 1px solid #00dcff;
+
+    font-family: Modular Amplitude;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    display: flex;
+    align-items: center;
+    margin: 79px auto 0;
+    justify-content: center;
+    gap: 8px;
   }
 }
 @media screen and (max-width: 768px) {
@@ -279,6 +334,7 @@
   .wrapInner {
     width: 350px;
     padding: 0;
+    margin-top: 50px;
   }
   .wrap1 {
     width: 350px;
@@ -299,6 +355,7 @@
   }
   .between {
     margin-top: 14px;
+    margin-bottom: 24px;
   }
   .left {
     font-size: 14px;
@@ -424,5 +481,51 @@
   .payBtn {
     width: 100%;
     margin: 40px 0;
+    height: 44px;
+    font-family: Modular Amplitude;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+  }
+}
+@media screen and (max-width: 768px) {
+  .alertContent {
+    padding: 48px 10px 50px;
+    .payTitle {
+      display: block;
+      text-align: center;
+    }
+    .status {
+      font-family: Barlow Condensed;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 24px;
+      text-align: center;
+      margin-top: 8px;
+    }
+    .priceTip {
+      font-family: Barlow Condensed;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 18px;
+      text-align: center;
+    }
+    .imgWrap {
+      display: flex;
+      justify-content: center;
+    }
+    .statusBtn {
+      width: 280px;
+      height: 44px;
+      font-family: Modular Amplitude;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 18px;
+      text-align: center;
+    }
+    .teleImg {
+      width: 28px;
+    }
   }
 }

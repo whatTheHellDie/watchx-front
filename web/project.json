@@ -28,12 +28,10 @@
           "vendorChunk": true
         },
         "production": {
-          "fileReplacements": [
-            {
-              "replace": "web/src/environments/environment.ts",
-              "with": "web/src/environments/environment.prod.ts"
-            }
-          ],
+          "fileReplacements": [{
+            "replace": "web/src/environments/environment.ts",
+            "with": "web/src/environments/environment.prod.ts"
+          }],
           "optimization": true,
           "outputHashing": "all",
           "sourceMap": false,

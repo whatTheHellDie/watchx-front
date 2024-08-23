@@ -15,7 +15,6 @@ export const MenuListConfig: any[] = [
   ['Product', 'javascript:void(0);'],
   ['Technology', '/Technology'],
   ['Docs', 'https://watchxnetwork.gitbook.io/watchx/', undefined, true],
-  ['Preorder', 'javascript:void(0);'],
 ];
 import styles from './index.module.less';
 
@@ -94,50 +93,6 @@ export default function OverviewMenu({ close }: any) {
                       />
                     </ListItemButton>
                   </a>
-                </List>
-              </Collapse>
-            ) : (
-              ''
-            )}
-            {index === 4 ? (
-              <Collapse in={true} timeout="auto" unmountOnExit>
-                <List
-                  component="div"
-                  disablePadding
-                  className={`${styles.div} ${active1 ? styles.active : ''}`}
-                >
-                  {/* <a href="/Preorder?type=founder"> */}
-                  <ListItemButton
-                    sx={{ padding: 0, color: '#fff' }}
-                    onClick={() => {
-                      dispatch(warning('Open soon'));
-                    }}
-                  >
-                    <ListItemText
-                      primary={'Founder'}
-                      sx={{
-                        pl: '163px',
-                        color: '#fff',
-                      }}
-                    />
-                  </ListItemButton>
-                  {/* </a> */}
-                  {/* <a href="/Preorder?type=fusion"> */}
-                  <ListItemButton
-                    sx={{ padding: 0, color: '#fff' }}
-                    onClick={() => {
-                      dispatch(warning('Open soon'));
-                    }}
-                  >
-                    <ListItemText
-                      primary={'Fusion'}
-                      sx={{
-                        pl: '163px',
-                        color: '#fff',
-                      }}
-                    />
-                  </ListItemButton>
-                  {/* </a> */}
                 </List>
               </Collapse>
             ) : (

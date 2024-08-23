@@ -1,27 +1,32 @@
 .name {
-  padding-left: 7px;
+  padding-left: 9px;
 }
 .btn {
-  height: 48px;
-  width: 160px;
+  width: 206px;
+  height: 40px;
+
   text-transform: unset;
-  border: 1px solid #26c6da;
-  color: #26c6da;
+  border: 2px solid #00dcff;
+  color: #000000;
   font-weight: 600;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 16px;
-
+  background: #00dcff;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: 18px; /* 100% */
   cursor: pointer;
+  font-family: Barlow Condensed;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+
   &:hover {
-    background: #26c6da;
-    color: #fff;
-    font-weight: 600;
+    background: transparent;
+    color: #00dcff;
   }
 }
 .phoneBtn {
@@ -29,6 +34,34 @@
 }
 .watchBox {
   display: none;
+}
+.navA {
+  height: 100px;
+  font-family: Barlow Condensed;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  position: relative;
+  &::after {
+    content: '';
+    display: none;
+    position: absolute;
+    right: -0px;
+    top: 65px;
+    height: 3px;
+    background: linear-gradient(90deg, #00dcff 0%, #017ef7 100%);
+    width: calc(100% - 18px);
+  }
+  &.active,
+  &:hover {
+    &::after {
+      display: block;
+    }
+  }
 }
 .hoverWrap:hover .watchBox,
 .btn:hover .watchBox {
@@ -83,10 +116,46 @@
     }
   }
 }
+.menuList {
+  display: flex;
+  margin-left: 40px;
+  align-items: center;
+  z-index: 1000;
+  position: absolute;
+  left: 50%;
+  margin-left: -308px;
+  top: 0;
+  .menuListItem {
+    position: relative;
+    margin-right: 74px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
 
 @media screen and(max-width:768px) {
+  .menuList {
+    display: none;
+  }
   .name {
     width: 90px;
+    display: none;
+  }
+  .btn {
+    display: none;
+  }
+  .btn1 {
+    display: flex;
+    border-radius: 40px;
+    width: 160px;
+    height: 30px;
+    font-family: Barlow Condensed;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+    margin-right: 8px;
   }
   .phoneBtn {
     display: flex;

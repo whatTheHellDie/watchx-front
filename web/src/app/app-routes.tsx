@@ -5,6 +5,7 @@ import Fusion from '../components/Fusion';
 import Order from '../components/Order';
 import Product from '../components/Product';
 import Technology from '../components/Technology';
+import FutureNFT from '../components/FutureNFT';
 export function AppRoutes() {
   return useRoutes([
     // { index: true, element: <Navigate replace to="/" /> },
@@ -15,8 +16,12 @@ export function AppRoutes() {
     },
     {
       path: '/Preorder',
-      element: <Preorder />,
+      element: <FutureNFT />,
     },
+    // {
+    //   path: '/Preorder',
+    //   element: <Preorder />,
+    // },
     {
       path: '/Fusion',
       element: <Fusion />,
