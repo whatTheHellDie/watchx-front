@@ -33,7 +33,7 @@ const urlList = [
   {
     name: 'Community',
     inner: [
-      { name: 'Discord', url: 'https://discord.gg/heNbWZyhhJ' },
+      { name: 'Discord', url: 'https://discord.gg/rBM9BCzTpF' },
       { name: 'X(Twitter) ', url: 'https://twitter.com/watchxnetwork' },
       { name: 'Telegram', url: 'https://t.me/watchxofficial' },
       { name: 'Medium', url: 'https://medium.com/@watchxnetwork' },
@@ -261,7 +261,7 @@ export const Footer = () => {
                     gap: { md: '50px', xs: '7.5px' },
                   }}
                 >
-                  <a href="https://discord.gg/heNbWZyhhJ" target="_blank">
+                  <a href="https://discord.gg/rBM9BCzTpF" target="_blank">
                     <img
                       src="/assets/upload/v1.png"
                       onMouseEnter={(event: any) => {
