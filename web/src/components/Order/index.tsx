@@ -11,6 +11,7 @@ import { countryList } from './country';
 import Alert from '../Alert';
 import { success, warning, error } from 'web/src/slices/MessagesSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { from } from '@iotexproject/iotex-address-ts';
 import {
   Connection,
   SystemProgram,
@@ -19,7 +20,7 @@ import {
   sendAndConfirmTransaction,
   PublicKey,
 } from '@solana/web3.js';
-import { getQueryParam } from 'web/src/utils';
+import { apiUrl, getQueryParam } from 'web/src/utils';
 import { CircularProgress } from '@mui/material';
 export const cutAddress = (str: any) => {
   if (!str) {
@@ -46,6 +47,7 @@ const roleList = [
 //   { name: 'Project founder', value: '4' },
 // ];
 export default function Pre() {
+  const [showClick, setShowClick] = useState(false);
   const { connection } = useConnection();
   const {
     select,
@@ -64,16 +66,49 @@ export default function Pre() {
   const [showAlert, setShowAlert] = useState(status ? true : false);
   const [country, setCountry] = useState('');
   const [role, setRole] = useState('');
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [discountNumber, setDiscountNumber] = useState('0');
   const [buySuccess, setBuySuccess] = useState(
     status === 'success' ? true : false
   );
-
+  const getDiscountNumber = async (value: any) => {
+    if (!value) {
+      setDiscountNumber('0');
+      setIsInvalid(false);
+      return;
+    }
+    const formData = {
+      discountCode: value,
+    };
+    try {
+      const response = await fetch(`${apiUrl}/future/discount/status`, {
+        method: 'POST',
+        headers: { Origin: apiUrl, 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (data.code === 0) {
+        const mData = data.data;
+        if (mData.discountValue) {
+          setIsInvalid(false);
+          setDiscountNumber(mData.discountValue);
+        } else {
+          setIsInvalid(true);
+          setDiscountNumber('0');
+        }
+      } else {
+        dispatch(error(data.msg));
+      }
+    } catch (e: any) {
+      dispatch(error(e.message));
+      console.error(e);
+    }
+  };
   const handleChange = (event: SelectChangeEvent, setFunc: any) => {
     setFunc(event.target.value as string);
   };
   const [emailMe, setEmailMe] = useState(true);
-  const [Credit, setCredit] = useState(true);
-  const [Wallet, setWallet] = useState(false);
+
   const type = getQueryParam('type');
   let watchInfoArr: any = [
     { name: 'WatchX Future NFT', bg: '#102B4C', num: 1 },
@@ -86,7 +121,7 @@ export default function Pre() {
   // watchInfoArr = JSON.parse(param);
   // const price = type === 'founder' ? '469.00' : '89.00';
   const price = '189.00';
-  let buyTotal = Number(price);
+  let buyTotal = Number(price) - Number(discountNumber);
   // watchInfoArr.forEach((item: any) => {
   //   buyTotal += Number(item.num) * Number(price);
   // });
@@ -95,10 +130,7 @@ export default function Pre() {
   const [width, setWidth] = useState('');
   const handleResize = () => {
     const item = wrap1InnerRef && wrap1InnerRef.current;
-    console.log(
-      item.getBoundingClientRect().width + 'px',
-      'item.getBoundingClientRect().width'
-    );
+
     if (item) {
       setWidth(item.getBoundingClientRect().width + 'px');
       setTop('100px');
@@ -108,12 +140,27 @@ export default function Pre() {
     handleResize();
     // 添加滚动事件监听器
     window.addEventListener('resize', handleResize);
+    sessionStorage.setItem('discountCode', '');
+    const data = localStorage.getItem('previousData');
+    const previousData = data && JSON.parse(data);
+    if (previousData) {
+      setShowClick(true);
+    }
+    document.addEventListener('visibilitychange', (event) => {
+      if (!document.hidden) {
+        if (window.location.pathname === '/Order') {
+          console.log(sessionStorage.getItem('discountCode'));
+          getDiscountNumber(sessionStorage.getItem('discountCode'));
+        }
+      }
+    });
   }, []);
   const [isLoading, setIsLoading] = useState(false);
   const [orderObj, setOrderObj] = useState<any>({
     payerEmail: '',
     nftReceivingAddress: '',
-    inviteId: sessionStorage.getItem('inviteId') || '',
+    discountCode: '',
+    inviteId: localStorage.getItem('inviteId') || '',
   });
   const [deliveryObj, setDeliveryObj] = useState<any>({
     region: '',
@@ -125,7 +172,38 @@ export default function Pre() {
     address: '',
     phone: '',
   });
+  const initData = () => {
+    setEmailMe(true);
+    setCountry('');
+    setOrderObj({
+      payerEmail: '',
+      nftReceivingAddress: '',
+      inviteId: '',
+      discountCode: '',
+    });
+    setDiscountNumber('0');
+    setIsInvalid(false);
+    setDeliveryObj({
+      region: '',
+      firstname: '',
+      lastname: '',
+      city: '',
+      state: '',
+      postcode: '',
+      address: '',
+      phone: '',
+    });
+  };
+
   const sendTransactionA = async () => {
+    if (country === 'CN') {
+      dispatch(
+        warning(
+          'Due to policy restrictions, we do not support user addresses from mainland China.'
+        )
+      );
+      return;
+    }
     if (!orderObj.payerEmail) {
       dispatch(warning('Please enter email'));
       return;
@@ -173,20 +251,53 @@ export default function Pre() {
       return;
     }
     if (!regex.test(deliveryObj.phone)) {
-      dispatch(warning('Invalid phone number,for example:+1 xxxxxxxx'));
+      dispatch(
+        warning(
+          'Invalid phone number,the area code must be the same as the region,the number must be the same as the region,such as the USA:+1 xxxxxxxx'
+        )
+      );
       return;
     }
-    if (!/^0x[a-fA-F0-9]{40}$/.test(orderObj.nftReceivingAddress)) {
+    let mAddr;
+    try {
+      mAddr = from(orderObj.nftReceivingAddress);
+    } catch (err: any) {
       dispatch(warning('Invalid IoTeX address'));
       return;
     }
-    const apiUrl = 'https://dev.watchx.network';
+
+    const isPhone = await phoneCheck();
+    if (!isPhone) {
+      dispatch(
+        warning(
+          'Invalid phone number,the area code must be the same as the region,such as the USA:+1 xxxxxxxx'
+        )
+      );
+      return;
+    }
+    if (isInvalid) {
+      dispatch(warning('Invalid discount code.'));
+      return;
+    }
     const formData = {
       ...orderObj,
+      nftReceivingAddress: mAddr.stringEth().toString(),
       emailMe,
-      link: `${window.location.origin}${window.location.pathname}?status=success`,
-      delivery: deliveryObj,
+      successUrl: `${window.location.origin}${window.location.pathname}?status=success`,
+      cancelURL: `${window.location.origin}${window.location.pathname}?status=failed`,
+      delivery: { ...deliveryObj, phone: deliveryObj.phone.replace(' ', '') },
     };
+    const formData1 = {
+      //用于储存信息
+      ...orderObj,
+      nftReceivingAddress: mAddr.stringEth().toString(),
+      emailMe,
+      successUrl: `${window.location.origin}${window.location.pathname}?status=success`,
+      cancelURL: `${window.location.origin}${window.location.pathname}?status=failed`,
+      delivery: deliveryObj,
+      countryName: country,
+    };
+    localStorage.setItem('previousData', JSON.stringify(formData1));
     try {
       setIsLoading(true);
       const response = await fetch(`${apiUrl}/future/order/create`, {
@@ -195,14 +306,11 @@ export default function Pre() {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      debugger;
       if (data.code === 0) {
-        window.open(data.data, '_self');
-        setShowAlert(true);
-        setBuySuccess(true);
-        setIsLoading(false);
+        getOrderStatus(data.data.orderId);
+        window.open(data.data.paymentUrl);
       } else {
-        dispatch(error(data.message));
+        dispatch(error(data.msg));
         setIsLoading(false);
       }
     } catch (e: any) {
@@ -211,14 +319,82 @@ export default function Pre() {
       setIsLoading(false);
     }
   };
+  const getOrderStatus = async (orderId: any) => {
+    const formData = {
+      orderId,
+    };
+    try {
+      const response = await fetch(`${apiUrl}/future/order/queryPalStatus`, {
+        method: 'POST',
+        headers: { Origin: apiUrl, 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
 
+      if (data.code === 0) {
+        const status = data.data.payStatus;
+        if (
+          status === 'paid_confirming' ||
+          status === 'partial_paid_confirming' ||
+          status === 'paid'
+        ) {
+          setIsLoading(false);
+          // initData();
+          setShowAlert(true);
+          setBuySuccess(true);
+          return;
+        }
+        setTimeout(() => {
+          getOrderStatus(orderId);
+        }, 2000);
+      } else {
+        setIsLoading(false);
+        dispatch(error(data.msg));
+      }
+    } catch (e: any) {
+      setIsLoading(false);
+      dispatch(error(e.message));
+    }
+  };
+  const phoneCheck = async () => {
+    try {
+      const response = await fetch(
+        `${apiUrl}/future/order/validPhoneNumber?phoneNumber=${deliveryObj.phone.replace(
+          ' ',
+          ''
+        )}&regionCode=${country}`,
+        {
+          headers: { Origin: apiUrl },
+        }
+      );
+      const data = await response.json();
+      return data.data;
+    } catch (e: any) {
+      setIsLoading(false);
+      dispatch(error(e.message));
+    }
+  };
   const content = (
     <div>
       <div className={styles.orderTitle}>Your order</div>
-      <div className={styles.between}>
+      <div
+        className={`${styles.between} ${
+          !isInvalid && discountNumber !== '0' ? styles.active : ''
+        }`}
+      >
         <div className={styles.left}>WatchX Future NFT</div>
         <div className={`${styles.left} ${styles.right}`}>${price}</div>
       </div>
+      {!isInvalid && discountNumber !== '0' ? (
+        <div className={`${styles.between} ${styles.between1}`}>
+          <div className={styles.left}>Discount Code</div>
+          <div className={`${styles.left} ${styles.right}`}>
+            -${discountNumber}
+          </div>
+        </div>
+      ) : (
+        ''
+      )}
       <div className={styles.settle}>
         {/* <div className={styles.itemUl}>
           {watchInfoArr.map((item: any, i: number) => {
@@ -289,6 +465,43 @@ export default function Pre() {
                 ></img>
               </div>
             </div> */}
+            {showClick ? (
+              <div className={styles.previous}>
+                Autofill previous usage information?
+                <span
+                  className={styles.reuse}
+                  onClick={() => {
+                    const data = localStorage.getItem('previousData');
+                    const previousData = data && JSON.parse(data);
+                    debugger;
+                    setOrderObj({
+                      payerEmail: previousData.payerEmail,
+                      nftReceivingAddress: previousData.nftReceivingAddress,
+                      discountCode: previousData.discountCode,
+                      inviteId: localStorage.getItem('inviteId') || '',
+                    });
+                    const delivery = previousData.delivery;
+                    setDeliveryObj({
+                      region: delivery.region,
+                      firstname: delivery.firstname,
+                      lastname: delivery.lastname,
+                      city: delivery.city,
+                      state: delivery.state,
+                      postcode: delivery.postcode,
+                      address: delivery.address,
+                      phone: delivery.phone,
+                    });
+                    setEmailMe(previousData.emailMe);
+                    setCountry(previousData.countryName);
+                  }}
+                >
+                  {' '}
+                  click here
+                </span>
+              </div>
+            ) : (
+              ''
+            )}
             <div className={`${styles.orderTitle} `}>Contact</div>
             <div className={`${styles.inputWrap}`}>
               <input
@@ -302,6 +515,7 @@ export default function Pre() {
                   });
                 }}
                 placeholder="Email"
+                value={orderObj.payerEmail}
               />
               <div className={styles.email}>
                 <div
@@ -322,6 +536,14 @@ export default function Pre() {
                   value={country}
                   onChange={(event: any) => {
                     let value = event.target.value;
+                    if (value === 'CN') {
+                      dispatch(
+                        warning(
+                          'Due to policy restrictions, we do not support user addresses from mainland China.'
+                        )
+                      );
+                      return;
+                    }
                     setCountry(value);
                     const chooseList = countryList.filter((item) => {
                       return item.value === value;
@@ -363,8 +585,9 @@ export default function Pre() {
                     firstname: value,
                   });
                 }}
-                value={deliveryObj.firstName}
+                value={deliveryObj.firstname}
               />
+              {deliveryObj.firstName}
               <input
                 type="text"
                 className={styles.input}
@@ -525,19 +748,67 @@ export default function Pre() {
                 value={orderObj.nftReceivingAddress}
               />
               <div className={styles.addressTip}>
-                Address for Future NFT distribution.
+                Address(EVM compatible) for Future NFT distribution.
               </div>
+            </div>
+            <div
+              className={`${styles.orderTitle} ${styles.orderTitle1} ${styles.orderTitle2}`}
+            >
+              Discount Code
+            </div>
+            <div className={`${styles.inputWrap}`}>
+              <input
+                type="text"
+                className={styles.input}
+                placeholder="Discount Code"
+                onChange={(event: any) => {
+                  let value = event.target.value;
+                  getDiscountNumber(value);
+                  sessionStorage.setItem('discountCode', value);
+                  setOrderObj({
+                    ...orderObj,
+                    discountCode: value,
+                  });
+                }}
+                value={orderObj.discountCode}
+              />
+              {isInvalid ? (
+                <div className={styles.invalid}>Invalid discount code.</div>
+              ) : (
+                ''
+              )}
+              {!isInvalid && discountNumber !== '0' ? (
+                <div className={`${styles.invalid} ${styles.discountNumber}`}>
+                  -${discountNumber}
+                </div>
+              ) : (
+                ''
+              )}
             </div>
             <div
               className={`${styles.connectBtn} ${styles.payBtn}`}
               onClick={sendTransactionA}
             >
               {isLoading ? (
-                <CircularProgress color="inherit" size={18} />
+                <div style={{ margin: '0 5px' }}>
+                  <CircularProgress color="inherit" size={18} /> Waiting...
+                </div>
               ) : (
                 'PAY NOW'
               )}
             </div>
+            {isLoading ? (
+              <div
+                className={`${styles.connectBtn} ${styles.payBtn}  ${styles.againBtn}`}
+                onClick={() => {
+                  setIsLoading(false);
+                }}
+              >
+                Re-PAY
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         </div>
         <div className={styles.wrap1} ref={wrap1InnerRef}>
@@ -580,21 +851,21 @@ export default function Pre() {
               )}
             </div>
             <div>
-              <div className={styles.status}>Payment Successful</div>
-              <div className={styles.priceTip}>
-                Purchase Item: Future NFT <div>Price:$189.00</div>
+              <div className={styles.status}>
+                {buySuccess ? 'Payment Successful' : 'Payment Failed'}
               </div>
+              <div className={styles.priceTip}>Purchase Item: Future NFT</div>
             </div>
           </div>
           {buySuccess ? (
             <div
               className={styles.statusBtn}
               onClick={() => {
-                window.open('#');
+                window.open('https://discord.gg/rBM9BCzTpF');
               }}
             >
               <img
-                src="/assets/upload/toTelegram.png"
+                src="/assets/upload/toDiscord.png"
                 alt=""
                 className={styles.teleImg}
               />

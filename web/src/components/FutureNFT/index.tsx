@@ -9,8 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import copy from 'copy-to-clipboard';
 import { useNavigate } from 'react-router-dom';
 import { success } from 'web/src/slices/MessagesSlice';
-import { getQueryParam } from 'web/src/utils';
+import { apiUrl, getQueryParam } from 'web/src/utils';
 const tagList = ['NFT', 'OG ROLE', 'SMARTWATCH', 'TOKENS', 'MINING', 'AIRDROP'];
+import { from } from '@iotexproject/iotex-address-ts';
+import NFTBanner from '../NFTBanner';
 const benefitsList = [
   {
     title:
@@ -54,42 +56,13 @@ export default function FutureNFT() {
   const dispatch = useDispatch();
   useEffect(() => {
     const inviteId = getQueryParam('inviteId');
-    inviteId && sessionStorage.setItem('inviteId', inviteId);
+    inviteId && localStorage.setItem('inviteId', inviteId);
   }, []);
   return (
     <BodyWrapper>
       <div className={styles.body}>
-        <div className={styles.banner}>
-          <div className={styles.leftWrap}>
-            <div className={styles.title}>
-              <span className={styles.titleInner}>
-                Join the future of DePIN with WatchX
-              </span>
-              <img
-                src="/assets/upload/shadow.png"
-                alt=""
-                className={styles.shadow}
-              />
-              <img
-                src="/assets/upload/shadowActive.png"
-                alt=""
-                className={`${styles.shadow} ${styles.shadowActive}`}
-              />
-            </div>
-            <div className={styles.title1}>Future NFT</div>
-            <div
-              className={styles.btn}
-              onClick={() => {
-                navigate(`/Order`);
-              }}
-            >
-              ONE-CLICK MINT FUTURE
-            </div>
-          </div>
-          <div className={styles.rightWrap}>
-            <img src="/assets/upload/NFTBanner.png" width={'100%'} alt="" />
-          </div>
-        </div>
+        <NFTBanner />
+
         <div className={styles.benefitsWrap}>
           <div className={styles.benefits}>
             <div className={styles.BenefitsText}>Future's Benefits</div>
@@ -140,7 +113,14 @@ export default function FutureNFT() {
         </div>
         <div className={styles.imgingWrap}>
           <div className={styles.text}>{text}</div>
-          <div className={styles.btn}>MORE</div>
+          <div
+            className={styles.btn}
+            onClick={() => {
+              window.open('/Fusion', '_self');
+            }}
+          >
+            MORE
+          </div>
         </div>
       </div>
       <div className={styles.inviteWrap}>
@@ -148,14 +128,14 @@ export default function FutureNFT() {
           One-click generate your exclusive referral link!
         </div>
         <div className={styles.content}>
-          lf a user mint Future NFT through the referral link, the inviter will
-          receive 10% token reward!
+          If a user buy Future NFT through your referral link, you will receive
+          10% reward!
         </div>
         <div className={styles.inputWrap}>
           <input
             type="text"
             className={styles.input}
-            placeholder="Please enter your loTex address"
+            placeholder="Please enter your IoTex address(EVM compatible)"
             onChange={(event: any) => {
               setAddress(event.target.value);
             }}
@@ -163,31 +143,37 @@ export default function FutureNFT() {
           <div
             className={styles.btn}
             onClick={async () => {
-              if (/^0x[a-fA-F0-9]{40}$/.test(address)) {
-                try {
-                  fetch(
-                    `https://dev.watchx.network/future/order/generateInviteId?address=${address}`,
-                    {
-                      headers: { Origin: 'https://dev.watchx.network' },
-                    }
-                  )
-                    .then((response) => {
-                      return response.json();
-                    })
-                    .then((res: any) => {
-                      if (res.code === 0) {
-                        setSuccessText(
-                          `${window.location.origin}${window.location.pathname}?inviteId=${res.data}`
-                        );
-                      } else {
-                        setErrorText(res.msg);
-                      }
-                    });
-                } catch (err: any) {
-                  setErrorText(err.message);
-                }
-              } else {
+              let mAddr;
+              try {
+                mAddr = from(address);
+              } catch (err: any) {
                 setErrorText('Invalid Address.');
+                return;
+              }
+
+              try {
+                fetch(
+                  `${apiUrl}/future/order/generateInviteId?address=${mAddr
+                    .stringEth()
+                    .toString()}`,
+                  {
+                    headers: { Origin: apiUrl },
+                  }
+                )
+                  .then((response) => {
+                    return response.json();
+                  })
+                  .then((res: any) => {
+                    if (res.code === 0) {
+                      setSuccessText(
+                        `${window.location.origin}${window.location.pathname}?inviteId=${res.data}`
+                      );
+                    } else {
+                      setErrorText(res.msg);
+                    }
+                  });
+              } catch (err: any) {
+                setErrorText(err.message);
               }
             }}
           >

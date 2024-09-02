@@ -47,6 +47,19 @@
   justify-content: space-between;
   margin-top: 68px;
   margin-bottom: 91px;
+  &.active {
+    margin-bottom: 12px;
+  }
+
+  &.between1 {
+    color: #00dcff;
+    font-family: Barlow Condensed;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: left;
+    margin: 0 0 63px;
+  }
 }
 .left {
   font-family: Barlow Condensed;
@@ -259,6 +272,9 @@
   margin-top: 64px;
   margin-bottom: 103px;
 }
+.againBtn {
+  margin-top: -80px;
+}
 .addressTip {
   margin-top: 8px;
   font-family: Barlow Condensed;
@@ -322,6 +338,18 @@
     gap: 8px;
   }
 }
+.invalid {
+  font-family: Barlow Condensed;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: left;
+  color: #ff0000;
+  margin-top: 9px;
+}
+.discountNumber {
+  color: #00dcff;
+}
 @media screen and (max-width: 768px) {
   .outBox {
     display: flex;
@@ -356,6 +384,12 @@
   .between {
     margin-top: 14px;
     margin-bottom: 24px;
+    &.active {
+      margin-bottom: 12px;
+    }
+    &.between1 {
+      margin-bottom: 24px;
+    }
   }
   .left {
     font-size: 14px;
@@ -489,6 +523,13 @@
     text-align: center;
   }
 }
+.previous {
+  color: #00dcff;
+  font-size: 14px;
+}
+.reuse {
+  color: #ffffff;
+}
 @media screen and (max-width: 768px) {
   .alertContent {
     padding: 48px 10px 50px;
@@ -527,5 +568,8 @@
     .teleImg {
       width: 28px;
     }
+  }
+  .orderTitle2 {
+    margin-top: 18px;
   }
 }
