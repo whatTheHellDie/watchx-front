@@ -8,6 +8,10 @@ import MenuItem from '@mui/material/MenuItem';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { countryList } from './country';
+import Alert from '../Alert';
+import { success, warning, error } from 'web/src/slices/MessagesSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { from } from '@iotexproject/iotex-address-ts';
 import {
   Connection,
   SystemProgram,
@@ -16,6 +20,8 @@ import {
   sendAndConfirmTransaction,
   PublicKey,
 } from '@solana/web3.js';
+import { apiUrl, getQueryParam } from 'web/src/utils';
+import { CircularProgress } from '@mui/material';
 export const cutAddress = (str: any) => {
   if (!str) {
     return;
@@ -33,6 +39,7 @@ const roleList = [
   { name: 'Investor', value: '3' },
   { name: 'Project founder', value: '4' },
 ];
+
 // const countryList = [
 //   { name: 'Developer', value: '1' },
 //   { name: 'User', value: '2' },
@@ -40,6 +47,7 @@ const roleList = [
 //   { name: 'Project founder', value: '4' },
 // ];
 export default function Pre() {
+  const [showClick, setShowClick] = useState(false);
   const { connection } = useConnection();
   const {
     select,
@@ -49,46 +57,80 @@ export default function Pre() {
     sendTransaction,
     disconnect,
   } = useWallet();
+  const dispatch = useDispatch();
+  const status = getQueryParam('status');
   const receiverPublicKey = 'Receiver_Public_Key';
   const amount = 100000; // 以 lamports 为单位的转账金额
   const walletAddress = publicKey?.toString();
-  function getQueryParam(key: string) {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    return urlParams.get(key);
-  }
+
+  const [showAlert, setShowAlert] = useState(status ? true : false);
   const [country, setCountry] = useState('');
   const [role, setRole] = useState('');
-
+  const [isInvalid, setIsInvalid] = useState(false);
+  const [discountNumber, setDiscountNumber] = useState('0');
+  const [buySuccess, setBuySuccess] = useState(
+    status === 'success' ? true : false
+  );
+  const getDiscountNumber = async (value: any) => {
+    if (!value) {
+      setDiscountNumber('0');
+      setIsInvalid(false);
+      return;
+    }
+    const formData = {
+      discountCode: value,
+    };
+    try {
+      const response = await fetch(`${apiUrl}/future/discount/status`, {
+        method: 'POST',
+        headers: { Origin: apiUrl, 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (data.code === 0) {
+        const mData = data.data;
+        if (mData.discountValue) {
+          setIsInvalid(false);
+          setDiscountNumber(mData.discountValue);
+        } else {
+          setIsInvalid(true);
+          setDiscountNumber('0');
+        }
+      } else {
+        dispatch(error(data.msg));
+      }
+    } catch (e: any) {
+      dispatch(error(e.message));
+      console.error(e);
+    }
+  };
   const handleChange = (event: SelectChangeEvent, setFunc: any) => {
     setFunc(event.target.value as string);
   };
   const [emailMe, setEmailMe] = useState(true);
-  const [Credit, setCredit] = useState(true);
-  const [Wallet, setWallet] = useState(false);
+
   const type = getQueryParam('type');
   let watchInfoArr: any = [
-    { name: 'Navy Blue', bg: '#102B4C', num: '' },
-    { name: 'Bloodstone Red', bg: '#7B1515', num: '' },
-    { name: 'Uniform Green', bg: '#443B1C', num: '' },
-    { name: 'Obsidian Black', bg: '#000000', num: '' },
+    { name: 'WatchX Future NFT', bg: '#102B4C', num: 1 },
+    //   { name: 'Navy Blue', bg: '#102B4C', num: '' },
+    //   { name: 'Bloodstone Red', bg: '#7B1515', num: '' },
+    //   { name: 'Uniform Green', bg: '#443B1C', num: '' },
+    //   { name: 'Obsidian Black', bg: '#000000', num: '' },
   ];
-  const param: any = getQueryParam('param');
-  watchInfoArr = JSON.parse(param);
-  const price = type === 'founder' ? '469.00' : '89.00';
-  let buyTotal = 0;
-  watchInfoArr.forEach((item: any) => {
-    buyTotal += Number(item.num) * Number(price);
-  });
+  // const param: any = getQueryParam('param');
+  // watchInfoArr = JSON.parse(param);
+  // const price = type === 'founder' ? '469.00' : '89.00';
+  const price = '189.00';
+  let buyTotal = Number(price) - Number(discountNumber);
+  // watchInfoArr.forEach((item: any) => {
+  //   buyTotal += Number(item.num) * Number(price);
+  // });
   const wrap1InnerRef = useRef<any>(null);
   const [top, setTop] = useState('');
   const [width, setWidth] = useState('');
   const handleResize = () => {
     const item = wrap1InnerRef && wrap1InnerRef.current;
-    console.log(
-      item.getBoundingClientRect().width + 'px',
-      'item.getBoundingClientRect().width'
-    );
+
     if (item) {
       setWidth(item.getBoundingClientRect().width + 'px');
       setTop('100px');
@@ -98,60 +140,263 @@ export default function Pre() {
     handleResize();
     // 添加滚动事件监听器
     window.addEventListener('resize', handleResize);
+    sessionStorage.setItem('discountCode', '');
+    const data = localStorage.getItem('previousData');
+    const previousData = data && JSON.parse(data);
+    if (previousData) {
+      setShowClick(true);
+    }
+    document.addEventListener('visibilitychange', (event) => {
+      if (!document.hidden) {
+        if (window.location.pathname === '/Order') {
+          console.log(sessionStorage.getItem('discountCode'));
+          getDiscountNumber(sessionStorage.getItem('discountCode'));
+        }
+      }
+    });
   }, []);
+  const [isLoading, setIsLoading] = useState(false);
+  const [orderObj, setOrderObj] = useState<any>({
+    payerEmail: '',
+    nftReceivingAddress: '',
+    discountCode: '',
+    inviteId: localStorage.getItem('inviteId') || '',
+  });
+  const [deliveryObj, setDeliveryObj] = useState<any>({
+    region: '',
+    firstname: '',
+    lastname: '',
+    city: '',
+    state: '',
+    postcode: '',
+    address: '',
+    phone: '',
+  });
+  const initData = () => {
+    setEmailMe(true);
+    setCountry('');
+    setOrderObj({
+      payerEmail: '',
+      nftReceivingAddress: '',
+      inviteId: '',
+      discountCode: '',
+    });
+    setDiscountNumber('0');
+    setIsInvalid(false);
+    setDeliveryObj({
+      region: '',
+      firstname: '',
+      lastname: '',
+      city: '',
+      state: '',
+      postcode: '',
+      address: '',
+      phone: '',
+    });
+  };
+
   const sendTransactionA = async () => {
-    // const wallet1: any = wallet;
-    // console.log(wallet1.adapter.publicKey);
-    debugger;
-    if (!wallet) {
-      console.error('Wallet not connected');
+    if (country === 'CN') {
+      dispatch(
+        warning(
+          'Due to policy restrictions, we do not support user addresses from mainland China.'
+        )
+      );
+      return;
+    }
+    if (!orderObj.payerEmail) {
+      dispatch(warning('Please enter email'));
+      return;
+    }
+    if (!orderObj.nftReceivingAddress) {
+      dispatch(warning('Please enter IoTeX address'));
+      return;
+    }
+    if (!deliveryObj.region) {
+      dispatch(warning('Please enter Country/Region'));
+      return;
+    }
+    if (!deliveryObj.firstname) {
+      dispatch(warning('Please enter firstName'));
+      return;
+    }
+    if (!deliveryObj.lastname) {
+      dispatch(warning('Please enter lastName'));
+      return;
+    }
+    if (!deliveryObj.city) {
+      dispatch(warning('Please enter city'));
+      return;
+    }
+    if (!deliveryObj.state) {
+      dispatch(warning('Please enter state'));
+      return;
+    }
+    if (!deliveryObj.postcode) {
+      dispatch(warning('Please enter postcode'));
+      return;
+    }
+    if (!deliveryObj.address) {
+      dispatch(warning('Please enter address'));
+      return;
+    }
+    if (!deliveryObj.phone) {
+      dispatch(warning('Please enter phone'));
+      return;
+    }
+    const regex = /^\+([1-9]\d{0,2})\s?(\d{4,14})$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(orderObj.payerEmail)) {
+      dispatch(warning('Invalid email'));
+      return;
+    }
+    if (!regex.test(deliveryObj.phone)) {
+      dispatch(
+        warning(
+          'Invalid phone number,the area code must be the same as the region,the number must be the same as the region,such as the USA:+1 xxxxxxxx'
+        )
+      );
+      return;
+    }
+    let mAddr;
+    try {
+      mAddr = from(orderObj.nftReceivingAddress);
+    } catch (err: any) {
+      dispatch(warning('Invalid IoTeX address'));
       return;
     }
 
+    const isPhone = await phoneCheck();
+    if (!isPhone) {
+      dispatch(
+        warning(
+          'Invalid phone number,the area code must be the same as the region,such as the USA:+1 xxxxxxxx'
+        )
+      );
+      return;
+    }
+    if (isInvalid) {
+      dispatch(warning('Invalid discount code.'));
+      return;
+    }
+    const formData = {
+      ...orderObj,
+      nftReceivingAddress: mAddr.stringEth().toString(),
+      emailMe,
+      successUrl: `${window.location.origin}${window.location.pathname}?status=success`,
+      cancelURL: `${window.location.origin}${window.location.pathname}?status=failed`,
+      delivery: { ...deliveryObj, phone: deliveryObj.phone.replace(' ', '') },
+    };
+    const formData1 = {
+      //用于储存信息
+      ...orderObj,
+      nftReceivingAddress: mAddr.stringEth().toString(),
+      emailMe,
+      successUrl: `${window.location.origin}${window.location.pathname}?status=success`,
+      cancelURL: `${window.location.origin}${window.location.pathname}?status=failed`,
+      delivery: deliveryObj,
+      countryName: country,
+    };
+    localStorage.setItem('previousData', JSON.stringify(formData1));
     try {
-      // 连接到 Solana 主网
-      const PROGRAM_ID = `ChT1B39WKLS8qUrkLvFDXMhEJ4F1XZzwUNHUt4AU9aVa`;
-      const DATA_ACCOUNT_PUBKEY = `Ah9K7dQ8EHaZqcAsgBW8w37yN2eAy3koFmUn4x3CJtod`;
-      const programId = new PublicKey(PROGRAM_ID);
-      const programDataAccount = new PublicKey(DATA_ACCOUNT_PUBKEY);
-      // 创建交易
-      const transaction = new Transaction();
-      const param1 = Buffer.from('abc', 'utf-8');
-      const param2 = Buffer.from('ccb', 'utf-8');
-      const instruction = new TransactionInstruction({
-        keys: [
-          {
-            pubkey: programDataAccount,
-            isSigner: false,
-            isWritable: true,
-          },
-        ],
-        programId,
-        data: Buffer.concat([param1, param2]), // 将参数组合为一个字节数组，并作为数据字段传递给交易指令
+      setIsLoading(true);
+      const response = await fetch(`${apiUrl}/future/order/create`, {
+        method: 'POST',
+        headers: { Origin: apiUrl, 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       });
+      const data = await response.json();
+      if (data.code === 0) {
+        getOrderStatus(data.data.orderId);
+        window.open(data.data.paymentUrl);
+      } else {
+        dispatch(error(data.msg));
+        setIsLoading(false);
+      }
+    } catch (e: any) {
+      dispatch(error(e.message));
+      console.error(e);
+      setIsLoading(false);
+    }
+  };
+  const getOrderStatus = async (orderId: any) => {
+    const formData = {
+      orderId,
+    };
+    try {
+      const response = await fetch(`${apiUrl}/future/order/queryPalStatus`, {
+        method: 'POST',
+        headers: { Origin: apiUrl, 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
 
-      transaction.add(instruction);
-
-      // 发送交易
-      const result = await sendTransaction(transaction, connection);
-      console.log('Transaction sent:', result);
-    } catch (error) {
-      console.error('Error sending transaction:', error);
+      if (data.code === 0) {
+        const status = data.data.payStatus;
+        if (
+          status === 'paid_confirming' ||
+          status === 'partial_paid_confirming' ||
+          status === 'paid'
+        ) {
+          setIsLoading(false);
+          // initData();
+          setShowAlert(true);
+          setBuySuccess(true);
+          return;
+        }
+        setTimeout(() => {
+          getOrderStatus(orderId);
+        }, 2000);
+      } else {
+        setIsLoading(false);
+        dispatch(error(data.msg));
+      }
+    } catch (e: any) {
+      setIsLoading(false);
+      dispatch(error(e.message));
+    }
+  };
+  const phoneCheck = async () => {
+    try {
+      const response = await fetch(
+        `${apiUrl}/future/order/validPhoneNumber?phoneNumber=${deliveryObj.phone.replace(
+          ' ',
+          ''
+        )}&regionCode=${country}`,
+        {
+          headers: { Origin: apiUrl },
+        }
+      );
+      const data = await response.json();
+      return data.data;
+    } catch (e: any) {
+      setIsLoading(false);
+      dispatch(error(e.message));
     }
   };
   const content = (
     <div>
       <div className={styles.orderTitle}>Your order</div>
-      <div className={styles.between}>
-        <div className={styles.left}>
-          Preorder,WatchX {type === 'founder' ? 'Founder' : 'Fusion'}
-        </div>
-        <div className={`${styles.left} ${styles.right}`}>
-          {type === 'founder' ? 'Founder' : 'Fusion'}:${price}
-        </div>
+      <div
+        className={`${styles.between} ${
+          !isInvalid && discountNumber !== '0' ? styles.active : ''
+        }`}
+      >
+        <div className={styles.left}>WatchX Future NFT</div>
+        <div className={`${styles.left} ${styles.right}`}>${price}</div>
       </div>
+      {!isInvalid && discountNumber !== '0' ? (
+        <div className={`${styles.between} ${styles.between1}`}>
+          <div className={styles.left}>Discount Code</div>
+          <div className={`${styles.left} ${styles.right}`}>
+            -${discountNumber}
+          </div>
+        </div>
+      ) : (
+        ''
+      )}
       <div className={styles.settle}>
-        <div className={styles.itemUl}>
+        {/* <div className={styles.itemUl}>
           {watchInfoArr.map((item: any, i: number) => {
             return (
               <div key={'b' + i} className={`${styles.itemLi} `}>
@@ -162,7 +407,7 @@ export default function Pre() {
               </div>
             );
           })}
-        </div>
+        </div> */}
         <div className={styles.total}>
           <div className={styles.totalPrice}>
             Total price:${buyTotal.toFixed(2)}
@@ -185,7 +430,7 @@ export default function Pre() {
       <div className={styles.outBox}>
         <div className={styles.wrap}>
           <div className={styles.wrapInner}>
-            <div className={styles.orderTitle}>Information</div>
+            {/* <div className={styles.orderTitle}>Information</div>
             <div className={styles.twitterWrap}>
               <div className={styles.twitterTip}>
                 Connect your Twitter (X) for more incentives.
@@ -219,12 +464,59 @@ export default function Pre() {
                   src="/assets/upload/downSelect.png"
                 ></img>
               </div>
-            </div>
-            <div className={`${styles.orderTitle} ${styles.orderTitle1}`}>
-              Contact
-            </div>
+            </div> */}
+            {showClick ? (
+              <div className={styles.previous}>
+                Autofill previous usage information?
+                <span
+                  className={styles.reuse}
+                  onClick={() => {
+                    const data = localStorage.getItem('previousData');
+                    const previousData = data && JSON.parse(data);
+                    debugger;
+                    setOrderObj({
+                      payerEmail: previousData.payerEmail,
+                      nftReceivingAddress: previousData.nftReceivingAddress,
+                      discountCode: previousData.discountCode,
+                      inviteId: localStorage.getItem('inviteId') || '',
+                    });
+                    const delivery = previousData.delivery;
+                    setDeliveryObj({
+                      region: delivery.region,
+                      firstname: delivery.firstname,
+                      lastname: delivery.lastname,
+                      city: delivery.city,
+                      state: delivery.state,
+                      postcode: delivery.postcode,
+                      address: delivery.address,
+                      phone: delivery.phone,
+                    });
+                    setEmailMe(previousData.emailMe);
+                    setCountry(previousData.countryName);
+                  }}
+                >
+                  {' '}
+                  click here
+                </span>
+              </div>
+            ) : (
+              ''
+            )}
+            <div className={`${styles.orderTitle} `}>Contact</div>
             <div className={`${styles.inputWrap}`}>
-              <input type="text" className={styles.input} placeholder="Email" />
+              <input
+                type="text"
+                className={styles.input}
+                onChange={(event: any) => {
+                  let value = event.target.value;
+                  setOrderObj({
+                    ...orderObj,
+                    payerEmail: value,
+                  });
+                }}
+                placeholder="Email"
+                value={orderObj.payerEmail}
+              />
               <div className={styles.email}>
                 <div
                   className={`${styles.radio} ${emailMe ? styles.active : ''}`}
@@ -242,7 +534,25 @@ export default function Pre() {
               <div className={`${styles.select} ${styles.select1}`}>
                 <Select
                   value={country}
-                  onChange={(event) => handleChange(event, setCountry)}
+                  onChange={(event: any) => {
+                    let value = event.target.value;
+                    if (value === 'CN') {
+                      dispatch(
+                        warning(
+                          'Due to policy restrictions, we do not support user addresses from mainland China.'
+                        )
+                      );
+                      return;
+                    }
+                    setCountry(value);
+                    const chooseList = countryList.filter((item) => {
+                      return item.value === value;
+                    });
+                    setDeliveryObj({
+                      ...deliveryObj,
+                      region: chooseList[0].name,
+                    });
+                  }}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   className={styles.select}
@@ -268,24 +578,69 @@ export default function Pre() {
                 type="text"
                 className={styles.input}
                 placeholder="First name"
+                onChange={(event: any) => {
+                  let value = event.target.value;
+                  setDeliveryObj({
+                    ...deliveryObj,
+                    firstname: value,
+                  });
+                }}
+                value={deliveryObj.firstname}
               />
+              {deliveryObj.firstName}
               <input
                 type="text"
                 className={styles.input}
                 placeholder="Last name"
+                onChange={(event: any) => {
+                  let value = event.target.value;
+                  setDeliveryObj({
+                    ...deliveryObj,
+                    lastname: value,
+                  });
+                }}
+                value={deliveryObj.lastname}
               />
             </div>
             <div className={`${styles.twoColumn}`}>
-              <input type="text" className={styles.input} placeholder="City" />
+              <input
+                type="text"
+                className={styles.input}
+                placeholder="City"
+                onChange={(event: any) => {
+                  let value = event.target.value;
+                  setDeliveryObj({
+                    ...deliveryObj,
+                    city: value,
+                  });
+                }}
+                value={deliveryObj.city}
+              />
               <input
                 type="text"
                 className={styles.input}
                 placeholder="State/territory"
+                onChange={(event: any) => {
+                  let value = event.target.value;
+                  setDeliveryObj({
+                    ...deliveryObj,
+                    state: value,
+                  });
+                }}
+                value={deliveryObj.state}
               />
               <input
                 type="text"
                 className={styles.input}
                 placeholder="Postcode"
+                onChange={(event: any) => {
+                  let value = event.target.value;
+                  setDeliveryObj({
+                    ...deliveryObj,
+                    postcode: value,
+                  });
+                }}
+                value={deliveryObj.postcode}
               />
             </div>
             <div className={`${styles.twoColumn} ${styles.oneColumn}`}>
@@ -293,15 +648,35 @@ export default function Pre() {
                 type="text"
                 className={styles.input}
                 placeholder="Address"
+                onChange={(event: any) => {
+                  let value = event.target.value;
+                  setDeliveryObj({
+                    ...deliveryObj,
+                    address: value,
+                  });
+                }}
+                value={deliveryObj.address}
               />
             </div>
             <div className={`${styles.twoColumn} ${styles.oneColumn}`}>
-              <input type="text" className={styles.input} placeholder="Phone" />
+              <input
+                type="text"
+                className={styles.input}
+                placeholder="Phone,For example:+1 xxxxxxxx"
+                onChange={(event: any) => {
+                  let value = event.target.value;
+                  setDeliveryObj({
+                    ...deliveryObj,
+                    phone: value,
+                  });
+                }}
+                value={deliveryObj.phone}
+              />
             </div>
-            <div className={`${styles.orderTitle} ${styles.orderTitle1}`}>
+            {/* <div className={`${styles.orderTitle} ${styles.orderTitle1}`}>
               Payment
-            </div>
-            <div className={`${styles.email} ${styles.credit}`}>
+            </div> */}
+            {/* <div className={`${styles.email} ${styles.credit}`}>
               <div
                 className={`${styles.radio} ${Credit ? styles.active : ''}`}
                 onClick={() => {
@@ -354,13 +729,86 @@ export default function Pre() {
                 </div>
               </div>
               <div>{cutAddress(walletAddress)}</div>
+            </div> */}
+            <div className={`${styles.orderTitle} ${styles.orderTitle1}`}>
+              IoTeX address
+            </div>
+            <div className={`${styles.inputWrap}`}>
+              <input
+                type="text"
+                className={styles.input}
+                placeholder="Address"
+                onChange={(event: any) => {
+                  let value = event.target.value;
+                  setOrderObj({
+                    ...orderObj,
+                    nftReceivingAddress: value,
+                  });
+                }}
+                value={orderObj.nftReceivingAddress}
+              />
+              <div className={styles.addressTip}>
+                Address(EVM compatible) for Future NFT distribution.
+              </div>
+            </div>
+            <div
+              className={`${styles.orderTitle} ${styles.orderTitle1} ${styles.orderTitle2}`}
+            >
+              Discount Code
+            </div>
+            <div className={`${styles.inputWrap}`}>
+              <input
+                type="text"
+                className={styles.input}
+                placeholder="Discount Code"
+                onChange={(event: any) => {
+                  let value = event.target.value;
+                  getDiscountNumber(value);
+                  sessionStorage.setItem('discountCode', value);
+                  setOrderObj({
+                    ...orderObj,
+                    discountCode: value,
+                  });
+                }}
+                value={orderObj.discountCode}
+              />
+              {isInvalid ? (
+                <div className={styles.invalid}>Invalid discount code.</div>
+              ) : (
+                ''
+              )}
+              {!isInvalid && discountNumber !== '0' ? (
+                <div className={`${styles.invalid} ${styles.discountNumber}`}>
+                  -${discountNumber}
+                </div>
+              ) : (
+                ''
+              )}
             </div>
             <div
               className={`${styles.connectBtn} ${styles.payBtn}`}
               onClick={sendTransactionA}
             >
-              PAY NOW
+              {isLoading ? (
+                <div style={{ margin: '0 5px' }}>
+                  <CircularProgress color="inherit" size={18} /> Waiting...
+                </div>
+              ) : (
+                'PAY NOW'
+              )}
             </div>
+            {isLoading ? (
+              <div
+                className={`${styles.connectBtn} ${styles.payBtn}  ${styles.againBtn}`}
+                onClick={() => {
+                  setIsLoading(false);
+                }}
+              >
+                Re-PAY
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         </div>
         <div className={styles.wrap1} ref={wrap1InnerRef}>
@@ -380,6 +828,61 @@ export default function Pre() {
           </div>
         </div>
       </div>
+      <Alert
+        title={'Payment Status'}
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
+      >
+        <div className={styles.alertContent}>
+          <div className={styles.payTitle}>
+            <div className={styles.imgWrap}>
+              {buySuccess ? (
+                <img
+                  src="/assets/upload/iconPaymentSuccess.png"
+                  alt=""
+                  className={styles.img}
+                />
+              ) : (
+                <img
+                  src="/assets/upload/iconPaymentFailed.png"
+                  alt=""
+                  className={styles.img}
+                />
+              )}
+            </div>
+            <div>
+              <div className={styles.status}>
+                {buySuccess ? 'Payment Successful' : 'Payment Failed'}
+              </div>
+              <div className={styles.priceTip}>Purchase Item: Future NFT</div>
+            </div>
+          </div>
+          {buySuccess ? (
+            <div
+              className={styles.statusBtn}
+              onClick={() => {
+                window.open('https://discord.gg/rBM9BCzTpF');
+              }}
+            >
+              <img
+                src="/assets/upload/toDiscord.png"
+                alt=""
+                className={styles.teleImg}
+              />
+              Join Support Group
+            </div>
+          ) : (
+            <div
+              className={styles.statusBtn}
+              onClick={() => {
+                setShowAlert(false);
+              }}
+            >
+              Try Again
+            </div>
+          )}
+        </div>
+      </Alert>
     </BodyWrapper>
   );
 }

@@ -13,6 +13,7 @@ import { Footer } from '../footer';
 import BodyWrapper from '../BodyWrapper';
 import { VideoCanvasPlay } from '../videoPlayer';
 import styles from './index.module.less';
+import NFTBanner from '../NFTBanner';
 // import bgNew from '@/assets/img/star.png';
 export default function OverviewPage() {
   const [locale, setLocale] = useState(false);
@@ -74,12 +75,10 @@ export default function OverviewPage() {
             }}
           >
             <div
-              style={{
-                // width: '1280px',
-                margin: '0 auto',
-              }}
+              className={styles.bannerWrap}
             >
-              <video
+              <NFTBanner />
+              {/* <video
                 className={styles.newVideo}
                 controls
                 // muted={muted}
@@ -91,7 +90,7 @@ export default function OverviewPage() {
                 controlsList="nodownload noplaybackrate"
               >
                 Your browser does not support the video tag.
-              </video>
+              </video> */}
             </div>
           </Box>
           <Smartwear />

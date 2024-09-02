@@ -26,7 +26,21 @@ export const OverViewBar = (props: any) => {
     return urlParams.get(key);
   }
   const type = getQueryParam('type');
+  const [showBg, setShowBg] = useState(false);
   const dispatch = useDispatch();
+  const handleScroll = (e: any) => {
+    // 处理滚动事件
+
+    if (window.scrollY > 0) {
+      setShowBg(true);
+    } else {
+      setShowBg(false);
+    }
+  };
+  useEffect(() => {
+    // 添加滚动事件监听器
+    window.addEventListener('scroll', handleScroll);
+  }, []);
   return (
     <Box>
       <Box sx={{ height: { md: '100px', xs: '60px' } }}></Box>
@@ -38,7 +52,7 @@ export const OverViewBar = (props: any) => {
           width: '100%',
           minWidth: { xs: 'auto', md: '1200px' },
           zIndex: 999,
-          background: '#000',
+          background: showBg ? '#000' : '',
           margin: { md: 'auto' },
           height: { md: '100px', xs: '60px' },
           alignItems: 'center',
@@ -91,7 +105,7 @@ export const OverViewBar = (props: any) => {
                 <Box>
                   <img
                     src="/assets/upload/logo.png?v=1122"
-                    width="50px"
+                    width="44px"
                     height="auto"
                     alt=""
                   />
@@ -105,15 +119,15 @@ export const OverViewBar = (props: any) => {
                 </div>
               </Box>
             </a>
-            <Box sx={{ display: 'flex' }}>
-              {/* <Box
-                sx={{
-                  mt: '-4px',
-                  mr: '1px',
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <div
+                className={`${styles.btn} ${styles.btn1}`}
+                onClick={() => {
+                  window.open('/Preorder', '_self');
                 }}
               >
-              
-              {/* <div className={`${styles.btn} ${styles.phoneBtn}`}>Preorder</div> */}
+                FUTURE NFT
+              </div>
               <IconButton sx={{ pt: 0 }} onClick={toggleDrawer}>
                 <img
                   src="/assets/upload/nav_icon_home_menu.png"
@@ -125,141 +139,67 @@ export const OverViewBar = (props: any) => {
             </Box>
           </Box>
           <Box sx={{ display: { xs: 'block', md: 'flex' } }}>
-            <Box
-              sx={{
-                display: { xs: 'none', md: 'flex' },
-                ml: '40px',
-                alignItems: 'center',
-                zIndex: 1000,
-                position: 'absolute',
-                left: '50%',
-                marginLeft: '-300px',
-                top: '0',
-                a: {
-                  marginRight: { md: '32px' },
-                  ':last-child': {
-                    mr: '0',
-                  },
-                },
-                '.navA': {
-                  fontSize: { md: '20px' },
-                  color: '#fff',
-                  fontWeight: 400,
-                  display: 'flex',
-                  height: '100px',
-                  alignItems: 'center',
-                  '&.active': { color: '#26C6DA' },
-                  '&:hover': {
-                    color: '#26C6DA',
-                    '.sign': {
-                      transform: 'rotate(-90deg)',
-                    },
-                    '.ul': { display: 'block' },
-                  },
-                },
-                '.sign': {
-                  transform: 'rotate(90deg)',
-                  color: 'white',
-                  transition: 'all .5s',
-                  marginTop: '4px',
-                  marginLeft: '6px',
-                },
-                '.symbol': {
-                  margin: '0 31px',
-                  fontFamily: 'Roboto',
-                  fontSize: '20px',
-                },
-                '.ulWrap': {
-                  paddingTop: '10px',
-                  position: 'absolute',
-                  top: '27px',
-                  left: '-244px',
-                },
-                '.ul': {
-                  background: '#000000',
-                  padding: '20px 33px',
-                  borderRadius: '20px',
-                  display: 'none',
-                },
-                '.li': {
-                  color: '#fff',
-                  fontSize: '18px',
-                  lineHeight: '23px',
-                  whiteSpace: 'nowrap',
-                  fontWeight: '400',
-                  textAlign: 'center',
-                  '&:hover': {
-                    color: '#F33000',
-                    fontWeight: 600,
-                  },
-                },
+            <Box className={styles.menuList}>
+              {MenuListConfig.map(([text, href, list, isBlank], index) => {
+                return index < 4 ? (
+                  <div className={styles.menuListItem} key={text}>
+                    <a
+                      key={index}
+                      href={href}
+                      target={!isBlank ? '_self' : '_blank'}
+                    >
+                      <Box
+                        className={`${styles.navA} ${
+                          pathName == text ? styles.active : ''
+                        } ${styles.hoverWrap}`}
+                      >
+                        {text}
+                        {index === 1 ? (
+                          <div className={styles.watchBox}>
+                            <div className={styles.watchWrap}>
+                              <a href="/Product">
+                                <div
+                                  className={`${styles.watchImgWrap} ${
+                                    mPathName === 'Product' ? styles.active : ''
+                                  }`}
+                                >
+                                  <img src="/assets/upload/watch1.png" alt="" />
+                                  <div className={styles.text}>Founder</div>
+                                </div>
+                              </a>
+                              <div className={styles.border}></div>
+                              <a href="/Fusion">
+                                <div
+                                  className={`${styles.watchImgWrap} ${
+                                    mPathName === 'Fusion' ? styles.active : ''
+                                  }`}
+                                >
+                                  <img src="/assets/upload/watch2.png" alt="" />
+                                  <div className={styles.text}>Fusion</div>
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        ) : (
+                          ''
+                        )}
+                      </Box>
+                    </a>
+                  </div>
+                ) : (
+                  ''
+                );
+              })}
+            </Box>
+            <div
+              className={styles.btn}
+              onClick={() => {
+                window.open('/Preorder', '_self');
               }}
             >
-              {MenuListConfig.map(([text, href, list, isBlank], index) => {
-                return (
-                  <Box
-                    sx={{ position: 'relative', marginRight: '49px' }}
-                    key={text}
-                  >
-                    {index !== 4 ? (
-                      <a
-                        key={index}
-                        href={href}
-                        target={!isBlank ? '_self' : '_blank'}
-                      >
-                        <Box
-                          className={`navA ${
-                            pathName == text ? 'active' : ''
-                          } ${styles.hoverWrap}`}
-                        >
-                          {text}
-                          {index === 1 ? (
-                            <div className={styles.watchBox}>
-                              <div className={styles.watchWrap}>
-                                <a href="/Product">
-                                  <div
-                                    className={`${styles.watchImgWrap} ${
-                                      mPathName === 'Product'
-                                        ? styles.active
-                                        : ''
-                                    }`}
-                                  >
-                                    <img
-                                      src="/assets/upload/watch1.png"
-                                      alt=""
-                                    />
-                                    <div className={styles.text}>Founder</div>
-                                  </div>
-                                </a>
-                                <div className={styles.border}></div>
-                                <a href="/Fusion">
-                                  <div
-                                    className={`${styles.watchImgWrap} ${
-                                      mPathName === 'Fusion'
-                                        ? styles.active
-                                        : ''
-                                    }`}
-                                  >
-                                    <img
-                                      src="/assets/upload/watch2.png"
-                                      alt=""
-                                    />
-                                    <div className={styles.text}>Fusion</div>
-                                  </div>
-                                </a>
-                              </div>
-                            </div>
-                          ) : (
-                            ''
-                          )}
-                        </Box>
-                      </a>
-                    ) : (
-                      <div className={styles.btn}>
-                        Preorder
-                        <div className={styles.watchBox}>
+              FUTURE NFT
+              {/* <div className={styles.watchBox}>
                           <div className={styles.watchWrap}>
-                            {/* <a href="/Preorder?type=founder"> */}
                             <div
                               onClick={() => {
                                 dispatch(warning('Open soon'));
@@ -273,9 +213,7 @@ export const OverViewBar = (props: any) => {
                               <img src="/assets/upload/watch1.png" alt="" />
                               <div className={styles.text}>Founder</div>
                             </div>
-                            {/* </a> */}
                             <div className={styles.border}></div>
-                            {/* <a href="/Preorder?type=fusion"> */}
                             <div
                               onClick={() => {
                                 dispatch(warning('Open soon'));
@@ -289,15 +227,9 @@ export const OverViewBar = (props: any) => {
                               <img src="/assets/upload/watch2.png" alt="" />
                               <div className={styles.text}>Fusion</div>
                             </div>
-                            {/* </a> */}
                           </div>
-                        </div>
-                      </div>
-                    )}
-                  </Box>
-                );
-              })}
-            </Box>
+                        </div> */}
+            </div>
           </Box>
         </Box>
 

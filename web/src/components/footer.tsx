@@ -52,7 +52,6 @@ const styles = {
     display: { md: 'flex', xs: 'block' },
     justifyContent: { md: 'space-around', xs: 'space-between' },
     flexWrap: { xs: 'wrap', md: 'nowrap' },
-    paddingTop: '25px',
   },
   item: {
     width: { md: '154px', xs: '100%' },
@@ -102,12 +101,13 @@ const styles = {
   },
   logoTitleWrap: {
     borderTop: { xs: '1px solid #4d4d4d', md: 'none' },
-    display: { md: 'flex', xs: 'none' },
+    display: { md: 'block', xs: 'none' },
     alignItems: { md: 'center', xs: 'start' },
     color: '#fff',
     marginRight: { md: '165px', xs: 'auto' },
     paddingTop: { xs: '10px', md: 0 },
     height: { xs: '158px', md: 'auto' },
+    '.logo': { display: 'flex', alignItems: 'center', gap: '8px', mb: '15px' },
   },
   logoTitle: {
     pt: { md: 0, xs: '10px' },
@@ -122,7 +122,7 @@ export const Footer = () => {
   const [elementRef2, isElementVisible2] = useIsElementInViewport();
   const [activeIndex, setActiveIndex] = useState<any>(null);
   return (
-    <Box>
+    <Box sx={{ background: '#000' }}>
       <Box
         sx={{
           width: { md: '1200px', xs: '350px' },
@@ -170,11 +170,16 @@ export const Footer = () => {
           }}
         >
           <Box sx={styles.logoTitleWrap}>
-            <img
-              src="/assets/upload/footer_logo.png"
-              className="footerImg"
-              alt=""
-            />
+            <div className="logo">
+              <img src="/assets/upload/logo.png" className="logoImg" alt="" />
+              <div>
+                <img
+                  src="/assets/upload/name.png"
+                  className={'logoName'}
+                  alt=""
+                />
+              </div>
+            </div>
             <Box sx={styles.logoTitle}>
               The first blockchain smartwatch and wearable device Web3
               applications platform.

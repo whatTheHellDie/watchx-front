@@ -1,0 +1,146 @@
+@font-face {
+  font-family: Modular Amplitude;
+  src: url(../../assets/fonts/Modular-Amplitude.otf?v=1) format('opentype');
+}
+
+.body {
+  padding: 0 20px;
+}
+.banner {
+  display: flex;
+  justify-content: center;
+
+  .leftWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    top: -86px;
+    white-space: nowrap;
+    &:hover {
+      .shadow {
+        display: none;
+      }
+      .shadowActive {
+        display: block;
+      }
+    }
+  }
+  .rightWrap {
+    position: relative;
+    top: -60px;
+  }
+  .title {
+    position: relative;
+  }
+  .titleInner {
+    position: relative;
+    font-family: Barlow Condensed;
+    font-size: 50px;
+    font-weight: 500;
+    line-height: 56px;
+    text-align: left;
+    background: linear-gradient(90deg, #00dcff 0%, #017ef7 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    z-index: 1;
+  }
+  .shadow {
+    position: absolute;
+    left: 268px;
+    top: -125px;
+  }
+  .shadowActive {
+    left: 67px;
+    top: -205px;
+    display: none;
+  }
+  .title1 {
+    display: block;
+    margin: 17px 0 24px;
+    font-family: Modular Amplitude;
+    font-size: 100px;
+    font-weight: 400;
+    line-height: 100px;
+    text-align: left;
+    background: linear-gradient(90deg, #00dcff 0%, #017ef7 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    position: relative;
+  }
+  .btn {
+    font-family: Barlow Condensed;
+    position: relative;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 44px;
+    text-align: center;
+    color: #fff;
+    width: 460px;
+    height: 78px;
+    background: linear-gradient(90deg, #00dcff 0%, #017ef7 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &:hover {
+      /* 设置背景渐变作为边框 */
+
+      background: url('../../assets/upload/borderImage.png');
+    }
+  }
+}
+
+@media screen and (max-width: 1568px) {
+  .watchBG {
+    .watchImg {
+      bottom: 0;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .banner {
+    flex-direction: column-reverse;
+    .leftWrap {
+      top: 0;
+      align-items: center;
+    }
+    .rightWrap {
+      top: 0;
+    }
+    .titleInner {
+      font-family: Barlow Condensed;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 24px;
+    }
+    .title1 {
+      font-family: Modular Amplitude;
+      font-size: 44px;
+      font-weight: 400;
+      line-height: 44px;
+      text-align: left;
+      margin: 8px 0 16px;
+    }
+    .btn {
+      font-family: Barlow Condensed;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 24px;
+      text-align: center;
+      width: 240px;
+      height: 40px;
+      &:hover {
+        background-size: cover;
+      }
+    }
+    .shadow {
+      width: 162px;
+      left: auto;
+      right: 0;
+      top: -67px;
+    }
+  }
+}
