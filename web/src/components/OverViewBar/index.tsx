@@ -4,7 +4,15 @@ import { useDispatch } from 'react-redux';
 import { warning } from 'web/src/slices/MessagesSlice';
 import styles from './index.module.less';
 import { useEffect, useState } from 'react';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { InjectedConnector } from 'wagmi/connectors/injected';
 export const OverViewBar = (props: any) => {
+  const { address, isConnected } = useAccount();
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const { disconnect } = useDisconnect();
   const [pathName, __pathName] = useState('');
   const [rightDrawerOpen, __rightDrawerOpen] = useState(false);
   const [mPathName, __mPathName] = useState('');
@@ -120,7 +128,7 @@ export const OverViewBar = (props: any) => {
               </Box>
             </a>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <div
+              {/*<div
                 className={`${styles.btn} ${styles.btn1}`}
                 onClick={() => {
                   window.open('/Preorder', '_self');
@@ -128,6 +136,54 @@ export const OverViewBar = (props: any) => {
               >
                 FUTURE NFT
               </div>
+*/}
+              <ConnectButton.Custom>
+                {({
+                  account,
+                  chain,
+                  openAccountModal,
+                  openChainModal,
+                  openConnectModal,
+                  authenticationStatus,
+                  mounted,
+                }) => {
+                  const connected =
+                    account &&
+                    chain &&
+                    (!authenticationStatus ||
+                      authenticationStatus === 'authenticated');
+
+                  return (
+                    <div>
+                      {!connected ? (
+                        <div
+                          onClick={openConnectModal}
+                          className={`${styles.connectBtn} ${styles.connectBtn1}`}
+                        >
+                          <img
+                            src="/assets/upload/connectIcon.png"
+                            alt=""
+                            className={styles.connectIcon}
+                          />
+                          Connect Wallet
+                        </div>
+                      ) : (
+                        <div
+                          onClick={openAccountModal}
+                          className={`${styles.connectBtn} ${styles.connectBtn1} ${styles.active}`}
+                        >
+                          <img
+                            src="/assets/upload/connectIcon.png"
+                            alt=""
+                            className={styles.connectIcon}
+                          />
+                          {account.displayName}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }}
+              </ConnectButton.Custom>
               <IconButton sx={{ pt: 0 }} onClick={toggleDrawer}>
                 <img
                   src="/assets/upload/nav_icon_home_menu.png"
@@ -191,6 +247,7 @@ export const OverViewBar = (props: any) => {
                 );
               })}
             </Box>
+            {/* <ConnectButton label="SELECT WALLET" /> */}
             <div
               className={styles.btn}
               onClick={() => {
@@ -230,6 +287,54 @@ export const OverViewBar = (props: any) => {
                           </div>
                         </div> */}
             </div>
+            {/* <ConnectButton /> */}
+            <ConnectButton.Custom>
+              {({
+                account,
+                chain,
+                openAccountModal,
+                openChainModal,
+                openConnectModal,
+                authenticationStatus,
+                mounted,
+              }) => {
+                const connected =
+                  account &&
+                  chain &&
+                  (!authenticationStatus ||
+                    authenticationStatus === 'authenticated');
+
+                return (
+                  <div>
+                    {!connected ? (
+                      <div
+                        onClick={openConnectModal}
+                        className={styles.connectBtn}
+                      >
+                        <img
+                          src="/assets/upload/connectIcon.png"
+                          alt=""
+                          className={styles.connectIcon}
+                        />
+                        Connect Wallet
+                      </div>
+                    ) : (
+                      <div
+                        onClick={openAccountModal}
+                        className={`${styles.connectBtn} ${styles.active}`}
+                      >
+                        <img
+                          src="/assets/upload/connectIcon.png"
+                          alt=""
+                          className={styles.connectIcon}
+                        />
+                        {account.displayName}
+                      </div>
+                    )}
+                  </div>
+                );
+              }}
+            </ConnectButton.Custom>
           </Box>
         </Box>
 

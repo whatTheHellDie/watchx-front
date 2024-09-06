@@ -1,17 +1,28 @@
 import { OverViewBar } from '../OverViewBar';
 import { Box, Typography } from '@mui/material';
-
-import { useState } from 'react';
+import '@rainbow-me/rainbowkit/styles.css';
+import { useEffect, useState } from 'react';
 import { Footer } from '../footer';
-
+import NetworkSwitcher from '../NetworkSwither';
+import Tip from '../Tip';
+import { useNetwork, useSwitchNetwork } from 'wagmi';
 // import bgNew from '@/assets/img/star.png';
 export default function BodyWrapper(props: any) {
   const [locale, setLocale] = useState(false);
-
+  const { chain } = useNetwork();
   function changeLocale(locale: any) {
     setLocale(locale);
   }
-
+  const [showAlert, setShowAlert] = useState(false);
+  useEffect(() => {
+    if (chain) {
+      if (chain.id === 4689) {
+        setShowAlert(false);
+      } else {
+        setShowAlert(true);
+      }
+    }
+  }, [chain]);
   return (
     <Box
       sx={{
@@ -37,6 +48,15 @@ export default function BodyWrapper(props: any) {
           {props.children}
           <Footer />
         </Box>
+        {/* <Tip
+          class2={true}
+          title={'Switch Chain'}
+          showAlert={showAlert}
+          setShowAlert={setShowAlert}
+          notShowClose={true}
+        >
+          <NetworkSwitcher />
+        </Tip> */}
       </Box>
     </Box>
   );

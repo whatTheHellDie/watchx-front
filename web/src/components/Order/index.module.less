@@ -271,6 +271,7 @@
 
   margin-top: 64px;
   margin-bottom: 103px;
+  color: #000;
 }
 .againBtn {
   margin-top: -80px;
@@ -284,15 +285,16 @@
   text-align: left;
 }
 @media screen and (max-width: 1200px) {
-  .phoneHide {
-    display: none;
-  }
+  // .phoneHide {
+  //   display: none;
+  // }
   .pcOpacity {
     opacity: 1;
   }
 }
 .alertContent {
   padding: 57px 0 87px;
+
   .payTitle {
     display: flex;
     gap: 16px;
@@ -322,10 +324,10 @@
     cursor: pointer;
     width: 380px;
     height: 64px;
-    top: 615px;
-    left: 763px;
+
     border-radius: 40px;
     border: 1px solid #00dcff;
+    color: #fff;
 
     font-family: Modular Amplitude;
     font-size: 24px;
@@ -336,7 +338,13 @@
     margin: 79px auto 0;
     justify-content: center;
     gap: 8px;
+    &.statusBtn2 {
+      margin: 30px auto 0;
+    }
   }
+}
+.alertContent1 {
+  padding: 30px 0;
 }
 .invalid {
   font-family: Barlow Condensed;
@@ -372,9 +380,13 @@
   .wrap1Inner {
     width: 350px;
     padding: 0;
+    &.wrap1Inner1 {
+      background: #000;
+      padding-bottom: 20px;
+    }
   }
   .orderTitle {
-    margin-top: 8px;
+    padding-top: 8px;
     font-size: 22px;
     font-weight: 500;
     line-height: 26px;
@@ -530,12 +542,55 @@
 .reuse {
   color: #ffffff;
 }
+.chooseWatch {
+  display: flex;
+  gap: 32px;
+  padding: 30px 0 20px;
+  .box {
+    &:hover,
+    &.active {
+      .imgWrap {
+        border: 1px solid #00dcff;
+      }
+      .name {
+        font-family: Barlow Condensed;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 16px;
+        text-align: center;
+        color: #00dcff;
+      }
+    }
+  }
+  .imgWrap {
+    cursor: pointer;
+    background: #141e1e;
+    border-radius: 10px;
+    border: 1px solid #141e1e;
+  }
+  .img {
+  }
+  .name {
+    font-family: Barlow Condensed;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: center;
+    margin-top: 8px;
+  }
+}
 @media screen and (max-width: 768px) {
+  .orderTitle {
+  }
   .alertContent {
     padding: 48px 10px 50px;
+
     .payTitle {
       display: block;
       text-align: center;
+    }
+    .payTitle1 {
+      font-size: 26px;
     }
     .status {
       font-family: Barlow Condensed;
@@ -568,6 +623,9 @@
     .teleImg {
       width: 28px;
     }
+  }
+  .alertContent1 {
+    padding: 30px 0;
   }
   .orderTitle2 {
     margin-top: 18px;

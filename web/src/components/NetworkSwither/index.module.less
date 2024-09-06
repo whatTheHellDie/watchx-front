@@ -1,0 +1,41 @@
+.flexItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.title {
+  font-family: Barlow Condensed;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 32px;
+  text-align: left;
+  margin: 43px auto;
+}
+.btn {
+  height: 44px;
+  font-family: Modular Amplitude;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #26c6da;
+  cursor: pointer;
+  position: relative;
+  border-radius: 10px;
+  width: 300px;
+}
+@media screen and (max-width: 768px) {
+  .title {
+    font-size: 18px;
+    margin: 38px auto;
+  }
+  .btn {
+    font-size: 16px;
+    height: 32px;
+    width: 200px;
+  }
+}

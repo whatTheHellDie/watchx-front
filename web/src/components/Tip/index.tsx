@@ -2,25 +2,21 @@
 
 import styles from './index.module.css';
 import { useState, useEffect } from 'react';
-export default function Alert({
+export default function Tip({
   children,
   title,
   showAlert,
   setShowAlert,
   notShowClose,
+  class2,
 }: any) {
-  const [BottomActive, setBottomActive] = useState(false);
-  useEffect(() => {
-    setBottomActive(showAlert);
-  }, [showAlert]);
   return (
-    <div className={`${styles.Alert} ${showAlert ? styles.active : ''}`}>
+    <div className={`${styles.Tip} `}>
       <div
-        className={styles.AlertContent}
-        style={{ bottom: BottomActive ? 0 : '' }}
+        className={`${styles.TipContent} ${class2 ? styles.alertContent1 : ''}`}
       >
-        <div className={styles.AlertContentInner}>
-          <div className={styles.AlertTitle}>{title}</div>
+        <div className={styles.TipContentInner}>
+          <div className={styles.TipTitle}>{title}</div>
           {children}
         </div>
         {!notShowClose ? (
@@ -28,7 +24,6 @@ export default function Alert({
             src="/assets/upload/alertClose.png"
             onClick={() => {
               setShowAlert(!showAlert);
-              setBottomActive(!BottomActive);
             }}
             alt=""
             className={styles.close}

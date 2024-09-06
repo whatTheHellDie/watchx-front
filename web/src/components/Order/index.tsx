@@ -6,22 +6,20 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { countryList } from './country';
-import Alert from '../Alert';
+import Tip from '../Tip';
 import { success, warning, error } from 'web/src/slices/MessagesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { from } from '@iotexproject/iotex-address-ts';
-import {
-  Connection,
-  SystemProgram,
-  Transaction,
-  TransactionInstruction,
-  sendAndConfirmTransaction,
-  PublicKey,
-} from '@solana/web3.js';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
+
 import { apiUrl, getQueryParam } from 'web/src/utils';
 import { CircularProgress } from '@mui/material';
+import {
+  useConnectModal,
+  useAccountModal,
+  useChainModal,
+} from '@rainbow-me/rainbowkit';
 export const cutAddress = (str: any) => {
   if (!str) {
     return;
@@ -47,33 +45,28 @@ const roleList = [
 //   { name: 'Project founder', value: '4' },
 // ];
 export default function Pre() {
+  const { openConnectModal } = useConnectModal();
   const [showClick, setShowClick] = useState(false);
-  const { connection } = useConnection();
-  const {
-    select,
-    wallet,
-    publicKey,
-    signTransaction,
-    sendTransaction,
-    disconnect,
-  } = useWallet();
-  const dispatch = useDispatch();
-  const status = getQueryParam('status');
-  const receiverPublicKey = 'Receiver_Public_Key';
-  const amount = 100000; // 以 lamports 为单位的转账金额
-  const walletAddress = publicKey?.toString();
 
-  const [showAlert, setShowAlert] = useState(status ? true : false);
+  const { address, isConnected } = useAccount();
+
+  const dispatch = useDispatch();
+
+  const receiverPublicKey = 'Receiver_Public_Key';
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [chooseActive, setChooseActive] = useState(0);
+  const [showAlert1, setShowAlert1] = useState(false);
+  const [isConfirm, setIsConfirm] = useState(false);
+  const [payUrl, setPayUrl] = useState('');
   const [country, setCountry] = useState('');
   const [role, setRole] = useState('');
   const [isInvalid, setIsInvalid] = useState(false);
-  const [discountNumber, setDiscountNumber] = useState('0');
-  const [buySuccess, setBuySuccess] = useState(
-    status === 'success' ? true : false
-  );
-  const getDiscountNumber = async (value: any) => {
+  const [discountCodeNumber, setDiscountCodeNumber] = useState('0');
+  const [buySuccess, setBuySuccess] = useState(false);
+  const getDiscountCodeNumber = async (value: any) => {
     if (!value) {
-      setDiscountNumber('0');
+      setDiscountCodeNumber('0');
       setIsInvalid(false);
       return;
     }
@@ -91,10 +84,10 @@ export default function Pre() {
         const mData = data.data;
         if (mData.discountValue) {
           setIsInvalid(false);
-          setDiscountNumber(mData.discountValue);
+          setDiscountCodeNumber(mData.discountValue);
         } else {
           setIsInvalid(true);
-          setDiscountNumber('0');
+          setDiscountCodeNumber('0');
         }
       } else {
         dispatch(error(data.msg));
@@ -120,25 +113,45 @@ export default function Pre() {
   // const param: any = getQueryParam('param');
   // watchInfoArr = JSON.parse(param);
   // const price = type === 'founder' ? '469.00' : '89.00';
+  const [allDiscountNumber, setAllDiscountNumber] = useState('0');
+
   const price = '189.00';
-  let buyTotal = Number(price) - Number(discountNumber);
+  const [buyTotal, setBuyTotal] = useState('0');
   // watchInfoArr.forEach((item: any) => {
   //   buyTotal += Number(item.num) * Number(price);
   // });
   const wrap1InnerRef = useRef<any>(null);
   const [top, setTop] = useState('');
   const [width, setWidth] = useState('');
+  const [right, setRight] = useState('');
+  const [marginRight, setMarginRight] = useState('');
   const handleResize = () => {
     const item = wrap1InnerRef && wrap1InnerRef.current;
-
     if (item) {
       setWidth(item.getBoundingClientRect().width + 'px');
-      setTop('100px');
+      if (item.getBoundingClientRect().width == 350) {
+        setTop('60px');
+        // margin-right: ;
+        // right: 50%;
+        setRight('50%');
+        setMarginRight('-175px');
+        item.style.marginRight = '';
+      } else {
+        setTop('100px');
+        setRight('0%');
+        setMarginRight('0');
+      }
     }
   };
   useEffect(() => {
     handleResize();
+  }, [isConfirm]);
+  useEffect(() => {
     // 添加滚动事件监听器
+    const status = getQueryParam('status');
+    setBuySuccess(status === 'success' ? true : false);
+    setShowAlert(status === 'success' || status === 'failed' ? true : false);
+
     window.addEventListener('resize', handleResize);
     sessionStorage.setItem('discountCode', '');
     const data = localStorage.getItem('previousData');
@@ -150,7 +163,7 @@ export default function Pre() {
       if (!document.hidden) {
         if (window.location.pathname === '/Order') {
           console.log(sessionStorage.getItem('discountCode'));
-          getDiscountNumber(sessionStorage.getItem('discountCode'));
+          getDiscountCodeNumber(sessionStorage.getItem('discountCode'));
         }
       }
     });
@@ -181,7 +194,7 @@ export default function Pre() {
       inviteId: '',
       discountCode: '',
     });
-    setDiscountNumber('0');
+    setDiscountCodeNumber('0');
     setIsInvalid(false);
     setDeliveryObj({
       region: '',
@@ -208,8 +221,9 @@ export default function Pre() {
       dispatch(warning('Please enter email'));
       return;
     }
-    if (!orderObj.nftReceivingAddress) {
-      dispatch(warning('Please enter IoTeX address'));
+    if (!address) {
+      dispatch(warning('Please connect wallet'));
+      openConnectModal && openConnectModal();
       return;
     }
     if (!deliveryObj.region) {
@@ -258,13 +272,6 @@ export default function Pre() {
       );
       return;
     }
-    let mAddr;
-    try {
-      mAddr = from(orderObj.nftReceivingAddress);
-    } catch (err: any) {
-      dispatch(warning('Invalid IoTeX address'));
-      return;
-    }
 
     const isPhone = await phoneCheck();
     if (!isPhone) {
@@ -279,25 +286,35 @@ export default function Pre() {
       dispatch(warning('Invalid discount code.'));
       return;
     }
+    if (!isConfirm) {
+      getAllDiscountNumber();
+      return;
+    }
     const formData = {
       ...orderObj,
-      nftReceivingAddress: mAddr.stringEth().toString(),
+      nftReceivingAddress: address,
       emailMe,
       successUrl: `${window.location.origin}${window.location.pathname}?status=success`,
       cancelURL: `${window.location.origin}${window.location.pathname}?status=failed`,
       delivery: { ...deliveryObj, phone: deliveryObj.phone.replace(' ', '') },
+      watchContent: JSON.stringify({
+        color: chooseActive === 0 ? 'Black' : 'Grey',
+      }),
     };
     const formData1 = {
       //用于储存信息
       ...orderObj,
-      nftReceivingAddress: mAddr.stringEth().toString(),
+      nftReceivingAddress: '',
       emailMe,
       successUrl: `${window.location.origin}${window.location.pathname}?status=success`,
       cancelURL: `${window.location.origin}${window.location.pathname}?status=failed`,
       delivery: deliveryObj,
       countryName: country,
+      watchContent: '',
     };
     localStorage.setItem('previousData', JSON.stringify(formData1));
+    console.log(JSON.stringify(formData));
+    debugger;
     try {
       setIsLoading(true);
       const response = await fetch(`${apiUrl}/future/order/create`, {
@@ -308,7 +325,14 @@ export default function Pre() {
       const data = await response.json();
       if (data.code === 0) {
         getOrderStatus(data.data.orderId);
-        window.open(data.data.paymentUrl);
+        setPayUrl(data.data.paymentUrl);
+        let aDom = document.createElement('a');
+        aDom.target = '_blank';
+        aDom.href = data.data.paymentUrl;
+        aDom.click();
+        setTimeout(() => {
+          setShowAlert1(true);
+        }, 2000);
       } else {
         dispatch(error(data.msg));
         setIsLoading(false);
@@ -317,6 +341,35 @@ export default function Pre() {
       dispatch(error(e.message));
       console.error(e);
       setIsLoading(false);
+    }
+  };
+  const getAllDiscountNumber = async () => {
+    const formData = {
+      ...orderObj,
+      nftReceivingAddress: address,
+      emailMe,
+      successUrl: `${window.location.origin}${window.location.pathname}?status=success`,
+      cancelURL: `${window.location.origin}${window.location.pathname}?status=failed`,
+      delivery: { ...deliveryObj, phone: deliveryObj.phone.replace(' ', '') },
+      watchContent: '',
+    };
+    try {
+      const response = await fetch(`${apiUrl}/future/order/amount`, {
+        method: 'POST',
+        headers: { Origin: apiUrl, 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (data.code === 0) {
+        setAllDiscountNumber(data.data.discount.toString());
+        setBuyTotal(data.data.amount.toString());
+        setIsConfirm(true);
+      } else {
+        dispatch(error(data.msg));
+      }
+    } catch (e: any) {
+      dispatch(error(e.message));
+      console.error(e);
     }
   };
   const getOrderStatus = async (orderId: any) => {
@@ -376,27 +429,30 @@ export default function Pre() {
   };
   const content = (
     <div>
-      <div className={styles.orderTitle}>Your order</div>
-      <div
-        className={`${styles.between} ${
-          !isInvalid && discountNumber !== '0' ? styles.active : ''
-        }`}
-      >
-        <div className={styles.left}>WatchX Future NFT</div>
-        <div className={`${styles.left} ${styles.right}`}>${price}</div>
-      </div>
-      {!isInvalid && discountNumber !== '0' ? (
-        <div className={`${styles.between} ${styles.between1}`}>
-          <div className={styles.left}>Discount Code</div>
-          <div className={`${styles.left} ${styles.right}`}>
-            -${discountNumber}
+      {isConfirm ? (
+        <div>
+          <div className={styles.orderTitle}>Your order</div>
+
+          <div
+            className={`${styles.between} ${
+              !isInvalid && allDiscountNumber !== '0' ? styles.active : ''
+            }`}
+          >
+            <div className={styles.left}>WatchX Future NFT</div>
+            <div className={`${styles.left} ${styles.right}`}>${price}</div>
           </div>
-        </div>
-      ) : (
-        ''
-      )}
-      <div className={styles.settle}>
-        {/* <div className={styles.itemUl}>
+          {!isInvalid && allDiscountNumber !== '0' ? (
+            <div className={`${styles.between} ${styles.between1}`}>
+              <div className={styles.left}>Discount</div>
+              <div className={`${styles.left} ${styles.right}`}>
+                -${allDiscountNumber}
+              </div>
+            </div>
+          ) : (
+            ''
+          )}
+          <div className={styles.settle}>
+            {/* <div className={styles.itemUl}>
           {watchInfoArr.map((item: any, i: number) => {
             return (
               <div key={'b' + i} className={`${styles.itemLi} `}>
@@ -408,12 +464,16 @@ export default function Pre() {
             );
           })}
         </div> */}
-        <div className={styles.total}>
-          <div className={styles.totalPrice}>
-            Total price:${buyTotal.toFixed(2)}
+            <div className={styles.total}>
+              <div className={styles.totalPrice}>
+                Total price:${Number(buyTotal).toFixed(2)}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        ''
+      )}
     </div>
   );
   const renderPlaceHolder = (value: any, list: any[], placeholder: string) => {
@@ -427,10 +487,11 @@ export default function Pre() {
   };
   return (
     <BodyWrapper>
-      <div className={styles.outBox}>
-        <div className={styles.wrap}>
-          <div className={styles.wrapInner}>
-            {/* <div className={styles.orderTitle}>Information</div>
+      <div>
+        <div className={styles.outBox}>
+          <div className={styles.wrap}>
+            <div className={styles.wrapInner}>
+              {/* <div className={styles.orderTitle}>Information</div>
             <div className={styles.twitterWrap}>
               <div className={styles.twitterTip}>
                 Connect your Twitter (X) for more incentives.
@@ -465,218 +526,260 @@ export default function Pre() {
                 ></img>
               </div>
             </div> */}
-            {showClick ? (
-              <div className={styles.previous}>
-                Autofill previous usage information?
-                <span
-                  className={styles.reuse}
-                  onClick={() => {
-                    const data = localStorage.getItem('previousData');
-                    const previousData = data && JSON.parse(data);
-                    debugger;
-                    setOrderObj({
-                      payerEmail: previousData.payerEmail,
-                      nftReceivingAddress: previousData.nftReceivingAddress,
-                      discountCode: previousData.discountCode,
-                      inviteId: localStorage.getItem('inviteId') || '',
-                    });
-                    const delivery = previousData.delivery;
-                    setDeliveryObj({
-                      region: delivery.region,
-                      firstname: delivery.firstname,
-                      lastname: delivery.lastname,
-                      city: delivery.city,
-                      state: delivery.state,
-                      postcode: delivery.postcode,
-                      address: delivery.address,
-                      phone: delivery.phone,
-                    });
-                    setEmailMe(previousData.emailMe);
-                    setCountry(previousData.countryName);
-                  }}
-                >
-                  {' '}
-                  click here
-                </span>
-              </div>
-            ) : (
-              ''
-            )}
-            <div className={`${styles.orderTitle} `}>Contact</div>
-            <div className={`${styles.inputWrap}`}>
-              <input
-                type="text"
-                className={styles.input}
-                onChange={(event: any) => {
-                  let value = event.target.value;
-                  setOrderObj({
-                    ...orderObj,
-                    payerEmail: value,
-                  });
-                }}
-                placeholder="Email"
-                value={orderObj.payerEmail}
-              />
-              <div className={styles.email}>
-                <div
-                  className={`${styles.radio} ${emailMe ? styles.active : ''}`}
-                  onClick={() => {
-                    setEmailMe(!emailMe);
-                  }}
-                ></div>
-                Email me will news and offers.
-              </div>
-            </div>
-            <div className={`${styles.orderTitle} ${styles.orderTitle1}`}>
-              Delivery
-            </div>
-            <div className={styles.deliveryWrap}>
-              <div className={`${styles.select} ${styles.select1}`}>
-                <Select
-                  value={country}
+              {showClick ? (
+                <div className={styles.previous}>
+                  Autofill previous usage information?
+                  <span
+                    className={styles.reuse}
+                    onClick={() => {
+                      const data = localStorage.getItem('previousData');
+                      const previousData = data && JSON.parse(data);
+                      setOrderObj({
+                        payerEmail: previousData.payerEmail,
+                        nftReceivingAddress: '',
+                        discountCode: previousData.discountCode,
+                        inviteId: localStorage.getItem('inviteId') || '',
+                      });
+                      const delivery = previousData.delivery;
+                      setDeliveryObj({
+                        region: delivery.region,
+                        firstname: delivery.firstname,
+                        lastname: delivery.lastname,
+                        city: delivery.city,
+                        state: delivery.state,
+                        postcode: delivery.postcode,
+                        address: delivery.address,
+                        phone: delivery.phone,
+                      });
+                      setEmailMe(previousData.emailMe);
+                      setCountry(previousData.countryName);
+                    }}
+                  >
+                    {' '}
+                    click here
+                  </span>
+                </div>
+              ) : (
+                ''
+              )}
+              <div className={`${styles.orderTitle} `}>Contact</div>
+              <div className={`${styles.inputWrap}`}>
+                <input
+                  type="text"
+                  className={styles.input}
                   onChange={(event: any) => {
                     let value = event.target.value;
-                    if (value === 'CN') {
-                      dispatch(
-                        warning(
-                          'Due to policy restrictions, we do not support user addresses from mainland China.'
-                        )
-                      );
-                      return;
-                    }
-                    setCountry(value);
-                    const chooseList = countryList.filter((item) => {
-                      return item.value === value;
-                    });
-                    setDeliveryObj({
-                      ...deliveryObj,
-                      region: chooseList[0].name,
+                    setOrderObj({
+                      ...orderObj,
+                      payerEmail: value,
                     });
                   }}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  className={styles.select}
-                  // inputProps={{ 'aria-label': 'Without label' }}
-                  label="Country/Region"
-                  displayEmpty
-                  renderValue={(value) =>
-                    renderPlaceHolder(value, countryList, 'Country/Region')
-                  }
-                >
-                  {countryList.map((item: any) => {
-                    return <MenuItem value={item.value}>{item.name}</MenuItem>;
-                  })}
-                </Select>
-                <img
-                  className={styles.dec}
-                  src="/assets/upload/downSelect.png"
-                ></img>
+                  placeholder="Email"
+                  value={orderObj.payerEmail}
+                />
+                <div className={styles.email}>
+                  <div
+                    className={`${styles.radio} ${
+                      emailMe ? styles.active : ''
+                    }`}
+                    onClick={() => {
+                      setEmailMe(!emailMe);
+                    }}
+                  ></div>
+                  Email me will news and offers.
+                </div>
               </div>
-            </div>
-            <div className={styles.twoColumn}>
-              <input
-                type="text"
-                className={styles.input}
-                placeholder="First name"
-                onChange={(event: any) => {
-                  let value = event.target.value;
-                  setDeliveryObj({
-                    ...deliveryObj,
-                    firstname: value,
-                  });
-                }}
-                value={deliveryObj.firstname}
-              />
-              {deliveryObj.firstName}
-              <input
-                type="text"
-                className={styles.input}
-                placeholder="Last name"
-                onChange={(event: any) => {
-                  let value = event.target.value;
-                  setDeliveryObj({
-                    ...deliveryObj,
-                    lastname: value,
-                  });
-                }}
-                value={deliveryObj.lastname}
-              />
-            </div>
-            <div className={`${styles.twoColumn}`}>
-              <input
-                type="text"
-                className={styles.input}
-                placeholder="City"
-                onChange={(event: any) => {
-                  let value = event.target.value;
-                  setDeliveryObj({
-                    ...deliveryObj,
-                    city: value,
-                  });
-                }}
-                value={deliveryObj.city}
-              />
-              <input
-                type="text"
-                className={styles.input}
-                placeholder="State/territory"
-                onChange={(event: any) => {
-                  let value = event.target.value;
-                  setDeliveryObj({
-                    ...deliveryObj,
-                    state: value,
-                  });
-                }}
-                value={deliveryObj.state}
-              />
-              <input
-                type="text"
-                className={styles.input}
-                placeholder="Postcode"
-                onChange={(event: any) => {
-                  let value = event.target.value;
-                  setDeliveryObj({
-                    ...deliveryObj,
-                    postcode: value,
-                  });
-                }}
-                value={deliveryObj.postcode}
-              />
-            </div>
-            <div className={`${styles.twoColumn} ${styles.oneColumn}`}>
-              <input
-                type="text"
-                className={styles.input}
-                placeholder="Address"
-                onChange={(event: any) => {
-                  let value = event.target.value;
-                  setDeliveryObj({
-                    ...deliveryObj,
-                    address: value,
-                  });
-                }}
-                value={deliveryObj.address}
-              />
-            </div>
-            <div className={`${styles.twoColumn} ${styles.oneColumn}`}>
-              <input
-                type="text"
-                className={styles.input}
-                placeholder="Phone,For example:+1 xxxxxxxx"
-                onChange={(event: any) => {
-                  let value = event.target.value;
-                  setDeliveryObj({
-                    ...deliveryObj,
-                    phone: value,
-                  });
-                }}
-                value={deliveryObj.phone}
-              />
-            </div>
-            {/* <div className={`${styles.orderTitle} ${styles.orderTitle1}`}>
+              <div className={`${styles.orderTitle} ${styles.orderTitle1}`}>
+                Fusion Smartwatch
+              </div>
+              <div className={styles.chooseWatch}>
+                <div
+                  className={`${styles.box} ${
+                    chooseActive === 0 ? styles.active : ''
+                  }`}
+                  onClick={() => {
+                    setChooseActive(0);
+                  }}
+                >
+                  <div className={styles.imgWrap}>
+                    <img
+                      src="/assets/upload/watchBlack.png"
+                      alt=""
+                      className={styles.img}
+                    />
+                  </div>
+                  <div className={styles.name}>Black</div>
+                </div>
+                <div
+                  className={`${styles.box} ${
+                    chooseActive === 1 ? styles.active : ''
+                  }`}
+                  onClick={() => {
+                    setChooseActive(1);
+                  }}
+                >
+                  <div className={styles.imgWrap}>
+                    <img
+                      src="/assets/upload/watchGrey.png"
+                      alt=""
+                      className={styles.img}
+                    />
+                  </div>
+                  <div className={styles.name}>Grey</div>
+                </div>
+              </div>
+              <div className={`${styles.orderTitle} ${styles.orderTitle1}`}>
+                Delivery
+              </div>
+              <div className={styles.deliveryWrap}>
+                <div className={`${styles.select} ${styles.select1}`}>
+                  <Select
+                    value={country}
+                    onChange={(event: any) => {
+                      let value = event.target.value;
+                      if (value === 'CN') {
+                        dispatch(
+                          warning(
+                            'Due to policy restrictions, we do not support user addresses from mainland China.'
+                          )
+                        );
+                        return;
+                      }
+                      setCountry(value);
+                      const chooseList = countryList.filter((item) => {
+                        return item.value === value;
+                      });
+                      setDeliveryObj({
+                        ...deliveryObj,
+                        region: chooseList[0].name,
+                      });
+                    }}
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    className={styles.select}
+                    // inputProps={{ 'aria-label': 'Without label' }}
+                    label="Country/Region"
+                    displayEmpty
+                    renderValue={(value) =>
+                      renderPlaceHolder(value, countryList, 'Country/Region')
+                    }
+                  >
+                    {countryList.map((item: any) => {
+                      return (
+                        <MenuItem value={item.value}>{item.name}</MenuItem>
+                      );
+                    })}
+                  </Select>
+                  <img
+                    className={styles.dec}
+                    src="/assets/upload/downSelect.png"
+                  ></img>
+                </div>
+              </div>
+              <div className={styles.twoColumn}>
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="First name"
+                  onChange={(event: any) => {
+                    let value = event.target.value;
+                    setDeliveryObj({
+                      ...deliveryObj,
+                      firstname: value,
+                    });
+                  }}
+                  value={deliveryObj.firstname}
+                />
+                {deliveryObj.firstName}
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="Last name"
+                  onChange={(event: any) => {
+                    let value = event.target.value;
+                    setDeliveryObj({
+                      ...deliveryObj,
+                      lastname: value,
+                    });
+                  }}
+                  value={deliveryObj.lastname}
+                />
+              </div>
+              <div className={`${styles.twoColumn}`}>
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="City"
+                  onChange={(event: any) => {
+                    let value = event.target.value;
+                    setDeliveryObj({
+                      ...deliveryObj,
+                      city: value,
+                    });
+                  }}
+                  value={deliveryObj.city}
+                />
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="State/territory"
+                  onChange={(event: any) => {
+                    let value = event.target.value;
+                    setDeliveryObj({
+                      ...deliveryObj,
+                      state: value,
+                    });
+                  }}
+                  value={deliveryObj.state}
+                />
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="Postcode"
+                  onChange={(event: any) => {
+                    let value = event.target.value;
+                    setDeliveryObj({
+                      ...deliveryObj,
+                      postcode: value,
+                    });
+                  }}
+                  value={deliveryObj.postcode}
+                />
+              </div>
+              <div className={`${styles.twoColumn} ${styles.oneColumn}`}>
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="Address"
+                  onChange={(event: any) => {
+                    let value = event.target.value;
+                    setDeliveryObj({
+                      ...deliveryObj,
+                      address: value,
+                    });
+                  }}
+                  value={deliveryObj.address}
+                />
+              </div>
+              <div className={`${styles.twoColumn} ${styles.oneColumn}`}>
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="Phone,For example:+1 xxxxxxxx"
+                  onChange={(event: any) => {
+                    let value = event.target.value;
+                    setDeliveryObj({
+                      ...deliveryObj,
+                      phone: value,
+                    });
+                  }}
+                  value={deliveryObj.phone}
+                />
+              </div>
+              {/* <div className={`${styles.orderTitle} ${styles.orderTitle1}`}>
               Payment
             </div> */}
-            {/* <div className={`${styles.email} ${styles.credit}`}>
+              {/* <div className={`${styles.email} ${styles.credit}`}>
               <div
                 className={`${styles.radio} ${Credit ? styles.active : ''}`}
                 onClick={() => {
@@ -730,7 +833,7 @@ export default function Pre() {
               </div>
               <div>{cutAddress(walletAddress)}</div>
             </div> */}
-            <div className={`${styles.orderTitle} ${styles.orderTitle1}`}>
+              {/* <div className={`${styles.orderTitle} ${styles.orderTitle1}`}>
               IoTeX address
             </div>
             <div className={`${styles.inputWrap}`}>
@@ -750,139 +853,178 @@ export default function Pre() {
               <div className={styles.addressTip}>
                 Address(EVM compatible) for Future NFT distribution.
               </div>
-            </div>
-            <div
-              className={`${styles.orderTitle} ${styles.orderTitle1} ${styles.orderTitle2}`}
-            >
-              Discount Code
-            </div>
-            <div className={`${styles.inputWrap}`}>
-              <input
-                type="text"
-                className={styles.input}
-                placeholder="Discount Code"
-                onChange={(event: any) => {
-                  let value = event.target.value;
-                  getDiscountNumber(value);
-                  sessionStorage.setItem('discountCode', value);
-                  setOrderObj({
-                    ...orderObj,
-                    discountCode: value,
-                  });
-                }}
-                value={orderObj.discountCode}
-              />
-              {isInvalid ? (
-                <div className={styles.invalid}>Invalid discount code.</div>
-              ) : (
-                ''
-              )}
-              {!isInvalid && discountNumber !== '0' ? (
-                <div className={`${styles.invalid} ${styles.discountNumber}`}>
-                  -${discountNumber}
-                </div>
-              ) : (
-                ''
-              )}
-            </div>
-            <div
-              className={`${styles.connectBtn} ${styles.payBtn}`}
-              onClick={sendTransactionA}
-            >
-              {isLoading ? (
-                <div style={{ margin: '0 5px' }}>
-                  <CircularProgress color="inherit" size={18} /> Waiting...
-                </div>
-              ) : (
-                'PAY NOW'
-              )}
-            </div>
-            {isLoading ? (
+            </div> */}
               <div
-                className={`${styles.connectBtn} ${styles.payBtn}  ${styles.againBtn}`}
-                onClick={() => {
-                  setIsLoading(false);
-                }}
+                className={`${styles.orderTitle} ${styles.orderTitle1} ${styles.orderTitle2}`}
               >
-                Re-PAY
+                Discount Code
               </div>
-            ) : (
-              ''
-            )}
+              <div className={`${styles.inputWrap}`}>
+                <input
+                  type="text"
+                  className={styles.input}
+                  placeholder="Discount Code"
+                  onChange={(event: any) => {
+                    let value = event.target.value;
+                    getDiscountCodeNumber(value);
+                    sessionStorage.setItem('discountCode', value);
+                    setOrderObj({
+                      ...orderObj,
+                      discountCode: value,
+                    });
+                  }}
+                  value={orderObj.discountCode}
+                />
+                {isInvalid ? (
+                  <div className={styles.invalid}>Invalid discount code.</div>
+                ) : (
+                  ''
+                )}
+                {!isInvalid && discountCodeNumber !== '0' ? (
+                  <div className={`${styles.invalid} ${styles.discountNumber}`}>
+                    -${discountCodeNumber}
+                  </div>
+                ) : (
+                  ''
+                )}
+              </div>
+              <div
+                className={`${styles.connectBtn} ${styles.payBtn}`}
+                onClick={sendTransactionA}
+              >
+                {!isConfirm ? (
+                  'Confirm'
+                ) : isLoading ? (
+                  <div style={{ margin: '0 5px' }}>
+                    <CircularProgress color="inherit" size={18} /> Waiting...
+                  </div>
+                ) : (
+                  'PAY NOW'
+                )}
+              </div>
+              {isLoading ? (
+                <div
+                  className={`${styles.connectBtn} ${styles.payBtn}  ${styles.againBtn}`}
+                  onClick={() => {
+                    setIsLoading(false);
+                    setIsConfirm(false);
+                  }}
+                >
+                  Re-PAY
+                </div>
+              ) : (
+                ''
+              )}
+            </div>
+          </div>
+          <div className={styles.wrap1} ref={wrap1InnerRef}>
+            <div className={styles.wrap1Inner}>
+              <div className={styles.pcOpacity}>{content}</div>
+            </div>
+            <div
+              className={`${styles.wrapFixed}`}
+              style={{
+                width: width,
+                top: top,
+                right: right,
+                marginRight: marginRight,
+              }}
+            >
+              <div
+                className={`${styles.wrap1Inner} ${styles.wrap1Inner1} ${styles.phoneHide}`}
+                style={{ top: top }}
+              >
+                {content}
+              </div>
+            </div>
           </div>
         </div>
-        <div className={styles.wrap1} ref={wrap1InnerRef}>
-          <div className={styles.wrap1Inner}>
-            <div className={styles.pcOpacity}>{content}</div>
-          </div>
-          <div
-            className={`${styles.wrapFixed}`}
-            style={{ width: width, top: top }}
-          >
-            <div
-              className={`${styles.wrap1Inner} ${styles.wrap1Inner1} ${styles.phoneHide}`}
-              style={{ top: top }}
+        <div>
+          <div style={{ display: showAlert ? 'block' : 'none' }}>
+            <Tip
+              title={'Payment Status'}
+              showAlert={showAlert}
+              setShowAlert={setShowAlert}
             >
-              {content}
+              <div className={styles.alertContent}>
+                <div className={styles.payTitle}>
+                  <div className={styles.imgWrap}>
+                    {buySuccess ? (
+                      <img
+                        src="/assets/upload/iconPaymentSuccess.png"
+                        alt=""
+                        className={styles.img}
+                      />
+                    ) : (
+                      <img
+                        src="/assets/upload/iconPaymentFailed.png"
+                        alt=""
+                        className={styles.img}
+                      />
+                    )}
+                  </div>
+                  <div>
+                    <div className={styles.status}>
+                      {buySuccess ? 'Payment Successful' : 'Payment Failed'}
+                    </div>
+                    <div className={styles.priceTip}>
+                      Purchase Item: Future NFT
+                    </div>
+                  </div>
+                </div>
+                {buySuccess ? (
+                  <a
+                    className={styles.statusBtn}
+                    target="_blank"
+                    href="https://discord.gg/rBM9BCzTpF"
+                  >
+                    <img
+                      src="/assets/upload/toDiscord.png"
+                      alt=""
+                      className={styles.teleImg}
+                    />
+                    Join Support Group
+                  </a>
+                ) : (
+                  <div
+                    className={styles.statusBtn}
+                    onClick={() => {
+                      setShowAlert(false);
+                    }}
+                  >
+                    Try Again
+                  </div>
+                )}
+              </div>
+            </Tip>
+          </div>
+          <div>
+            <div style={{ display: showAlert1 ? 'block' : 'none' }}>
+              <Tip
+                title={'Tip'}
+                class2={true}
+                showAlert={showAlert1}
+                setShowAlert={setShowAlert1}
+              >
+                <div
+                  className={`${styles.alertContent} ${styles.alertContent1}`}
+                >
+                  <div className={`${styles.payTitle} ${styles.payTitle1}`}>
+                    Payment page not loading?
+                  </div>
+                  <a
+                    className={`${styles.statusBtn} ${styles.statusBtn2}`}
+                    target="_blank"
+                    href={payUrl}
+                  >
+                    Click to pay
+                  </a>
+                </div>
+              </Tip>
             </div>
           </div>
         </div>
       </div>
-      <Alert
-        title={'Payment Status'}
-        showAlert={showAlert}
-        setShowAlert={setShowAlert}
-      >
-        <div className={styles.alertContent}>
-          <div className={styles.payTitle}>
-            <div className={styles.imgWrap}>
-              {buySuccess ? (
-                <img
-                  src="/assets/upload/iconPaymentSuccess.png"
-                  alt=""
-                  className={styles.img}
-                />
-              ) : (
-                <img
-                  src="/assets/upload/iconPaymentFailed.png"
-                  alt=""
-                  className={styles.img}
-                />
-              )}
-            </div>
-            <div>
-              <div className={styles.status}>
-                {buySuccess ? 'Payment Successful' : 'Payment Failed'}
-              </div>
-              <div className={styles.priceTip}>Purchase Item: Future NFT</div>
-            </div>
-          </div>
-          {buySuccess ? (
-            <div
-              className={styles.statusBtn}
-              onClick={() => {
-                window.open('https://discord.gg/rBM9BCzTpF');
-              }}
-            >
-              <img
-                src="/assets/upload/toDiscord.png"
-                alt=""
-                className={styles.teleImg}
-              />
-              Join Support Group
-            </div>
-          ) : (
-            <div
-              className={styles.statusBtn}
-              onClick={() => {
-                setShowAlert(false);
-              }}
-            >
-              Try Again
-            </div>
-          )}
-        </div>
-      </Alert>
     </BodyWrapper>
   );
 }

@@ -43,6 +43,19 @@ const urlList = [
     name: 'Support',
     inner: [
       { name: 'Privacy Policy', url: '/assets/upload/PrivacyPolicy.pdf' },
+      {
+        name: 'Terms Of Use',
+        url: '/assets/upload/WATCHX_WEARABLE_DEVICE_TERMS_of_USE.pdf',
+      },
+      {
+        name: 'Repair Policy',
+        url: '/assets/upload/WATCHX_REPLACEMENT&REPAIR_POLICY.pdf',
+      },
+
+      {
+        name: 'Shipping Policy',
+        url: '/assets/upload/WATCHX_GLOBAL_SHIPPING_POLICY.pdf',
+      },
     ],
   },
 ];
@@ -92,8 +105,8 @@ const styles = {
     fontSize: { md: '20px', xs: 12 },
     ml: { xs: '6px', md: '0' },
     whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
+    // overflow: 'hidden',
+    // textOverflow: 'ellipsis',
     fontWeight: 500,
     '&:hover': {
       color: '#fff',

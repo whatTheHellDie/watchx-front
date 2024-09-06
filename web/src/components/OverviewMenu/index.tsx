@@ -15,6 +15,7 @@ export const MenuListConfig: any[] = [
   ['Product', 'javascript:void(0);'],
   ['Technology', '/Technology'],
   ['Docs', 'https://watchxnetwork.gitbook.io/watchx/', undefined, true],
+  ['Future NFT', '/Preorder'],
 ];
 import styles from './index.module.less';
 
