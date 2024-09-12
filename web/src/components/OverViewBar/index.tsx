@@ -1,17 +1,19 @@
 import { Box, Button, Drawer, IconButton, Typography } from '@mui/material';
 import OverviwMenu, { MenuListConfig } from '../OverviewMenu';
 import { useDispatch } from 'react-redux';
-import { warning } from 'web/src/slices/MessagesSlice';
 import styles from './index.module.less';
 import { useEffect, useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
+import copy from 'copy-to-clipboard';
+import { success, warning, error } from 'web/src/slices/MessagesSlice';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
 export const OverViewBar = (props: any) => {
   const { address, isConnected } = useAccount();
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
+
   const { disconnect } = useDisconnect();
   const [pathName, __pathName] = useState('');
   const [rightDrawerOpen, __rightDrawerOpen] = useState(false);
@@ -169,7 +171,7 @@ export const OverViewBar = (props: any) => {
                         </div>
                       ) : (
                         <div
-                          onClick={openAccountModal}
+                          // onClick={openAccountModal}
                           className={`${styles.connectBtn} ${styles.connectBtn1} ${styles.active}`}
                         >
                           <img
@@ -178,6 +180,39 @@ export const OverViewBar = (props: any) => {
                             className={styles.connectIcon}
                           />
                           {account.displayName}
+                          <div className={`${styles.navListWrap} `}>
+                            <div
+                              className={`${styles.navList} ${styles.navList1}`}
+                            >
+                              <div
+                                className={`${styles.div} ${styles.disconnect}`}
+                                onClick={() => {
+                                  address && copy(address);
+                                  dispatch(success('copied'));
+                                }}
+                              >
+                                Copy Address
+                                <img
+                                  src="/images/c2.png"
+                                  className={styles.copyImg}
+                                  alt=""
+                                />
+                              </div>
+                              <div
+                                className={`${styles.disconnect} ${styles.div}`}
+                                onClick={() => {
+                                  disconnect();
+                                }}
+                              >
+                                Disconnect
+                                <img
+                                  src="/images/c3.png"
+                                  className={styles.copyImg}
+                                  alt=""
+                                />
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       )}
                     </div>
@@ -308,8 +343,8 @@ export const OverViewBar = (props: any) => {
                   <div>
                     {!connected ? (
                       <div
-                        onClick={openConnectModal}
                         className={styles.connectBtn}
+                        onClick={openConnectModal}
                       >
                         <img
                           src="/assets/upload/connectIcon.png"
@@ -319,16 +354,46 @@ export const OverViewBar = (props: any) => {
                         Connect Wallet
                       </div>
                     ) : (
-                      <div
-                        onClick={openAccountModal}
-                        className={`${styles.connectBtn} ${styles.active}`}
-                      >
+                      <div className={`${styles.connectBtn} ${styles.active}`}>
                         <img
                           src="/assets/upload/connectIcon.png"
                           alt=""
                           className={styles.connectIcon}
                         />
                         {account.displayName}
+                        <div className={`${styles.navListWrap} `}>
+                          <div
+                            className={`${styles.navList} ${styles.navList1}`}
+                          >
+                            <div
+                              className={`${styles.div} ${styles.disconnect}`}
+                              onClick={() => {
+                                address && copy(address);
+                                dispatch(success('copied'));
+                              }}
+                            >
+                              Copy Address
+                              <img
+                                src="/images/c2.png"
+                                className={styles.copyImg}
+                                alt=""
+                              />
+                            </div>
+                            <div
+                              className={`${styles.disconnect} ${styles.div}`}
+                              onClick={() => {
+                                disconnect();
+                              }}
+                            >
+                              Disconnect
+                              <img
+                                src="/images/c3.png"
+                                className={styles.copyImg}
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     )}
                   </div>

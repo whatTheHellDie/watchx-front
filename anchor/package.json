@@ -1,7 +1,9 @@
 {
   "name": "@solana-wallet/anchor",
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+    "@solana-wallet/anchor": "file:"
+  },
   "type": "commonjs",
   "main": "./index.cjs",
   "module": "./index.js"

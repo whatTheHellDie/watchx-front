@@ -148,14 +148,32 @@
   justify-content: center;
   border: 2px solid rgb(0, 35, 41);
   cursor: pointer;
+  position: relative;
   .connectIcon {
     margin-right: 6px;
   }
   &:hover {
     border: 2px solid #00dcff;
+    .navListWrap {
+      display: block;
+    }
   }
   &.active {
     font-weight: 500;
+  }
+  .navListWrap {
+    display: none;
+    position: absolute;
+    top: 42px;
+    left: 0;
+    width: 100%;
+    font-size: 20px;
+    background: rgb(0, 35, 41);
+    border-radius: 10px;
+    font-size: 18px;
+    line-height: 40px;
+    padding: 0 20px;
+    text-align: left;
   }
 }
 .connectBtn1 {
@@ -174,6 +192,11 @@
 @media screen and(max-width:768px) {
   .connectBtn {
     display: none;
+    .navListWrap {
+      top: 28px;
+      font-size: 14px;
+      line-height: 33px;
+    }
   }
   .connectBtn1 {
     display: flex;

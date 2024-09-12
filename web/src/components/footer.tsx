@@ -42,7 +42,10 @@ const urlList = [
   {
     name: 'Support',
     inner: [
-      { name: 'Privacy Policy', url: '/assets/upload/PrivacyPolicy.pdf' },
+      {
+        name: 'Privacy Policy',
+        url: '/assets/upload/WATCHX_PRIVATE_POLICY.pdf',
+      },
       {
         name: 'Terms Of Use',
         url: '/assets/upload/WATCHX_WEARABLE_DEVICE_TERMS_of_USE.pdf',
