@@ -5,7 +5,6 @@ import { AppRoutes } from './app-routes';
 import { useState, useEffect } from 'react';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { WagmiConfig } from 'wagmi';
-
 import { chains, config } from '../wagmi';
 import './index.css';
 export function App() {

@@ -160,7 +160,9 @@ pre {
 figure {
   margin: 0 0 1em;
 }
-
+a {
+  color: inherit;
+}
 img {
   vertical-align: middle;
   border-style: none;

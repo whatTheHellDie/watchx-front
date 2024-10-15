@@ -586,7 +586,7 @@ export default function Pre() {
                       setEmailMe(!emailMe);
                     }}
                   ></div>
-                  Email me will news and offers.
+                  Email me when news and offers.
                 </div>
               </div>
               <div className={`${styles.orderTitle} ${styles.orderTitle1}`}>

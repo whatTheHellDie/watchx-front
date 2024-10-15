@@ -62,7 +62,7 @@ export const Why = () => {
                   </div>
                   <div>
                     <div className={styles.downTitle}>Download on the</div>
-                    <div className={styles.downContent}>APP Store</div>
+                   <a href="https://itunes.apple.com/cn/app/id6479742971?mt=8" target="_blank" > <div className={styles.downContent}>APP Store</div></a>
                   </div>
                 </div>
               </a>

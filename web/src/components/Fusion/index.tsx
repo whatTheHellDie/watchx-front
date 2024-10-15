@@ -74,9 +74,9 @@ export default function Fusion() {
         <div className={styles.title}>More health,More wealth</div>
 
         <div className={styles.content}>
-          Integrating traditional payment methods with blockchain wallet
-          functionality, each smartwatch serves as a wallet, providing
-          convenient financial services for people.
+          Health is wealth! Your proactive health actions will earn token
+          rewards, and with an AI health assistant to help you know yourself
+          better, you'll be on your way to achieving a healthier lifestyle.
         </div>
       </div>
       <div className={styles.flexEnd}>
